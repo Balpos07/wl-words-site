@@ -315,233 +315,9 @@
       </div>
       <table class="story-table">
         <thead><tr><th>Story</th><th>Status</th><th>Chapters</th><th>Readers</th><th>Earnings</th><th>Pricing</th><th>Actions</th></tr></thead>
-        <tbody>
+        <tbody id="storyTableBody">
           <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c1">The Faithful Heart</div><div><div class="st-title">The Faithful Heart</div><div class="st-chapters">42 chapters · Christian Romance</div></div></div></td>
-            <td><span class="status-pill status-live">● Live</span></td>
-            <td>42</td><td>15,312</td>
-            <td style="font-weight:600;color:var(--success);">$98.40</td>
-            <td>🔒 8 coins (ch.4+)</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Chapters</button><button class="action-btn danger">Pause</button></div></td>
-          </tr>
-          <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c2">Daughter of Zion</div><div><div class="st-title">Daughter of Zion</div><div class="st-chapters">14 chapters · African Christian Lit</div></div></div></td>
-            <td><span class="status-pill status-live">● Live</span></td>
-            <td>14</td><td>11,041</td>
-            <td style="font-weight:600;color:var(--success);">$31.60</td>
-            <td>🔒 8 coins (ch.4+)</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Chapters</button><button class="action-btn danger">Pause</button></div></td>
-          </tr>
-          <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c3">Rivers of Light</div><div><div class="st-title">Rivers of Light</div><div class="st-chapters">6 chapters · Poetry & Psalms</div></div></div></td>
-            <td><span class="status-pill status-live">● Live</span></td>
-            <td>6</td><td>4,210</td>
-            <td style="color:var(--muted);">Free</td>
-            <td>✅ All free</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Chapters</button><button class="action-btn danger">Pause</button></div></td>
-          </tr>
-          <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c4">Called & Chosen</div><div><div class="st-title">Called & Chosen</div><div class="st-chapters">2 chapters · Draft</div></div></div></td>
-            <td><span class="status-pill status-draft">● Draft</span></td>
-            <td>2</td><td>—</td>
-            <td style="color:var(--muted);">—</td>
-            <td>Not set</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Publish</button><button class="action-btn danger">Delete</button></div></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- EARNINGS -->
-    <div class="panel" id="panel-earnings">
-      <div class="earnings-summary">
-        <div class="stat-card"><div class="sc-icon">💰</div><div class="sc-value">$142.80</div><div class="sc-label">Earned this month</div><div class="sc-change sc-up">↑ 38% vs May</div></div>
-        <div class="stat-card"><div class="sc-icon">✅</div><div class="sc-value">$319.40</div><div class="sc-label">Total paid out</div><div class="sc-change sc-up">Since Jan 2025</div></div>
-        <div class="stat-card"><div class="sc-icon">⏳</div><div class="sc-value">$114.24</div><div class="sc-label">Pending (your 80%)</div><div class="sc-change" style="color:var(--blue-deep);">Pays out July 15</div></div>
-      </div>
-      <div class="payout-history">
-.modal-footer{display:flex;gap:0.75rem;margin-top:1.5rem;}
-    .btn-cancel{flex:1;padding:0.85rem;border:1.5px solid var(--border);border-radius:12px;background:white;font-size:0.9rem;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;color:var(--ink);transition:all 0.2s;}
-    .btn-cancel:hover{border-color:var(--rose);color:var(--rose-deep);}
-    .btn-save{flex:2;padding:0.85rem;background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:white;border:none;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;box-shadow:0 4px 14px rgba(232,120,156,0.35);}
-    .btn-save:hover{transform:translateY(-1px);}
-
-    /* TOAST */
-    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:white;padding:0.85rem 1.5rem;border-radius:12px;font-size:0.875rem;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,0.25);transform:translateY(100px);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:600;}
-    .toast.show{transform:translateY(0);opacity:1;}
-
-    /* COVERS */
-    .c1{background:linear-gradient(150deg,#C9527A,#8B2045);}
-    .c2{background:linear-gradient(150deg,#7B5EA7,#4A3580);}
-    .c3{background:linear-gradient(150deg,#4A82C2,#2F5F98);}
-    .c4{background:linear-gradient(150deg,#52A8C4,#2A708C);}
-
-    @media(max-width:1100px){.stat-cards{grid-template-columns:repeat(2,1fr);}.two-col{grid-template-columns:1fr;}}
-    @media(max-width:768px){.sidebar{transform:translateX(-100%);}.main{margin-left:0;}.stat-cards{grid-template-columns:1fr 1fr;}}
-  </style>
-</head>
-<body>
-
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <a class="logo-text" href="index.html">W<span>&</span>L Words</a>
-    <div class="logo-sub">Writer Dashboard</div>
-  </div>
-  <div class="writer-info">
-    <div class="writer-avatar">G</div>
-    <div><div class="writer-name">Grace Abiodun</div><span class="writer-badge">✍🏽 Writer</span></div>
-  </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Overview</div>
-    <a class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon">📊</span> Dashboard</a>
-    <div class="nav-section-label">Content</div>
-    <a class="nav-item" onclick="showPanel('stories',this)"><span class="nav-icon">📚</span> My Stories <span class="nav-badge">4</span></a>
-    <a class="nav-item" onclick="openModal()"><span class="nav-icon">➕</span> Upload New Story</a>
-    <div class="nav-section-label">Money</div>
-    <a class="nav-item" onclick="showPanel('earnings',this)"><span class="nav-icon">💸</span> Earnings & Payouts</a>
-    <a class="nav-item" onclick="showPanel('coins',this)"><span class="nav-icon">🪙</span> Coin Analytics</a>
-    <div class="nav-section-label">Account</div>
-    <a class="nav-item" onclick="showPanel('profile',this)"><span class="nav-icon">👤</span> Writer Profile</a>
-    <a class="nav-item" onclick="showPanel('settings',this)"><span class="nav-icon">⚙️</span> Settings</a>
-  </nav>
-  <div class="sidebar-bottom">
-    <a class="btn-visit" href="index.html">🌐 View Public Site</a>
-  </div>
-</aside>
-
-<div class="main">
-  <div class="topbar">
-    <div>
-      <div class="page-title-sm" id="topbarLabel">Overview</div>
-      <div class="page-heading" id="topbarHeading">Good morning, Grace 🌸</div>
-    </div>
-    <div class="topbar-right">
-      <div class="notif-btn">🔔<div class="notif-dot"></div></div>
-      <button class="btn-upload" onclick="openModal()">+ Upload Story</button>
-    </div>
-  </div>
-
-  <div class="content">
-
-    <!-- OVERVIEW -->
-    <div class="panel active" id="panel-overview">
-      <div class="earnings-hero">
-        <div class="eh-left">
-          <div class="eh-label">Total Earnings — June 2025</div>
-          <div class="eh-amount">$142.80</div>
-          <div class="eh-sub">Payout on <strong>July 15</strong> · $114.24 to you (80%) · $28.56 to platform (20%)</div>
-        </div>
-        <div class="eh-right">
-          <div class="eh-stat"><div class="eh-stat-num">4,201</div><div class="eh-stat-label">Total Readers</div></div>
-          <div class="eh-stat"><div class="eh-stat-num">891</div><div class="eh-stat-label">Chapters Unlocked</div></div>
-          <div class="eh-stat"><div class="eh-stat-num">4.7★</div><div class="eh-stat-label">Avg Rating</div></div>
-        </div>
-        <button class="btn-payout" onclick="showToast('💳 Payout request submitted! Funds arrive within 3–5 business days.')">Request Early Payout</button>
-      </div>
-
-      <div class="stat-cards">
-        <div class="stat-card"><div class="sc-icon">📖</div><div class="sc-value">3</div><div class="sc-label">Active Stories</div><div class="sc-change sc-up">↑ 1 new this month</div></div>
-        <div class="stat-card"><div class="sc-icon">📝</div><div class="sc-value">62</div><div class="sc-label">Total Chapters</div><div class="sc-change sc-up">↑ 8 added this month</div></div>
-        <div class="stat-card"><div class="sc-icon">🔖</div><div class="sc-value">1,240</div><div class="sc-label">Bookmarks</div><div class="sc-change sc-up">↑ 14% this week</div></div>
-        <div class="stat-card"><div class="sc-icon">⭐</div><div class="sc-value">1,842</div><div class="sc-label">Total Ratings</div><div class="sc-change sc-up">↑ 203 new this month</div></div>
-      </div>
-
-      <div class="chart-card">
-        <div class="chart-header">
-          <div class="chart-title">Earnings This Week</div>
-          <div class="chart-tabs">
-            <button class="chart-tab active">7 days</button>
-            <button class="chart-tab" onclick="switchChartTab(this)">30 days</button>
-            <button class="chart-tab" onclick="switchChartTab(this)">3 months</button>
-          </div>
-        </div>
-        <svg class="chart" viewBox="0 0 700 180" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#E8789C" stop-opacity="0.25"/>
-              <stop offset="100%" stop-color="#E8789C" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <line x1="0" y1="36" x2="700" y2="36" stroke="#F0D8E8" stroke-width="1"/>
-          <line x1="0" y1="72" x2="700" y2="72" stroke="#F0D8E8" stroke-width="1"/>
-          <line x1="0" y1="108" x2="700" y2="108" stroke="#F0D8E8" stroke-width="1"/>
-          <line x1="0" y1="144" x2="700" y2="144" stroke="#F0D8E8" stroke-width="1"/>
-          <path d="M0,120 C58,120 58,80 116,80 C174,80 174,50 233,50 C291,50 291,90 350,90 C408,90 408,30 466,30 C525,30 525,60 583,60 C641,60 641,40 700,40 L700,180 L0,180 Z" fill="url(#chartGrad)"/>
-          <path d="M0,120 C58,120 58,80 116,80 C174,80 174,50 233,50 C291,50 291,90 350,90 C408,90 408,30 466,30 C525,30 525,60 583,60 C641,60 641,40 700,40" fill="none" stroke="#E8789C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="0" cy="120" r="4" fill="#E8789C"/>
-          <circle cx="116" cy="80" r="4" fill="#E8789C"/>
-          <circle cx="233" cy="50" r="4" fill="#E8789C"/>
-          <circle cx="350" cy="90" r="4" fill="#E8789C"/>
-          <circle cx="466" cy="30" r="5" fill="#C9527A" stroke="white" stroke-width="2"/>
-          <circle cx="583" cy="60" r="4" fill="#E8789C"/>
-          <circle cx="700" cy="40" r="4" fill="#E8789C"/>
-          <text x="706" y="40" font-size="10" fill="#6E6E85" dominant-baseline="middle">$32</text>
-          <text x="706" y="80" font-size="10" fill="#6E6E85" dominant-baseline="middle">$24</text>
-          <text x="706" y="120" font-size="10" fill="#6E6E85" dominant-baseline="middle">$16</text>
-        </svg>
-        <div class="chart-x-labels">
-          <span class="chart-x-label">Mon</span><span class="chart-x-label">Tue</span><span class="chart-x-label">Wed</span><span class="chart-x-label">Thu</span><span class="chart-x-label">Fri</span><span class="chart-x-label">Sat</span><span class="chart-x-label">Sun</span>
-        </div>
-      </div>
-
-      <div class="two-col">
-        <div class="card">
-          <div class="card-header"><div class="card-title">Top Performing Stories</div><a class="see-all-link" onclick="showPanel('stories',document.querySelectorAll('.nav-item')[1])">See all</a></div>
-          <div class="story-mini"><div class="sm-cover c1">The Faithful Heart</div><div class="sm-info"><div class="sm-title">The Faithful Heart</div><div class="sm-meta">15.3k reads · 42 chapters · 4.7★</div></div><div class="sm-earn">$98.40</div></div>
-          <div class="story-mini"><div class="sm-cover c2">Daughter of Zion</div><div class="sm-info"><div class="sm-title">Daughter of Zion</div><div class="sm-meta">11k reads · 14 chapters · 4.8★</div></div><div class="sm-earn">$31.60</div></div>
-          <div class="story-mini"><div class="sm-cover c3">Rivers of Light</div><div class="sm-info"><div class="sm-title">Rivers of Light</div><div class="sm-meta">4.2k reads · 6 chapters · Free</div></div><div class="sm-earn">—</div></div>
-        </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">Recent Activity</div></div>
-          <div class="activity-item"><div class="activity-icon act-gold">🪙</div><div><div class="activity-desc"><strong>47 coins earned</strong> from chapter unlocks on The Faithful Heart</div><div class="activity-time">2 hours ago</div></div></div>
-          <div class="activity-item"><div class="activity-icon act-pink">⭐</div><div><div class="activity-desc"><strong>12 new ratings</strong> on Daughter of Zion — avg 4.9★ this week</div><div class="activity-time">5 hours ago</div></div></div>
-          <div class="activity-item"><div class="activity-icon act-blue">📖</div><div><div class="activity-desc"><strong>320 new readers</strong> discovered The Faithful Heart through search</div><div class="activity-time">Yesterday</div></div></div>
-          <div class="activity-item"><div class="activity-icon act-green">💸</div><div><div class="activity-desc"><strong>$87.20 paid out</strong> for May earnings — arrived in your account</div><div class="activity-time">June 15</div></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- STORIES -->
-    <div class="panel" id="panel-stories">
-      <div class="stories-toolbar">
-        <div class="search-sm"><span>🔍</span><input type="text" placeholder="Search your stories…"/></div>
-        <select class="filter-sm"><option>All Status</option><option>Live</option><option>Draft</option></select>
-        <button class="btn-upload" onclick="openModal()">+ New Story</button>
-      </div>
-      <table class="story-table">
-        <thead><tr><th>Story</th><th>Status</th><th>Chapters</th><th>Readers</th><th>Earnings</th><th>Pricing</th><th>Actions</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c1">The Faithful Heart</div><div><div class="st-title">The Faithful Heart</div><div class="st-chapters">42 chapters · Christian Romance</div></div></div></td>
-            <td><span class="status-pill status-live">● Live</span></td>
-            <td>42</td><td>15,312</td>
-            <td style="font-weight:600;color:var(--success);">$98.40</td>
-            <td>🔒 8 coins (ch.4+)</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Chapters</button><button class="action-btn danger">Pause</button></div></td>
-          </tr>
-          <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c2">Daughter of Zion</div><div><div class="st-title">Daughter of Zion</div><div class="st-chapters">14 chapters · African Christian Lit</div></div></div></td>
-            <td><span class="status-pill status-live">● Live</span></td>
-            <td>14</td><td>11,041</td>
-            <td style="font-weight:600;color:var(--success);">$31.60</td>
-            <td>🔒 8 coins (ch.4+)</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Chapters</button><button class="action-btn danger">Pause</button></div></td>
-          </tr>
-          <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c3">Rivers of Light</div><div><div class="st-title">Rivers of Light</div><div class="st-chapters">6 chapters · Poetry & Psalms</div></div></div></td>
-            <td><span class="status-pill status-live">● Live</span></td>
-            <td>6</td><td>4,210</td>
-            <td style="color:var(--muted);">Free</td>
-            <td>✅ All free</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Chapters</button><button class="action-btn danger">Pause</button></div></td>
-          </tr>
-          <tr>
-            <td><div class="st-cover-cell"><div class="st-cover c4">Called & Chosen</div><div><div class="st-title">Called & Chosen</div><div class="st-chapters">2 chapters · Draft</div></div></div></td>
-            <td><span class="status-pill status-draft">● Draft</span></td>
-            <td>2</td><td>—</td>
-            <td style="color:var(--muted);">—</td>
-            <td>Not set</td>
-            <td><div class="story-actions"><button class="action-btn">Edit</button><button class="action-btn">Publish</button><button class="action-btn danger">Delete</button></div></td>
+            <td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading stories...</td>
           </tr>
         </tbody>
       </table>
@@ -605,6 +381,26 @@
   </div>
 </div>
 
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Edit Story</div>
+      <button class="modal-close" onclick="closeEditModal()">✕</button>
+    </div>
+    <div class="m-field"><label class="m-label">Story Title *</label><input id="editTitle" class="m-input" type="text"/></div>
+    <div class="m-field"><label class="m-label">Short Description *</label><textarea id="editDesc" class="m-input"></textarea></div>
+    <div class="m-row">
+      <div class="m-field"><label class="m-label">Category *</label><select id="editCategory" class="m-input"><option value="">Select category…</option><option>Devotionals</option><option>Christian Romance</option><option>Spiritual Warfare</option><option>African Christian Lit</option><option>Bible Study</option><option>Poetry & Psalms</option><option>Christian Youth</option><option>Faith & Healing</option><option>Theology & Doctrine</option></select></div>
+      <div class="m-field"><label class="m-label">Pricing</label><select id="editPricing" class="m-input"><option value="free">✅ All Free</option><option value="coins">🪙 Coin Unlock</option><option value="purchase">🔀 Mixed</option></select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+      <button class="btn-save" onclick="handleEditSave()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -623,6 +419,15 @@
 
   function openModal(){document.getElementById('uploadModal').classList.add('open');}
   function closeModal(){document.getElementById('uploadModal').classList.remove('open');}
+  document.getElementById('uploadModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+  
+  function openEditModal(id){
+    window.currentEditingStoryId = id;
+    if(window.populateEditModal) window.populateEditModal(id);
+    document.getElementById('editModal').classList.add('open');
+  }
+  function closeEditModal(){document.getElementById('editModal').classList.remove('open');}
+  document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeEditModal();});
   document.getElementById('uploadModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
 
   function setPricingTab(btn,type){
@@ -643,9 +448,159 @@
 
 <!-- Firebase SDK & Upload Logic -->
 <script type="module">
-  import { db, collection, addDoc } from './firebase-config.js';
+  import { auth, db, collection, addDoc, doc, getDoc, getDocs, query, where, updateDoc } from './firebase-config.js';
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+  let currentWriterId = null;
+  let writerPenName = "Writer";
+  let myStories = [];
+
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = 'index.html'; // Redirect to home if not logged in
+      return;
+    }
+
+    try {
+      // Check if user is a writer
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        if (userData.account_type !== 'writer') {
+          alert('Only writers have access to the dashboard. Redirecting to home...');
+          window.location.href = 'index.html';
+          return;
+        }
+        currentWriterId = user.uid;
+        writerPenName = userData.pen_name || userData.full_name || user.email.split('@')[0];
+        
+        // Update UI with writer info
+        const nameEl = document.querySelector('.writer-name');
+        const avatarEl = document.querySelector('.writer-avatar');
+        if (nameEl) nameEl.textContent = writerPenName;
+        if (avatarEl) avatarEl.textContent = writerPenName.charAt(0).toUpperCase();
+
+        // Fetch their stories
+        loadMyStories();
+      } else {
+        window.location.href = 'index.html';
+      }
+    } catch (error) {
+      console.error("Auth check error:", error);
+    }
+  });
+
+  async function loadMyStories() {
+    if (!currentWriterId) return;
+    
+    const tbody = document.getElementById('storyTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading stories...</td></tr>';
+    
+    try {
+      const q = query(collection(db, "stories"), where("author_uid", "==", currentWriterId));
+      const snapshot = await getDocs(q);
+      
+      myStories = [];
+      let html = '';
+      
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        myStories.push({ id: docSnap.id, ...data });
+        
+        let pricingBadge = '✅ All free';
+        if (data.pricing_type === 'coins') pricingBadge = '🔒 Coin unlock';
+        else if (data.pricing_type === 'purchase') pricingBadge = '🔀 Mixed';
+        
+        const statusClass = data.status === 'live' ? 'status-live' : 'status-draft';
+        const statusText = data.status === 'live' ? '● Live' : '● Draft';
+        
+        html += `
+          <tr>
+            <td><div class="st-cover-cell"><div class="st-cover ${data.coverClass||'c1'}">${data.title}</div><div><div class="st-title">${data.title}</div><div class="st-chapters">${data.category}</div></div></div></td>
+            <td><span class="status-pill ${statusClass}">${statusText}</span></td>
+            <td>--</td>
+            <td>${data.total_reads || 0}</td>
+            <td style="color:var(--muted);">--</td>
+            <td>${pricingBadge}</td>
+            <td><div class="story-actions"><button class="action-btn" onclick="openEditModal('${docSnap.id}')">Edit</button></div></td>
+          </tr>
+        `;
+      });
+      
+      if (myStories.length === 0) {
+        html = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">No stories yet. Click Upload New Story to get started!</td></tr>';
+      }
+      
+      tbody.innerHTML = html;
+      
+      // Update badge
+      const badge = document.querySelector('.nav-badge');
+      if (badge) badge.textContent = myStories.length;
+      
+    } catch (error) {
+      console.error("Error loading stories:", error);
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#C0392B;padding:2rem;">Failed to load stories.</td></tr>';
+    }
+  }
+
+  // Bind to window for HTML access
+  window.populateEditModal = function(id) {
+    const story = myStories.find(s => s.id === id);
+    if (!story) return;
+    
+    document.getElementById('editTitle').value = story.title || '';
+    document.getElementById('editDesc').value = story.description || '';
+    document.getElementById('editCategory').value = story.category || '';
+    document.getElementById('editPricing').value = story.pricing_type || 'free';
+  };
+
+  window.handleEditSave = async function() {
+    const id = window.currentEditingStoryId;
+    if (!id) return;
+    
+    const title = document.getElementById('editTitle').value;
+    const desc = document.getElementById('editDesc').value;
+    const category = document.getElementById('editCategory').value;
+    const pricing = document.getElementById('editPricing').value;
+    
+    if (!title || !category) {
+      showToast('⚠️ Title and Category are required.');
+      return;
+    }
+    
+    const btn = document.querySelector('.btn-save');
+    const oldText = btn.textContent;
+    btn.textContent = 'Saving...';
+    btn.disabled = true;
+    
+    try {
+      await updateDoc(doc(db, "stories", id), {
+        title: title,
+        description: desc,
+        category: category,
+        pricing_type: pricing
+      });
+      
+      showToast('✅ Story updated successfully!');
+      closeEditModal();
+      loadMyStories(); // refresh table
+    } catch (error) {
+      console.error("Edit error:", error);
+      showToast('❌ Failed to update story.');
+    } finally {
+      btn.textContent = oldText;
+      btn.disabled = false;
+    }
+  };
 
   window.handleUpload = async function() {
+    if (!currentWriterId) {
+      showToast('⚠️ You must be logged in as a writer to upload.');
+      return;
+    }
+
     const title = document.getElementById('uploadTitle').value;
     const desc = document.getElementById('uploadDesc').value;
     const category = document.getElementById('uploadCategory').value;
@@ -655,31 +610,21 @@
       return;
     }
     
-    // Determine pricing type
     let pricing_type = 'free';
     const activeTab = document.querySelector('.price-tab.active');
     if (activeTab && activeTab.dataset.type) {
       pricing_type = activeTab.dataset.type;
-    } else if (activeTab && activeTab.textContent.includes('Coin')) {
-      pricing_type = 'coins';
-    } else if (activeTab && activeTab.textContent.includes('Mixed')) {
-      pricing_type = 'purchase';
     }
     
-    // Random cover for simplicity
     const randomCover = 'c' + (Math.floor(Math.random() * 7) + 1);
     
-    // Get author name if logged in
-    const authorName = window.currentUser && window.currentUser.email 
-      ? window.currentUser.email.split('@')[0] 
-      : "Guest Writer";
-
     try {
       showToast('Uploading story...');
-      const docRef = await addDoc(collection(db, "stories"), {
+      await addDoc(collection(db, "stories"), {
         title: title,
         description: desc,
-        author: authorName,
+        author: writerPenName,
+        author_uid: currentWriterId,
         category: category,
         pricing_type: pricing_type,
         coverClass: randomCover,
@@ -690,17 +635,19 @@
       });
       
       closeModal();
-      showToast('🎉 Story published successfully! It is now live.');
+      showToast('🎉 Story published successfully!');
       
       // Clear inputs
       document.getElementById('uploadTitle').value = '';
       document.getElementById('uploadDesc').value = '';
       document.getElementById('uploadCategory').value = '';
+      
+      loadMyStories(); // refresh table
     } catch (error) {
       console.error(error);
       showToast('❌ Error publishing story. Check your connection.');
     }
-  }
+  };
 </script>
 </body>
 </html>

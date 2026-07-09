@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>W&L Words — Wonder & Light in Words to Liberate</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap"
+    rel="stylesheet" />
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --white:    #FFFFFF;
-      --off:      #FDF7FB;
-      --blush:    #F9E4EF;
-      --rose:     #E8789C;
-      --rose-deep:#C9527A;
-      --sky:      #C5DEFA;
-      --blue:     #4A82C2;
-      --blue-deep:#2F5F98;
-      --ink:      #1A1A2E;
-      --muted:    #6E6E85;
-      --border:   #F0D8E8;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    html { scroll-behavior: smooth; }
+    :root {
+      --white: #FFFFFF;
+      --off: #FDF7FB;
+      --blush: #F9E4EF;
+      --rose: #E8789C;
+      --rose-deep: #C9527A;
+      --sky: #C5DEFA;
+      --blue: #4A82C2;
+      --blue-deep: #2F5F98;
+      --ink: #1A1A2E;
+      --muted: #6E6E85;
+      --border: #F0D8E8;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background: var(--white);
@@ -33,14 +45,21 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 0 5%;
       height: 68px;
-      background: rgba(255,255,255,0.92);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
+
     .logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
@@ -49,80 +68,123 @@
       text-decoration: none;
       letter-spacing: -0.02em;
     }
-    .logo span { color: var(--rose); }
-    .nav-links {
-      display: flex; gap: 2rem; list-style: none;
+
+    .logo span {
+      color: var(--rose);
     }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
     .nav-links a {
-      font-size: 0.875rem; font-weight: 500;
-      color: var(--muted); text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--rose-deep); }
-    .nav-ctas { display: flex; gap: 0.75rem; align-items: center; }
+
+    .nav-links a:hover {
+      color: var(--rose-deep);
+    }
+
+    .nav-ctas {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
     .btn-ghost {
       padding: 0.5rem 1.2rem;
       border: 1.5px solid var(--rose);
       color: var(--rose-deep);
       background: transparent;
       border-radius: 50px;
-      font-size: 0.875rem; font-weight: 500;
-      cursor: pointer; text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
       transition: all 0.2s;
     }
-    .btn-ghost:hover { background: var(--blush); }
+
+    .btn-ghost:hover {
+      background: var(--blush);
+    }
+
     .btn-primary {
       padding: 0.5rem 1.4rem;
       background: var(--rose);
       color: white;
       border: none;
       border-radius: 50px;
-      font-size: 0.875rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
       transition: all 0.2s;
-      box-shadow: 0 4px 14px rgba(232,120,156,0.35);
+      box-shadow: 0 4px 14px rgba(232, 120, 156, 0.35);
     }
-    .btn-primary:hover { background: var(--rose-deep); transform: translateY(-1px); }
+
+    .btn-primary:hover {
+      background: var(--rose-deep);
+      transform: translateY(-1px);
+    }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
       padding-top: 68px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
       position: relative;
       overflow: hidden;
       background: var(--white);
     }
+
     /* Light-ray signature element */
     .hero::before {
       content: '';
       position: absolute;
-      top: -10%; left: 50%;
+      top: -10%;
+      left: 50%;
       transform: translateX(-50%);
-      width: 900px; height: 900px;
-      background: conic-gradient(
-        from 260deg at 50% 0%,
-        transparent 0deg,
-        rgba(249,228,239,0.5) 15deg,
-        transparent 30deg,
-        rgba(197,222,250,0.4) 50deg,
-        transparent 65deg,
-        rgba(249,228,239,0.4) 80deg,
-        transparent 100deg
-      );
+      width: 900px;
+      height: 900px;
+      background: conic-gradient(from 260deg at 50% 0%,
+          transparent 0deg,
+          rgba(249, 228, 239, 0.5) 15deg,
+          transparent 30deg,
+          rgba(197, 222, 250, 0.4) 50deg,
+          transparent 65deg,
+          rgba(249, 228, 239, 0.4) 80deg,
+          transparent 100deg);
       pointer-events: none;
       animation: rayRotate 30s linear infinite;
     }
+
     @keyframes rayRotate {
-      from { transform: translateX(-50%) rotate(0deg); }
-      to   { transform: translateX(-50%) rotate(360deg); }
+      from {
+        transform: translateX(-50%) rotate(0deg);
+      }
+
+      to {
+        transform: translateX(-50%) rotate(360deg);
+      }
     }
+
     .hero-inner {
-      position: relative; z-index: 2;
-      max-width: 820px; padding: 2rem 5%;
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+      padding: 2rem 5%;
     }
+
     .hero-eyebrow {
       display: inline-block;
       font-family: 'Cormorant Garamond', serif;
@@ -132,6 +194,7 @@
       letter-spacing: 0.04em;
       margin-bottom: 1.25rem;
     }
+
     .hero-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.8rem, 6vw, 5rem);
@@ -141,11 +204,13 @@
       color: var(--ink);
       margin-bottom: 1.5rem;
     }
+
     .hero-title em {
       font-style: italic;
       color: var(--rose-deep);
       display: block;
     }
+
     .hero-sub {
       font-size: 1.1rem;
       color: var(--muted);
@@ -154,52 +219,80 @@
       margin: 0 auto 2.5rem;
       font-weight: 300;
     }
+
     .hero-ctas {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
+
     .btn-hero {
       padding: 0.85rem 2rem;
       border-radius: 50px;
-      font-size: 1rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
       transition: all 0.25s;
     }
+
     .btn-hero.primary {
       background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
-      color: white; border: none;
-      box-shadow: 0 6px 20px rgba(201,82,122,0.35);
+      color: white;
+      border: none;
+      box-shadow: 0 6px 20px rgba(201, 82, 122, 0.35);
     }
-    .btn-hero.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,82,122,0.4); }
+
+    .btn-hero.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(201, 82, 122, 0.4);
+    }
+
     .btn-hero.secondary {
       background: white;
       color: var(--blue-deep);
       border: 1.5px solid var(--sky);
     }
-    .btn-hero.secondary:hover { background: var(--sky); color: var(--blue-deep); }
+
+    .btn-hero.secondary:hover {
+      background: var(--sky);
+      color: var(--blue-deep);
+    }
 
     /* Book-strip below hero */
     .book-strip {
-      position: relative; z-index: 2;
-      display: flex; gap: 1rem;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 1rem;
       padding: 2.5rem 0 0;
       overflow: hidden;
       width: 100%;
       justify-content: center;
     }
+
     .book-card {
       flex-shrink: 0;
       width: 90px;
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(26,26,46,0.12);
+      box-shadow: 0 8px 24px rgba(26, 26, 46, 0.12);
       transform: rotate(var(--r, 0deg));
       transition: transform 0.3s;
     }
-    .book-card:hover { transform: rotate(0deg) translateY(-6px) !important; }
+
+    .book-card:hover {
+      transform: rotate(0deg) translateY(-6px) !important;
+    }
+
     .book-cover {
-      width: 90px; height: 128px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      width: 90px;
+      height: 128px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 0.5rem;
       font-family: 'Playfair Display', serif;
       font-size: 0.6rem;
@@ -208,41 +301,78 @@
       color: white;
       line-height: 1.3;
     }
-    .bc1 { background: linear-gradient(150deg,#7B5EA7,#4A3580); }
-    .bc2 { background: linear-gradient(150deg,#E8789C,#B24570); }
-    .bc3 { background: linear-gradient(150deg,#4A82C2,#2F5F98); }
-    .bc4 { background: linear-gradient(150deg,#C9527A,#8B2045); }
-    .bc5 { background: linear-gradient(150deg,#52A8C4,#2A708C); }
-    .bc6 { background: linear-gradient(150deg,#A87DC9,#6A47A0); }
-    .bc7 { background: linear-gradient(150deg,#D4845A,#9E5230); }
-    .bc8 { background: linear-gradient(150deg,#5DB89C,#2E8070); }
+
+    .bc1 {
+      background: linear-gradient(150deg, #7B5EA7, #4A3580);
+    }
+
+    .bc2 {
+      background: linear-gradient(150deg, #E8789C, #B24570);
+    }
+
+    .bc3 {
+      background: linear-gradient(150deg, #4A82C2, #2F5F98);
+    }
+
+    .bc4 {
+      background: linear-gradient(150deg, #C9527A, #8B2045);
+    }
+
+    .bc5 {
+      background: linear-gradient(150deg, #52A8C4, #2A708C);
+    }
+
+    .bc6 {
+      background: linear-gradient(150deg, #A87DC9, #6A47A0);
+    }
+
+    .bc7 {
+      background: linear-gradient(150deg, #D4845A, #9E5230);
+    }
+
+    .bc8 {
+      background: linear-gradient(150deg, #5DB89C, #2E8070);
+    }
 
     /* ── STATS ── */
     .stats {
       background: var(--off);
       padding: 3rem 5%;
-      display: flex; justify-content: center;
-      gap: 4rem; flex-wrap: wrap;
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
-    .stat { text-align: center; }
+
+    .stat {
+      text-align: center;
+    }
+
     .stat-num {
       font-family: 'Playfair Display', serif;
-      font-size: 2.2rem; font-weight: 700;
+      font-size: 2.2rem;
+      font-weight: 700;
       color: var(--rose-deep);
     }
+
     .stat-label {
-      font-size: 0.82rem; color: var(--muted);
-      font-weight: 500; margin-top: 0.25rem;
-      text-transform: uppercase; letter-spacing: 0.06em;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     /* ── HOW IT WORKS ── */
     .hiw {
       padding: 6rem 5%;
-      max-width: 1100px; margin: 0 auto;
+      max-width: 1100px;
+      margin: 0 auto;
     }
+
     .section-eyebrow {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
@@ -252,6 +382,7 @@
       display: block;
       margin-bottom: 0.75rem;
     }
+
     .section-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
@@ -260,16 +391,22 @@
       line-height: 1.2;
       margin-bottom: 1rem;
     }
+
     .section-sub {
-      color: var(--muted); font-size: 1rem;
-      line-height: 1.7; max-width: 500px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 500px;
       font-weight: 300;
     }
+
     .hiw-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem; margin-top: 3.5rem;
+      gap: 2rem;
+      margin-top: 3.5rem;
     }
+
     .hiw-card {
       background: var(--off);
       border: 1px solid var(--border);
@@ -277,24 +414,48 @@
       padding: 2.5rem 2rem;
       transition: box-shadow 0.3s, transform 0.3s;
     }
-    .hiw-card:hover { box-shadow: 0 12px 40px rgba(232,120,156,0.15); transform: translateY(-4px); }
-    .hiw-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; margin-bottom: 1.5rem;
+
+    .hiw-card:hover {
+      box-shadow: 0 12px 40px rgba(232, 120, 156, 0.15);
+      transform: translateY(-4px);
     }
-    .icon-pink  { background: var(--blush); }
-    .icon-blue  { background: #E3EEFA; }
-    .icon-mixed { background: linear-gradient(135deg,var(--blush),#E3EEFA); }
+
+    .hiw-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .icon-pink {
+      background: var(--blush);
+    }
+
+    .icon-blue {
+      background: #E3EEFA;
+    }
+
+    .icon-mixed {
+      background: linear-gradient(135deg, var(--blush), #E3EEFA);
+    }
+
     .hiw-card h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.25rem; font-weight: 700;
-      color: var(--ink); margin-bottom: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
     }
+
     .hiw-card p {
-      color: var(--muted); font-size: 0.9rem;
-      line-height: 1.7; font-weight: 300;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      font-weight: 300;
     }
 
     /* ── FEATURED ── */
@@ -302,75 +463,121 @@
       background: var(--blush);
       padding: 6rem 5%;
     }
-    .featured-inner { max-width: 1100px; margin: 0 auto; }
-    .featured-header {
-      display: flex; align-items: flex-end;
-      justify-content: space-between; flex-wrap: wrap;
-      gap: 1rem; margin-bottom: 3rem;
+
+    .featured-inner {
+      max-width: 1100px;
+      margin: 0 auto;
     }
+
+    .featured-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
     .see-all {
-      font-size: 0.875rem; font-weight: 600;
-      color: var(--rose-deep); text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--rose-deep);
+      text-decoration: none;
       border-bottom: 1.5px solid var(--rose);
       padding-bottom: 2px;
       transition: color 0.2s;
     }
-    .see-all:hover { color: var(--ink); border-color: var(--ink); }
+
+    .see-all:hover {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 1.5rem;
     }
-    .book-item { cursor: pointer; }
+
+    .book-item {
+      cursor: pointer;
+    }
+
     .book-item-cover {
       width: 100%;
       aspect-ratio: 2/3;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 6px 18px rgba(26,26,46,0.14);
+      box-shadow: 0 6px 18px rgba(26, 26, 46, 0.14);
       transition: transform 0.3s, box-shadow 0.3s;
       margin-bottom: 0.85rem;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Playfair Display', serif;
-      font-size: 0.75rem; font-weight: 600;
-      color: white; text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: white;
+      text-align: center;
       padding: 0.75rem;
     }
+
     .book-item:hover .book-item-cover {
       transform: translateY(-5px);
-      box-shadow: 0 14px 34px rgba(26,26,46,0.2);
+      box-shadow: 0 14px 34px rgba(26, 26, 46, 0.2);
     }
+
     .book-item-title {
       font-family: 'Playfair Display', serif;
-      font-size: 0.9rem; font-weight: 600;
-      color: var(--ink); margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
     }
+
     .book-item-author {
-      font-size: 0.78rem; color: var(--muted);
+      font-size: 0.78rem;
+      color: var(--muted);
     }
+
     .book-badge {
       display: inline-block;
-      font-size: 0.68rem; font-weight: 600;
+      font-size: 0.68rem;
+      font-weight: 600;
       padding: 0.2rem 0.6rem;
       border-radius: 50px;
       margin-bottom: 0.4rem;
     }
-    .badge-free { background: #D4F5E9; color: #1A7A55; }
-    .badge-coins { background: #FFF0D0; color: #A06010; }
+
+    .badge-free {
+      background: #D4F5E9;
+      color: #1A7A55;
+    }
+
+    .badge-coins {
+      background: #FFF0D0;
+      color: #A06010;
+    }
 
     /* ── CATEGORIES ── */
     .categories {
       padding: 6rem 5%;
-      max-width: 1100px; margin: 0 auto;
+      max-width: 1100px;
+      margin: 0 auto;
     }
+
     .cats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1rem; margin-top: 3rem;
+      gap: 1rem;
+      margin-top: 3rem;
     }
+
     .cat-pill {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       padding: 1.4rem 1rem;
       border-radius: 16px;
@@ -380,14 +587,20 @@
       text-align: center;
       transition: all 0.25s;
     }
+
     .cat-pill:hover {
       border-color: var(--rose);
       background: var(--blush);
       transform: translateY(-3px);
     }
-    .cat-emoji { font-size: 1.8rem; }
+
+    .cat-emoji {
+      font-size: 1.8rem;
+    }
+
     .cat-name {
-      font-size: 0.82rem; font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 600;
       color: var(--ink);
     }
 
@@ -397,245 +610,99 @@
       background: linear-gradient(135deg, var(--blue-deep) 0%, #1A3A6E 100%);
       border-radius: 28px;
       padding: 5rem 4rem;
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
       gap: 2.5rem;
-      position: relative; overflow: hidden;
+      position: relative;
+      overflow: hidden;
     }
+
     .writer-cta::before {
       content: '';
-      position: absolute; top: -40%; right: -10%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(232,120,156,0.2) 0%, transparent 65%);
+      position: absolute;
+      top: -40%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(232, 120, 156, 0.2) 0%, transparent 65%);
       pointer-events: none;
     }
+
     .writer-cta::after {
       content: '';
-      position: absolute; bottom: -30%; left: 5%;
-      width: 350px; height: 350px;
-      background: radial-gradient(circle, rgba(74,130,194,0.25) 0%, transparent 65%);
+      position: absolute;
+      bottom: -30%;
+      left: 5%;
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(74, 130, 194, 0.25) 0%, transparent 65%);
       pointer-events: none;
     }
-    .cta-text { max-width: 520px; position: relative; z-index: 1; }
-    .cta-text .section-eyebrow { color: var(--sky); }
-    .cta-text .section-title { color: white; }
-    .cta-text .section-sub { color: rgba(255,255,255,0.7); max-width: 420px; }
-    .cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 1; }
+
+    .cta-text {
+      max-width: 520px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-text .section-eyebrow {
+      color: var(--sky);
+    }
+
+    .cta-text .section-title {
+      color: white;
+    }
+
+    .cta-text .section-sub {
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 420px;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
     .btn-white {
       padding: 0.85rem 2rem;
-      background: white; color: var(--blue-deep);
-      border: none; border-radius: 50px;
-      font-size: 0.95rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: all 0.25s;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    }
-    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-    .btn-outline-white {
-      padding: 0.85rem 2rem;
-      background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.4);
-      color: white; border-radius: 50px;
-      font-size: 0.95rem; font-weight: 500;
-      cursor: pointer; text-decoration: none;
-      transition: all 0.25s;
-    }
-    .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
-
-    /* ── TESTIMONIAL / MISSION ── */
-    .mission {
-      padding: 6rem 5%;
-      background: var(--off);
-      text-align: center;
-      border-top: 1px solid var(--border);
-    }
-    .mission-inner { max-width: 720px; margin: 0 auto; }
-    .mission blockquote {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 400;
-      color: var(--ink);
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-    }
-    .mission blockquote span { color: var(--rose-deep); }
-    .mission cite {
-      font-size: 0.85rem; color: var(--muted);
-      font-style: normal; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--ink);
-      color: rgba(255,255,255,0.6);
-      padding: 4rem 5% 2rem;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 3rem; margin-bottom: 3rem;
-    }
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 700;
-      color: white; text-decoration: none;
-      display: block; margin-bottom: 1rem;
-    }
-    .footer-logo span { color: var(--rose); }
-    .footer-tagline {
-      font-size: 0.875rem; line-height: 1.7;
-      font-weight: 300; margin-bottom: 1.5rem;
-    }
-    .footer-col h4 {
-      font-size: 0.8rem; font-weight: 600;
-      color: white; text-transform: uppercase;
-      letter-spacing: 0.1em; margin-bottom: 1.25rem;
-    }
-    .footer-col a {
-      display: block; color: rgba(255,255,255,0.5);
-      text-decoration: none; font-size: 0.875rem;
-      margin-bottom: 0.6rem;
-      transition: color 0.2s;
-    }
-    .footer-col a:hover { color: var(--rose); }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 2rem;
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-      font-size: 0.8rem;
-    }
-    .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
-    .footer-bottom a:hover { color: var(--rose); }
-
-    /* ── RESPONSIVE ── */
-    @media(max-width: 768px) {
-      .nav-links { display: none; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .writer-cta { padding: 3rem 2rem; }
-      .stats { gap: 2rem; }
-    }
-    @media(max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .cta-btns { flex-direction: column; }
-    }
-
-    /* ── SCROLL FADE-IN ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; }
-      .hero::before { animation: none; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav>
-  <a class="logo" href="index.html">W<span>&</span>L Words</a>
-  <ul class="nav-links">
-    <li><a href="browse.html">Browse Books</a></li>
-    <li><a href="browse.html">Free Stories</a></li>
-    <li><a href="browse.html">Categories</a></li>
-    <li><a href="auth.html">Write With Us</a></li>
-  </ul>
-  <div class="nav-ctas">
-    <a class="btn-ghost" href="auth.html">Sign In</a>
-    <a class="btn-primary" href="browse.html">Start Reading</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <span class="hero-eyebrow">A home for Christian stories</span>
-    <h1 class="hero-title">
-      Where faith meets<br/>
-      <em>the written word</em>
-    </h1>
-      gap: 1rem; margin-top: 3rem;
-    }
-    .cat-pill {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 0.5rem;
-      padding: 1.4rem 1rem;
-      border-radius: 16px;
-      border: 1.5px solid var(--border);
       background: white;
+      color: var(--blue-deep);
+      border: none;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
       cursor: pointer;
-      text-align: center;
+      text-decoration: none;
       transition: all 0.25s;
-    }
-    .cat-pill:hover {
-      border-color: var(--rose);
-      background: var(--blush);
-      transform: translateY(-3px);
-    }
-    .cat-emoji { font-size: 1.8rem; }
-    .cat-name {
-      font-size: 0.82rem; font-weight: 600;
-      color: var(--ink);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     }
 
-    /* ── WRITER CTA ── */
-    .writer-cta {
-      margin: 0 5% 6rem;
-      background: linear-gradient(135deg, var(--blue-deep) 0%, #1A3A6E 100%);
-      border-radius: 28px;
-      padding: 5rem 4rem;
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap;
-      gap: 2.5rem;
-      position: relative; overflow: hidden;
+    .btn-white:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
-    .writer-cta::before {
-      content: '';
-      position: absolute; top: -40%; right: -10%;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(232,120,156,0.2) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .writer-cta::after {
-      content: '';
-      position: absolute; bottom: -30%; left: 5%;
-      width: 350px; height: 350px;
-      background: radial-gradient(circle, rgba(74,130,194,0.25) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .cta-text { max-width: 520px; position: relative; z-index: 1; }
-    .cta-text .section-eyebrow { color: var(--sky); }
-    .cta-text .section-title { color: white; }
-    .cta-text .section-sub { color: rgba(255,255,255,0.7); max-width: 420px; }
-    .cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 1; }
-    .btn-white {
-      padding: 0.85rem 2rem;
-      background: white; color: var(--blue-deep);
-      border: none; border-radius: 50px;
-      font-size: 0.95rem; font-weight: 600;
-      cursor: pointer; text-decoration: none;
-      transition: all 0.25s;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    }
-    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
     .btn-outline-white {
       padding: 0.85rem 2rem;
       background: transparent;
-      border: 1.5px solid rgba(255,255,255,0.4);
-      color: white; border-radius: 50px;
-      font-size: 0.95rem; font-weight: 500;
-      cursor: pointer; text-decoration: none;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      color: white;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
       transition: all 0.25s;
     }
-    .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+
+    .btn-outline-white:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
 
     /* ── TESTIMONIAL / MISSION ── */
     .mission {
@@ -644,7 +711,12 @@
       text-align: center;
       border-top: 1px solid var(--border);
     }
-    .mission-inner { max-width: 720px; margin: 0 auto; }
+
+    .mission-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
     .mission blockquote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
@@ -654,323 +726,446 @@
       line-height: 1.5;
       margin-bottom: 1.5rem;
     }
-    .mission blockquote span { color: var(--rose-deep); }
+
+    .mission blockquote span {
+      color: var(--rose-deep);
+    }
+
     .mission cite {
-      font-size: 0.85rem; color: var(--muted);
-      font-style: normal; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     /* ── FOOTER ── */
     footer {
       background: var(--ink);
-      color: rgba(255,255,255,0.6);
+      color: rgba(255, 255, 255, 0.6);
       padding: 4rem 5% 2rem;
     }
+
     .footer-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 3rem; margin-bottom: 3rem;
+      gap: 3rem;
+      margin-bottom: 3rem;
     }
+
     .footer-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 700;
-      color: white; text-decoration: none;
-      display: block; margin-bottom: 1rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 1rem;
     }
-    .footer-logo span { color: var(--rose); }
+
+    .footer-logo span {
+      color: var(--rose);
+    }
+
     .footer-tagline {
-      font-size: 0.875rem; line-height: 1.7;
-      font-weight: 300; margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
     }
+
     .footer-col h4 {
-      font-size: 0.8rem; font-weight: 600;
-      color: white; text-transform: uppercase;
-      letter-spacing: 0.1em; margin-bottom: 1.25rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.25rem;
     }
+
     .footer-col a {
-      display: block; color: rgba(255,255,255,0.5);
-      text-decoration: none; font-size: 0.875rem;
+      display: block;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 0.875rem;
       margin-bottom: 0.6rem;
       transition: color 0.2s;
     }
-    .footer-col a:hover { color: var(--rose); }
+
+    .footer-col a:hover {
+      color: var(--rose);
+    }
+
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       padding-top: 2rem;
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
       font-size: 0.8rem;
     }
-    .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
-    .footer-bottom a:hover { color: var(--rose); }
+
+    .footer-bottom a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--rose);
+    }
 
     /* ── RESPONSIVE ── */
     @media(max-width: 768px) {
-      .nav-links { display: none; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .writer-cta { padding: 3rem 2rem; }
-      .stats { gap: 2rem; }
-    }
-    @media(max-width: 480px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .cta-btns { flex-direction: column; }
-    }
-
-    /* ── SCROLL FADE-IN ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; }
-      .hero::before { animation: none; }
-    }
-  </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav>
-  <a class="logo" href="index.html">W<span>&</span>L Words</a>
-  <ul class="nav-links">
-    <li><a href="browse.html">Browse Books</a></li>
-    <li><a href="browse.html">Free Stories</a></li>
-    <li><a href="browse.html">Categories</a></li>
-    <li><a href="auth.html">Write With Us</a></li>
-  </ul>
-  <div class="nav-ctas">
-    <a class="btn-ghost" href="auth.html">Sign In</a>
-    <a class="btn-primary" href="browse.html">Start Reading</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <span class="hero-eyebrow">A home for Christian stories</span>
-    <h1 class="hero-title">
-      Where faith meets<br/>
-      <em>the written word</em>
-    </h1>
-    <p class="hero-sub">
-      Wonder and Light in Words to Liberate — read free devotionals, purchase books, and discover serialized stories by Christian writers from around the world.
-    </p>
-    <div class="hero-ctas">
-      <a class="btn-hero primary" href="browse.html">Start Reading — It's Free</a>
-      <a class="btn-hero secondary" href="auth.html">Write &amp; Earn →</a>
-    </div>
-  </div>
-
-  <!-- Decorative book strip -->
-  <div class="book-strip" aria-hidden="true" id="homeBookStrip">
-    <!-- Books will be injected dynamically from Firestore -->
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat"><div class="stat-num">2,400+</div><div class="stat-label">Stories & Books</div></div>
-  <div class="stat"><div class="stat-num">850+</div><div class="stat-label">Christian Writers</div></div>
-  <div class="stat"><div class="stat-num">Free</div><div class="stat-label">To Start Reading</div></div>
-  <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Faith Categories</div></div>
-</div>
-
-<!-- HOW IT WORKS -->
-<section class="hiw">
-  <div class="reveal">
-    <span class="section-eyebrow">Simple from day one</span>
-    <h2 class="section-title">One platform. Every kind of<br/>Christian story.</h2>
-    <p class="section-sub">Whether you're here to read, to write, or to share your faith through fiction — W&L Words is built for you.</p>
-  </div>
-  <div class="hiw-grid">
-    <div class="hiw-card reveal">
-      <div class="hiw-icon icon-pink">📖</div>
-      <h3>Read for Free</h3>
-      <p>Browse thousands of free devotionals, short stories, and classic Christian texts — no subscription needed. Just open and read.</p>
-    </div>
-    <div class="hiw-card reveal">
-      <div class="hiw-icon icon-blue">🪙</div>
-      <h3>Unlock Premium Stories</h3>
-      <p>Buy coins with real money and spend them to unlock chapters in serialized stories. Read at your own pace — once you unlock, it's yours forever.</p>
-    </div>
-    <div class="hiw-card reveal">
-      <div class="hiw-icon icon-mixed">📚</div>
-      <h3>Purchase Full Books</h3>
-      <p>Shop a curated collection of published Christian books — devotionals, fiction, poetry, and theology — and read them inside the app.</p>
-    </div>
-    <div class="hiw-card reveal">
-      <div class="hiw-icon icon-pink">✍🏽</div>
-      <h3>Upload Your Stories</h3>
-      <p>Writers upload chapters, set their own pricing, and build a readership. You control what's free and what readers pay to unlock.</p>
-    </div>
-    <div class="hiw-card reveal">
-      <div class="hiw-icon icon-blue">💸</div>
-      <h3>Earn Every Month</h3>
-      <p>When readers unlock your chapters, you earn real money — paid out monthly directly to your account, with full earnings transparency.</p>
-    </div>
-    <div class="hiw-card reveal">
-      <div class="hiw-icon icon-mixed">🕊️</div>
-      <h3>Rooted in Faith</h3>
-      <p>Every story on W&L Words is faith-centred. This isn't a general reading app — it's a home built specifically for the Christian voice.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURED BOOKS -->
-<section class="featured">
-  <div class="featured-inner">
-    <div class="featured-header reveal">
-      <div>
-        <span class="section-eyebrow">Fresh on the shelf</span>
-        <h2 class="section-title">New &amp; Trending</h2>
-      </div>
-      <a class="see-all" href="browse.html">See all books →</a>
-    </div>
-    <div class="books-grid" id="featuredGrid">
-      <!-- Dynamic books will be loaded here -->
-    </div>
-  </div>
-</section>
-
-<!-- CATEGORIES -->
-<section class="categories">
-  <div class="reveal">
-    <span class="section-eyebrow">Browse by genre</span>
-    <h2 class="section-title">Find your kind of story</h2>
-  </div>
-  <div class="cats-grid">
-    <div class="cat-pill reveal"><span class="cat-emoji">🙏</span><span class="cat-name">Devotionals</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">📖</span><span class="cat-name">Bible Study</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">💑</span><span class="cat-name">Christian Romance</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">⚔️</span><span class="cat-name">Spiritual Warfare</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🌿</span><span class="cat-name">Faith & Healing</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">✍🏽</span><span class="cat-name">Poetry & Psalms</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🏠</span><span class="cat-name">Family & Marriage</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🌍</span><span class="cat-name">African Christian Lit</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🎓</span><span class="cat-name">Christian Youth</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">💼</span><span class="cat-name">Faith & Business</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🕊️</span><span class="cat-name">Prophecy & Vision</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">📚</span><span class="cat-name">Theology & Doctrine</span></div>
-  </div>
-</section>
-
-<!-- WRITER CTA -->
-<div class="writer-cta reveal">
-  <div class="cta-text">
-    <span class="section-eyebrow">For Christian writers</span>
-    <h2 class="section-title">Your words have a home here</h2>
-    <p class="section-sub">Upload your stories, set your own pricing, and earn every month. W&L Words was built so faith-driven writers could finally get paid for their gift.</p>
-  </div>
-  <div class="cta-btns">
-    <a class="btn-white" href="auth.html">Start Writing Free</a>
-    <a class="btn-outline-white" href="auth.html">See how earning works</a>
-  </div>
-</div>
-
-<!-- MISSION QUOTE -->
-<section class="mission">
-  <div class="mission-inner reveal">
-    <blockquote>
-      "Wonder and Light in <span>Words to Liberate</span> — because every story told in faith carries the power to set someone free."
-    </blockquote>
-    <cite>— The W&L Words Mission</cite>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-grid">
-    <div>
-      <a class="footer-logo" href="index.html">W<span>&</span>L Words</a>
-      <p class="footer-tagline">Wonder and Light in Words to Liberate. A home for every Christian story — read, written, and shared in faith.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Read</h4>
-      <a href="browse.html">Browse All Books</a>
-      <a href="browse.html">Free Stories</a>
-      <a href="browse.html">New Releases</a>
-      <a href="browse.html">Trending</a>
-      <a href="browse.html">Categories</a>
-    </div>
-    <div class="footer-col">
-      <h4>Write</h4>
-      <a href="auth.html">Become a Writer</a>
-      <a href="dashboard.html">Writer Dashboard</a>
-      <a href="auth.html">How Earning Works</a>
-      <a href="dashboard.html">Upload a Story</a>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="#">About Us</a>
-      <a href="#">Community Guidelines</a>
-      <a href="#">Terms of Service</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Contact</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2025 W&L Words. All rights reserved.</span>
-    <div style="display:flex;gap:1.5rem;">
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-      <a href="#">Support</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-        observer.unobserve(e.target);
+      .nav-links {
+        display: none;
       }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
-</script>
 
-<!-- Firebase SDK & Logic -->
-<script type="module">
-  import { db, collection, getDocs, query, orderBy, limit } from './firebase-config.js';
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
 
-  async function loadTrendingBooks() {
-    try {
-      const strip = document.getElementById('homeBookStrip');
-      const featuredGrid = document.getElementById('featuredGrid');
-      
-      // Fetch top books
-      const q = query(collection(db, "stories"), orderBy("total_reads", "desc"), limit(8));
-      const snapshot = await getDocs(q);
-      
-      let stripHtml = '';
-      let featuredHtml = '';
-      
-      const rotations = ['-3deg', '2deg', '-1.5deg', '3deg', '-2.5deg', '1.5deg', '-2deg', '2.5deg'];
-      let i = 0;
+      .writer-cta {
+        padding: 3rem 2rem;
+      }
 
-      snapshot.forEach(doc => {
-        const book = doc.data();
-        const cover = book.coverClass || 'c1';
-        
-        // Build strip item
-        const r = rotations[i % rotations.length];
-        stripHtml += `<div class="book-card" style="--r:${r}"><div class="book-cover ${cover}">${book.title}</div></div>`;
-        
-        // Build featured item (only up to 6 for the grid)
-        if (i < 6) {
-          let badge = '';
-          if (book.pricing_type === 'free') badge = `<span class="book-badge badge-free">Free</span>`;
-          else if (book.pricing_type === 'coins') badge = `<span class="book-badge badge-coins">🪙 Coins</span>`;
-          else if (book.pricing_type === 'purchase') badge = `<span class="book-badge badge-purchase">📘 Buy</span>`;
+      .stats {
+        gap: 2rem;
+      }
+    }
 
-          featuredHtml += `
+    @media(max-width: 480px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-btns {
+        flex-direction: column;
+      }
+    }
+
+    /* ── SCROLL FADE-IN ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      padding: 0.75rem;
+    }
+
+    .book-item:hover .book-item-cover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 34px rgba(26, 26, 46, 0.2);
+    }
+
+    .book-item-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .book-item-author {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .book-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      margin-bottom: 0.4rem;
+    }
+
+    .badge-free {
+      background: #D4F5E9;
+      color: #1A7A55;
+    }
+
+    .badge-coins {
+      background: #FFF0D0;
+      color: #A06010;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" href="index.html">W<span>&</span>L Words</a>
+    <ul class="nav-links">
+      <li><a href="browse.html">Browse Books</a></li>
+      <li><a href="browse.html">Free Stories</a></li>
+      <li><a href="browse.html">Categories</a></li>
+      <li><a href="auth.html">Write With Us</a></li>
+    </ul>
+    <div class="nav-ctas">
+      <a class="btn-ghost" href="auth.html">Sign In</a>
+      <a class="btn-primary" href="browse.html">Start Reading</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-eyebrow">A home for Christian stories</span>
+      <h1 class="hero-title">
+        Where faith meets<br />
+        <em>the written word</em>
+      </h1>
+      <p class="hero-sub">
+        Wonder and Light in Words to Liberate — read free devotionals, purchase books, and discover serialized stories
+        by Christian writers from around the world.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn-hero primary" href="browse.html">Start Reading — It's Free</a>
+        <a class="btn-hero secondary" href="auth.html">Write &amp; Earn →</a>
+      </div>
+    </div>
+
+    <!-- Decorative book strip -->
+    <div class="book-strip" aria-hidden="true" id="homeBookStrip">
+      <!-- Books will be injected dynamically from Firestore -->
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">2,400+</div>
+      <div class="stat-label">Stories & Books</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">850+</div>
+      <div class="stat-label">Christian Writers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Free</div>
+      <div class="stat-label">To Start Reading</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12+</div>
+      <div class="stat-label">Faith Categories</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="hiw">
+    <div class="reveal">
+      <span class="section-eyebrow">Simple from day one</span>
+      <h2 class="section-title">One platform. Every kind of<br />Christian story.</h2>
+      <p class="section-sub">Whether you're here to read, to write, or to share your faith through fiction — W&L Words
+        is built for you.</p>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-card reveal">
+        <div class="hiw-icon icon-pink">📖</div>
+        <h3>Read for Free</h3>
+        <p>Browse thousands of free devotionals, short stories, and classic Christian texts — no subscription needed.
+          Just open and read.</p>
+      </div>
+      <div class="hiw-card reveal">
+        <div class="hiw-icon icon-blue">🪙</div>
+        <h3>Unlock Premium Stories</h3>
+        <p>Buy coins with real money and spend them to unlock chapters in serialized stories. Read at your own pace —
+          once you unlock, it's yours forever.</p>
+      </div>
+      <div class="hiw-card reveal">
+        <div class="hiw-icon icon-mixed">📚</div>
+        <h3>Purchase Full Books</h3>
+        <p>Shop a curated collection of published Christian books — devotionals, fiction, poetry, and theology — and
+          read them inside the app.</p>
+      </div>
+      <div class="hiw-card reveal">
+        <div class="hiw-icon icon-pink">✍🏽</div>
+        <h3>Upload Your Stories</h3>
+        <p>Writers upload chapters, set their own pricing, and build a readership. You control what's free and what
+          readers pay to unlock.</p>
+      </div>
+      <div class="hiw-card reveal">
+        <div class="hiw-icon icon-blue">💸</div>
+        <h3>Earn Every Month</h3>
+        <p>When readers unlock your chapters, you earn real money — paid out monthly directly to your account, with full
+          earnings transparency.</p>
+      </div>
+      <div class="hiw-card reveal">
+        <div class="hiw-icon icon-mixed">🕊️</div>
+        <h3>Rooted in Faith</h3>
+        <p>Every story on W&L Words is faith-centred. This isn't a general reading app — it's a home built specifically
+          for the Christian voice.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED BOOKS -->
+  <section class="featured">
+    <div class="featured-inner">
+      <div class="featured-header reveal">
+        <div>
+          <span class="section-eyebrow">Fresh on the shelf</span>
+          <h2 class="section-title">New &amp; Trending</h2>
+        </div>
+        <a class="see-all" href="browse.html">See all books →</a>
+      </div>
+      <div class="books-grid" id="featuredGrid">
+        <!-- Dynamic books will be loaded here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <div class="reveal">
+      <span class="section-eyebrow">Browse by genre</span>
+      <h2 class="section-title">Find your kind of story</h2>
+    </div>
+    <div class="cats-grid">
+      <div class="cat-pill reveal"><span class="cat-emoji">🙏</span><span class="cat-name">Devotionals</span></div>
+      <div class="cat-pill reveal"><span class="cat-emoji">📖</span><span class="cat-name">Bible Study</span></div>
+      <div class="cat-pill reveal"><span class="cat-emoji">💑</span><span class="cat-name">Christian Romance</span>
+      </div>
+      <div class="cat-pill reveal"><span class="cat-emoji">⚔️</span><span class="cat-name">Spiritual Warfare</span>
+      </div>
+      <div class="cat-pill reveal"><span class="cat-emoji">🌿</span><span class="cat-name">Faith & Healing</span></div>
+      <div class="cat-pill reveal"><span class="cat-emoji">✍🏽</span><span class="cat-name">Poetry & Psalms</span></div>
+      <div class="cat-pill reveal"><span class="cat-emoji">🏠</span><span class="cat-name">Family & Marriage</span>
+      </div>
+      <div class="cat-pill reveal"><span class="cat-emoji">🌍</span><span class="cat-name">African Christian Lit</span>
+      </div>
+      <div class="cat-pill reveal"><span class="cat-emoji">🎓</span><span class="cat-name">Christian Youth</span></div>
+      <div class="cat-pill reveal"><span class="cat-emoji">💼</span><span class="cat-name">Faith & Business</span></div>
+      <div class="cat-pill reveal"><span class="cat-emoji">🕊️</span><span class="cat-name">Prophecy & Vision</span>
+      </div>
+      <div class="cat-pill reveal"><span class="cat-emoji">📚</span><span class="cat-name">Theology & Doctrine</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITER CTA -->
+  <div class="writer-cta reveal">
+    <div class="cta-text">
+      <span class="section-eyebrow">For Christian writers</span>
+      <h2 class="section-title">Your words have a home here</h2>
+      <p class="section-sub">Upload your stories, set your own pricing, and earn every month. W&L Words was built so
+        faith-driven writers could finally get paid for their gift.</p>
+    </div>
+    <div class="cta-btns">
+      <a class="btn-white" href="auth.html">Start Writing Free</a>
+      <a class="btn-outline-white" href="auth.html">See how earning works</a>
+    </div>
+  </div>
+
+  <!-- MISSION QUOTE -->
+  <section class="mission">
+    <div class="mission-inner reveal">
+      <blockquote>
+        "Wonder and Light in <span>Words to Liberate</span> — because every story told in faith carries the power to set
+        someone free."
+      </blockquote>
+      <cite>— The W&L Words Mission</cite>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <a class="footer-logo" href="index.html">W<span>&</span>L Words</a>
+        <p class="footer-tagline">Wonder and Light in Words to Liberate. A home for every Christian story — read,
+          written, and shared in faith.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Read</h4>
+        <a href="browse.html">Browse All Books</a>
+        <a href="browse.html">Free Stories</a>
+        <a href="browse.html">New Releases</a>
+        <a href="browse.html">Trending</a>
+        <a href="browse.html">Categories</a>
+      </div>
+      <div class="footer-col">
+        <h4>Write</h4>
+        <a href="auth.html">Become a Writer</a>
+        <a href="dashboard.html">Writer Dashboard</a>
+        <a href="auth.html">How Earning Works</a>
+        <a href="dashboard.html">Upload a Story</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Community Guidelines</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 W&L Words. All rights reserved.</span>
+      <div style="display:flex;gap:1.5rem;">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+  <!-- Firebase SDK & Logic -->
+  <script type="module">
+    import { db, collection, getDocs, query, orderBy, limit } from './firebase-config.js';
+
+    async function loadTrendingBooks() {
+      try {
+        const strip = document.getElementById('homeBookStrip');
+        const featuredGrid = document.getElementById('featuredGrid');
+
+        // Fetch top books
+        const q = query(collection(db, "stories"), orderBy("total_reads", "desc"), limit(8));
+        const snapshot = await getDocs(q);
+
+        let stripHtml = '';
+        let featuredHtml = '';
+
+        const rotations = ['-3deg', '2deg', '-1.5deg', '3deg', '-2.5deg', '1.5deg', '-2deg', '2.5deg'];
+        let i = 0;
+
+        snapshot.forEach(doc => {
+          const book = doc.data();
+          const cover = book.coverClass || 'c1';
+
+          // Build strip item
+          const r = rotations[i % rotations.length];
+          stripHtml += `<div class="book-card" style="--r:${r}"><div class="book-cover ${cover}">${book.title}</div></div>`;
+
+          // Build featured item (only up to 6 for the grid)
+          if (i < 6) {
+            let badge = '';
+            if (book.pricing_type === 'free') badge = `<span class="book-badge badge-free">Free</span>`;
+            else if (book.pricing_type === 'coins') badge = `<span class="book-badge badge-coins">🪙 Coins</span>`;
+            else if (book.pricing_type === 'purchase') badge = `<span class="book-badge badge-purchase">📘 Buy</span>`;
+
+            featuredHtml += `
             <div class="book-item reveal visible" onclick="window.location.href='story.html?id=${doc.id}'" style="cursor:pointer">
               <div class="book-item-cover ${cover}">${book.title}</div>
               ${badge}
@@ -978,19 +1173,20 @@
               <div class="book-item-author">by ${book.author}</div>
             </div>
           `;
-        }
-        i++;
-      });
-      
-      if(strip) strip.innerHTML = stripHtml;
-      if(featuredGrid) featuredGrid.innerHTML = featuredHtml;
-      
-    } catch (error) {
-      console.error("Error fetching trending books:", error);
-    }
-  }
+          }
+          i++;
+        });
 
-  loadTrendingBooks();
-</script>
+        if (strip) strip.innerHTML = stripHtml;
+        if (featuredGrid) featuredGrid.innerHTML = featuredHtml;
+
+      } catch (error) {
+        console.error("Error fetching trending books:", error);
+      }
+    }
+
+    loadTrendingBooks();
+  </script>
 </body>
+
 </html>
