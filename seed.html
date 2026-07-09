@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Seed Database</title>
+</head>
+<body>
+  <h1>Seeding Firebase Database</h1>
+  <p id="status">Loading...</p>
+  
+  <script type="module">
+    import { db, collection, addDoc } from './firebase-config.js';
+
+    const books = [
+      { title: "Grace at Midnight", author: "Faith Okafor", rating: 4.8, reads: "12.4k", type: "free", category: "Fiction", coverClass: "c1", total_reads: 12400, avg_rating: 4.8, pricing_type: "free", status: "live" },
+      { title: "Letters to Heaven", author: "David Nwachukwu", rating: 4.9, reads: "8.1k", type: "coins", category: "Devotionals", coverClass: "c2", total_reads: 8100, avg_rating: 4.9, pricing_type: "coins", status: "live" },
+      { title: "Rivers of Light", author: "Sarah Johnson", rating: 4.6, reads: "5.2k", type: "purchase", category: "Poetry", coverClass: "c3", total_reads: 5200, avg_rating: 4.6, pricing_type: "purchase", price: "$2.99", status: "live" },
+      { title: "The Faithful Heart", author: "Grace Abiodun", rating: 4.7, reads: "15.3k", type: "coins", category: "Romance", coverClass: "c4", total_reads: 15300, avg_rating: 4.7, pricing_type: "coins", status: "live" },
+      { title: "Still Waters", author: "Ruth Chibuike", rating: 4.5, reads: "9.2k", type: "free", category: "Devotionals", coverClass: "c5", total_reads: 9200, avg_rating: 4.5, pricing_type: "free", status: "live" },
+      { title: "Called & Chosen", author: "Daniel Eze", rating: 4.6, reads: "6.8k", type: "coins", category: "Spiritual Warfare", coverClass: "c6", total_reads: 6800, avg_rating: 4.6, pricing_type: "coins", status: "live" },
+      { title: "The Waiting Room", author: "Folake Adeyemi", rating: 4.9, reads: "4.1k", type: "purchase", category: "Theology & Doctrine", coverClass: "c7", total_reads: 4100, avg_rating: 4.9, pricing_type: "purchase", price: "$4.99", status: "live" },
+      { title: "Daughter of Zion", author: "Ngozi Ibe", rating: 4.8, reads: "11.0k", type: "free", category: "African Christian Lit", coverClass: "c8", total_reads: 11000, avg_rating: 4.8, pricing_type: "free", status: "live" },
+      { title: "The Word Made Plain", author: "Samuel Osei", rating: 4.7, reads: "3.5k", type: "purchase", category: "Bible Study", coverClass: "c9", total_reads: 3500, avg_rating: 4.7, pricing_type: "purchase", price: "$6.99", status: "live" },
+      { title: "Young & Chosen", author: "Amara Nwosu", rating: 4.5, reads: "7.4k", type: "coins", category: "Christian Youth", coverClass: "c10", total_reads: 7400, avg_rating: 4.5, pricing_type: "coins", status: "live" },
+      { title: "Broken & Whole", author: "Blessing Okoro", rating: 4.8, reads: "13.6k", type: "free", category: "Faith & Healing", coverClass: "c11", total_reads: 13600, avg_rating: 4.8, pricing_type: "free", status: "live" },
+      { title: "Anointed Steps", author: "Chidi Okafor", rating: 4.6, reads: "2.1k", type: "purchase", category: "African Christian Lit", coverClass: "c12", total_reads: 2100, avg_rating: 4.6, pricing_type: "purchase", price: "$3.99", status: "live" }
+    ];
+
+    async function seedDB() {
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = 'Inserting books...';
+      try {
+        const storiesRef = collection(db, 'stories');
+        for (const book of books) {
+          await addDoc(storiesRef, book);
+        }
+        statusEl.textContent = 'Success! 12 books inserted. You can now close this page and delete seed.html.';
+      } catch(e) {
+        statusEl.textContent = 'Error: ' + e.message;
+        console.error(e);
+      }
+    }
+
+    seedDB();
+  </script>
+</body>
+</html>

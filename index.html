@@ -561,6 +561,201 @@
       Where faith meets<br/>
       <em>the written word</em>
     </h1>
+      gap: 1rem; margin-top: 3rem;
+    }
+    .cat-pill {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.5rem;
+      padding: 1.4rem 1rem;
+      border-radius: 16px;
+      border: 1.5px solid var(--border);
+      background: white;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s;
+    }
+    .cat-pill:hover {
+      border-color: var(--rose);
+      background: var(--blush);
+      transform: translateY(-3px);
+    }
+    .cat-emoji { font-size: 1.8rem; }
+    .cat-name {
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ── WRITER CTA ── */
+    .writer-cta {
+      margin: 0 5% 6rem;
+      background: linear-gradient(135deg, var(--blue-deep) 0%, #1A3A6E 100%);
+      border-radius: 28px;
+      padding: 5rem 4rem;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap;
+      gap: 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .writer-cta::before {
+      content: '';
+      position: absolute; top: -40%; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(232,120,156,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .writer-cta::after {
+      content: '';
+      position: absolute; bottom: -30%; left: 5%;
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(74,130,194,0.25) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cta-text { max-width: 520px; position: relative; z-index: 1; }
+    .cta-text .section-eyebrow { color: var(--sky); }
+    .cta-text .section-title { color: white; }
+    .cta-text .section-sub { color: rgba(255,255,255,0.7); max-width: 420px; }
+    .cta-btns { display: flex; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn-white {
+      padding: 0.85rem 2rem;
+      background: white; color: var(--blue-deep);
+      border: none; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.25s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-outline-white {
+      padding: 0.85rem 2rem;
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      color: white; border-radius: 50px;
+      font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+
+    /* ── TESTIMONIAL / MISSION ── */
+    .mission {
+      padding: 6rem 5%;
+      background: var(--off);
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .mission-inner { max-width: 720px; margin: 0 auto; }
+    .mission blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+    .mission blockquote span { color: var(--rose-deep); }
+    .mission cite {
+      font-size: 0.85rem; color: var(--muted);
+      font-style: normal; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.6);
+      padding: 4rem 5% 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; margin-bottom: 3rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: white; text-decoration: none;
+      display: block; margin-bottom: 1rem;
+    }
+    .footer-logo span { color: var(--rose); }
+    .footer-tagline {
+      font-size: 0.875rem; line-height: 1.7;
+      font-weight: 300; margin-bottom: 1.5rem;
+    }
+    .footer-col h4 {
+      font-size: 0.8rem; font-weight: 600;
+      color: white; text-transform: uppercase;
+      letter-spacing: 0.1em; margin-bottom: 1.25rem;
+    }
+    .footer-col a {
+      display: block; color: rgba(255,255,255,0.5);
+      text-decoration: none; font-size: 0.875rem;
+      margin-bottom: 0.6rem;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--rose); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 2rem;
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+      font-size: 0.8rem;
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-bottom a:hover { color: var(--rose); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .writer-cta { padding: 3rem 2rem; }
+      .stats { gap: 2rem; }
+    }
+    @media(max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-btns { flex-direction: column; }
+    }
+
+    /* ── SCROLL FADE-IN ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; }
+      .hero::before { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="index.html">W<span>&</span>L Words</a>
+  <ul class="nav-links">
+    <li><a href="browse.html">Browse Books</a></li>
+    <li><a href="browse.html">Free Stories</a></li>
+    <li><a href="browse.html">Categories</a></li>
+    <li><a href="auth.html">Write With Us</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a class="btn-ghost" href="auth.html">Sign In</a>
+    <a class="btn-primary" href="browse.html">Start Reading</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">A home for Christian stories</span>
+    <h1 class="hero-title">
+      Where faith meets<br/>
+      <em>the written word</em>
+    </h1>
     <p class="hero-sub">
       Wonder and Light in Words to Liberate — read free devotionals, purchase books, and discover serialized stories by Christian writers from around the world.
     </p>
@@ -571,15 +766,8 @@
   </div>
 
   <!-- Decorative book strip -->
-  <div class="book-strip" aria-hidden="true">
-    <div class="book-card" style="--r:-3deg"><div class="book-cover bc1">Grace at Midnight</div></div>
-    <div class="book-card" style="--r:2deg"><div class="book-cover bc2">Letters to Heaven</div></div>
-    <div class="book-card" style="--r:-1.5deg"><div class="book-cover bc3">Rivers of Light</div></div>
-    <div class="book-card" style="--r:3deg"><div class="book-cover bc4">The Faithful Heart</div></div>
-    <div class="book-card" style="--r:-2.5deg"><div class="book-cover bc5">Still Waters</div></div>
-    <div class="book-card" style="--r:1.5deg"><div class="book-cover bc6">Called &amp; Chosen</div></div>
-    <div class="book-card" style="--r:-2deg"><div class="book-cover bc7">The Waiting Room</div></div>
-    <div class="book-card" style="--r:2.5deg"><div class="book-cover bc8">Daughter of Zion</div></div>
+  <div class="book-strip" aria-hidden="true" id="homeBookStrip">
+    <!-- Books will be injected dynamically from Firestore -->
   </div>
 </section>
 
@@ -642,43 +830,8 @@
       </div>
       <a class="see-all" href="browse.html">See all books →</a>
     </div>
-    <div class="books-grid">
-      <div class="book-item reveal">
-        <div class="book-item-cover bc1">Grace at Midnight</div>
-        <span class="book-badge badge-free">Free</span>
-        <div class="book-item-title">Grace at Midnight</div>
-        <div class="book-item-author">by Adaeze Okonkwo</div>
-      </div>
-      <div class="book-item reveal">
-        <div class="book-item-cover bc2">Letters to Heaven</div>
-        <span class="book-badge badge-coins">🪙 Coins</span>
-        <div class="book-item-title">Letters to Heaven</div>
-        <div class="book-item-author">by Priscilla Mensah</div>
-      </div>
-      <div class="book-item reveal">
-        <div class="book-item-cover bc3">Rivers of Light</div>
-        <span class="book-badge badge-free">Free</span>
-        <div class="book-item-title">Rivers of Light</div>
-        <div class="book-item-author">by Emmanuel Taiwo</div>
-      </div>
-      <div class="book-item reveal">
-        <div class="book-item-cover bc4">The Faithful Heart</div>
-        <span class="book-badge badge-coins">🪙 Coins</span>
-        <div class="book-item-title">The Faithful Heart</div>
-        <div class="book-item-author">by Grace Abiodun</div>
-      </div>
-      <div class="book-item reveal">
-        <div class="book-item-cover bc5">Still Waters</div>
-        <span class="book-badge badge-free">Free</span>
-        <div class="book-item-title">Still Waters</div>
-        <div class="book-item-author">by Ruth Chibuike</div>
-      </div>
-      <div class="book-item reveal">
-        <div class="book-item-cover bc6">Called &amp; Chosen</div>
-        <span class="book-badge badge-coins">🪙 Coins</span>
-        <div class="book-item-title">Called &amp; Chosen</div>
-        <div class="book-item-author">by Daniel Eze</div>
-      </div>
+    <div class="books-grid" id="featuredGrid">
+      <!-- Dynamic books will be loaded here -->
     </div>
   </div>
 </section>
@@ -781,6 +934,63 @@
     });
   }, { threshold: 0.12 });
   reveals.forEach(el => observer.observe(el));
+</script>
+
+<!-- Firebase SDK & Logic -->
+<script type="module">
+  import { db, collection, getDocs, query, orderBy, limit } from './firebase-config.js';
+
+  async function loadTrendingBooks() {
+    try {
+      const strip = document.getElementById('homeBookStrip');
+      const featuredGrid = document.getElementById('featuredGrid');
+      
+      // Fetch top books
+      const q = query(collection(db, "stories"), orderBy("total_reads", "desc"), limit(8));
+      const snapshot = await getDocs(q);
+      
+      let stripHtml = '';
+      let featuredHtml = '';
+      
+      const rotations = ['-3deg', '2deg', '-1.5deg', '3deg', '-2.5deg', '1.5deg', '-2deg', '2.5deg'];
+      let i = 0;
+
+      snapshot.forEach(doc => {
+        const book = doc.data();
+        const cover = book.coverClass || 'c1';
+        
+        // Build strip item
+        const r = rotations[i % rotations.length];
+        stripHtml += `<div class="book-card" style="--r:${r}"><div class="book-cover ${cover}">${book.title}</div></div>`;
+        
+        // Build featured item (only up to 6 for the grid)
+        if (i < 6) {
+          let badge = '';
+          if (book.pricing_type === 'free') badge = `<span class="book-badge badge-free">Free</span>`;
+          else if (book.pricing_type === 'coins') badge = `<span class="book-badge badge-coins">🪙 Coins</span>`;
+          else if (book.pricing_type === 'purchase') badge = `<span class="book-badge badge-purchase">📘 Buy</span>`;
+
+          featuredHtml += `
+            <div class="book-item reveal visible" onclick="window.location.href='story.html?id=${doc.id}'" style="cursor:pointer">
+              <div class="book-item-cover ${cover}">${book.title}</div>
+              ${badge}
+              <div class="book-item-title">${book.title}</div>
+              <div class="book-item-author">by ${book.author}</div>
+            </div>
+          `;
+        }
+        i++;
+      });
+      
+      if(strip) strip.innerHTML = stripHtml;
+      if(featuredGrid) featuredGrid.innerHTML = featuredHtml;
+      
+    } catch (error) {
+      console.error("Error fetching trending books:", error);
+    }
+  }
+
+  loadTrendingBooks();
 </script>
 </body>
 </html>

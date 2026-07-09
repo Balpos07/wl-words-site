@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Join W&L Words — Wonder & Light in Words to Liberate</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet"/>
-  <!-- Supabase JS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -207,16 +205,8 @@
 </div>
 
 <script>
-  // ── INIT SUPABASE ──
-  const { createClient } = supabase;
-  const sb = createClient(
-    "https://xfgdoqpzptgyfhdbijbt.supabase.co",
-    "sb_publishable_JVmixw5c9ZyAQLTTTGftgg_l3LAj3xQ"
-  );
-
   let accountType = 'reader';
 
-  // ── TAB SWITCH ──
   function switchTab(tab) {
     document.getElementById('signupSection').classList.toggle('hidden', tab !== 'signup');
     document.getElementById('loginSection').classList.toggle('hidden', tab !== 'login');
@@ -225,7 +215,6 @@
     clearBanners();
   }
 
-  // ── ACCOUNT TYPE ──
   function selectType(type) {
     accountType = type;
     document.getElementById('typeReader').classList.toggle('active', type === 'reader');
@@ -236,14 +225,12 @@
       : 'Welcome! You\'ll have full access to read and unlock stories.';
   }
 
-  // ── PASSWORD TOGGLE ──
   function togglePw(id, btn) {
     const inp = document.getElementById(id);
     inp.type = inp.type === 'password' ? 'text' : 'password';
     btn.textContent = inp.type === 'password' ? '👁' : '🙈';
   }
 
-  // ── PASSWORD STRENGTH ──
   function checkStrength(inp) {
     const val = inp.value;
     const segs = ['s1','s2','s3','s4'].map(id => document.getElementById(id));
@@ -260,75 +247,6 @@
     document.getElementById('strengthLabel').textContent = labels[cls];
   }
 
-  // ── SIGN UP ──
-  async function handleSignup() {
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName  = document.getElementById('lastName').value.trim();
-    const email     = document.getElementById('signupEmail').value.trim();
-    const password  = document.getElementById('signupPassword').value;
-    const terms     = document.getElementById('terms').checked;
-    const penName   = document.getElementById('penName').value.trim();
-
-    if (!firstName || !lastName) return showError('Please enter your first and last name.');
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('Please enter a valid email address.');
-    if (!password || password.length < 8) return showError('Password must be at least 8 characters.');
-    if (!terms) return showError('Please agree to the Terms of Service to continue.');
-
-    setLoading('signupBtn', true, 'Creating your account…');
-    clearBanners();
-
-    const { data, error } = await sb.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: `${firstName} ${lastName}`,
-          account_type: accountType,
-          pen_name: penName || `${firstName} ${lastName}`,
-        }
-      }
-    });
-
-    setLoading('signupBtn', false, 'Create My Account');
-
-    if (error) return showError(error.message);
-
-    showSuccess(`🎉 Welcome, ${firstName}! Check your email to confirm your account, then sign in.`);
-    setTimeout(() => switchTab('login'), 3000);
-  }
-
-  // ── LOGIN ──
-  async function handleLogin() {
-    const email    = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value;
-
-    if (!email || !password) return showError('Please fill in both your email and password.');
-
-    setLoading('loginBtn', true, 'Signing in…');
-    clearBanners();
-
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
-
-    setLoading('loginBtn', false, 'Sign In');
-
-    if (error) return showError(error.message);
-
-    showSuccess('✅ Signed in! Redirecting you now…');
-    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
-  }
-
-  // ── FORGOT PASSWORD ──
-  async function handleForgotPassword() {
-    const email = document.getElementById('loginEmail').value.trim();
-    if (!email) return showError('Enter your email address above first, then click Forgot Password.');
-    const { error } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + '/auth.html'
-    });
-    if (error) return showError(error.message);
-    showSuccess('📧 Password reset email sent! Check your inbox.');
-  }
-
-  // ── HELPERS ──
   function setLoading(btnId, loading, text) {
     const btn = document.getElementById(btnId);
     btn.disabled = loading;
@@ -350,11 +268,90 @@
     document.getElementById('errorBanner').classList.remove('show');
     document.getElementById('successBanner').classList.remove('show');
   }
-
-  // ── CHECK IF ALREADY LOGGED IN ──
-  sb.auth.getSession().then(({ data: { session } }) => {
-    if (session) window.location.href = 'index.html';
-  });
 </script>
+
+<script type="module">
+  import { 
+    auth, db, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    sendPasswordResetEmail,
+    doc, setDoc 
+  } from './firebase-config.js';
+
+  window.handleSignup = async function() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('signupEmail').value.trim();
+    const password  = document.getElementById('signupPassword').value;
+    const terms     = document.getElementById('terms').checked;
+    const penName   = document.getElementById('penName').value.trim();
+
+    if (!firstName || !lastName) return showError('Please enter your first and last name.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('Please enter a valid email address.');
+    if (!password || password.length < 8) return showError('Password must be at least 8 characters.');
+    if (!terms) return showError('Please agree to the Terms of Service to continue.');
+
+    setLoading('signupBtn', true, 'Creating your account…');
+    clearBanners();
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        full_name: `${firstName} ${lastName}`,
+        email: email,
+        account_type: accountType,
+        pen_name: penName || `${firstName} ${lastName}`,
+        coin_balance: 0,
+        avatar_url: null,
+        created_at: new Date().toISOString()
+      });
+
+      setLoading('signupBtn', false, 'Create My Account');
+      showSuccess(`🎉 Welcome, ${firstName}! Your account has been created.`);
+      setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+      
+    } catch (error) {
+      setLoading('signupBtn', false, 'Create My Account');
+      showError(error.message);
+    }
+  };
+
+  window.handleLogin = async function() {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email || !password) return showError('Please fill in both your email and password.');
+
+    setLoading('loginBtn', true, 'Signing in…');
+    clearBanners();
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setLoading('loginBtn', false, 'Sign In');
+      showSuccess('✅ Signed in! Redirecting you now…');
+      setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+    } catch(error) {
+      setLoading('loginBtn', false, 'Sign In');
+      showError(error.message);
+    }
+  };
+
+  window.handleForgotPassword = async function() {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) return showError('Enter your email address above first, then click Forgot Password.');
+    
+    try {
+      await sendPasswordResetEmail(auth, email);
+      showSuccess('📧 Password reset email sent! Check your inbox.');
+    } catch(error) {
+      showError(error.message);
+    }
+  };
+</script>
+
+<script type="module" src="firebase-config.js"></script>
 </body>
 </html>
