@@ -417,6 +417,8 @@
       .reading-wrap { padding: 2rem 1.25rem 5rem; }
     }
   </style>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
@@ -445,7 +447,7 @@
     <div class="book-hero-inner">
       <div class="book-cover-lg">The Faithful Heart</div>
       <div class="book-hero-info">
-        <div class="hero-badge">💑 Christian Romance</div>
+        <div class="hero-badge"><ion-icon name="heart-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Christian Romance</div>
         <h1 class="hero-title">The Faithful Heart</h1>
         <p class="hero-author">by <a href="#">Grace Abiodun</a> · Lagos, Nigeria</p>
         <div class="hero-stats">
@@ -462,8 +464,8 @@
           <span class="tag">Second Chances</span>
         </div>
         <div class="hero-ctas">
-          <button class="btn-read" onclick="openReading(1)">📖 Read Chapter 1 — Free</button>
-          <button class="btn-bookmark">🔖 Save for Later</button>
+          <button class="btn-read" onclick="openReading(1)"><ion-icon name="book-outline"></ion-icon> Read Chapter 1 — Free</button>
+          <button class="btn-bookmark"><ion-icon name="bookmark-outline"></ion-icon> Save for Later</button>
         </div>
       </div>
     </div>
@@ -553,9 +555,9 @@
 
       <!-- Coin card -->
       <div class="sidebar-card coin-card">
-        <h4 style="color:#8A6820;">🪙 Your Coin Balance</h4>
+        <h4 style="color:#8A6820;"><ion-icon name="wallet-outline"></ion-icon> Your Coin Balance</h4>
         <div class="coin-balance">
-          <span class="coin-icon">🪙</span>
+          <span class="coin-icon"><ion-icon name="wallet-outline"></ion-icon></span>
           <div>
             <div class="coin-amount">120</div>
             <div class="coin-label">coins available</div>
@@ -608,7 +610,7 @@
       <div class="toolbar-ch-title" id="toolbarTitle">Chapter 1 · The Wedding That Wasn't</div>
     </div>
     <div class="toolbar-controls">
-      <button class="tool-btn" title="Bookmark" onclick="this.classList.toggle('active')">🔖</button>
+      <button class="tool-btn" title="Bookmark" onclick="this.classList.toggle('active')"><ion-icon name="bookmark-outline"></ion-icon></button>
       <button class="tool-btn" title="Font settings" id="settingsBtn" onclick="toggleSettings()">Aa</button>
     </div>
 
@@ -623,8 +625,8 @@
       <span class="sp-label">Reading Theme</span>
       <div class="theme-btns">
         <button class="theme-btn active" data-theme="light" onclick="setTheme('light',this)">☀️ Light</button>
-        <button class="theme-btn" data-theme="sepia" onclick="setTheme('sepia',this)">📜 Sepia</button>
-        <button class="theme-btn" data-theme="dark" onclick="setTheme('dark',this)">🌙 Dark</button>
+        <button class="theme-btn" data-theme="sepia" onclick="setTheme('sepia',this)"><ion-icon name="document-text-outline"></ion-icon> Sepia</button>
+        <button class="theme-btn" data-theme="dark" onclick="setTheme('dark',this)"><ion-icon name="moon-outline"></ion-icon> Dark</button>
       </div>
     </div>
   </div>
@@ -652,7 +654,7 @@
       <div class="lock-icon">🔒</div>
       <h3 class="lock-title">Unlock this chapter</h3>
       <p class="lock-sub">This chapter is available to unlock with coins. Once you unlock it, it's yours forever — no expiry, no re-purchasing.</p>
-      <div class="lock-cost">🪙 8 coins to unlock</div>
+      <div class="lock-cost"><ion-icon name="wallet-outline"></ion-icon> 8 coins to unlock</div>
       <button class="unlock-btn" onclick="unlockChapter()">Unlock with 8 Coins</button>
       <a class="get-coins-link" href="coins.html">Don't have coins? Get 100 coins for $1.00 →</a>
     </div>

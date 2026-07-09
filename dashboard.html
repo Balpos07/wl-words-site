@@ -184,6 +184,8 @@
     @media(max-width:1100px){.stat-cards{grid-template-columns:repeat(2,1fr);}.two-col{grid-template-columns:1fr;}}
     @media(max-width:768px){.sidebar{transform:translateX(-100%);}.main{margin-left:0;}.stat-cards{grid-template-columns:1fr 1fr;}}
   </style>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
@@ -198,15 +200,15 @@
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section-label">Overview</div>
-    <a class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon">📊</span> Dashboard</a>
+    <a class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon"><ion-icon name="bar-chart-outline"></ion-icon></span> Dashboard</a>
     <div class="nav-section-label">Content</div>
-    <a class="nav-item" onclick="showPanel('stories',this)"><span class="nav-icon">📚</span> My Stories <span class="nav-badge">4</span></a>
+    <a class="nav-item" onclick="showPanel('stories',this)"><span class="nav-icon"><ion-icon name="library-outline"></ion-icon></span> My Stories <span class="nav-badge">4</span></a>
     <a class="nav-item" onclick="openModal()"><span class="nav-icon">➕</span> Upload New Story</a>
     <div class="nav-section-label">Money</div>
-    <a class="nav-item" onclick="showPanel('earnings',this)"><span class="nav-icon">💸</span> Earnings & Payouts</a>
-    <a class="nav-item" onclick="showPanel('coins',this)"><span class="nav-icon">🪙</span> Coin Analytics</a>
+    <a class="nav-item" onclick="showPanel('earnings',this)"><span class="nav-icon"><ion-icon name="cash-outline"></ion-icon></span> Earnings & Payouts</a>
+    <a class="nav-item" onclick="showPanel('coins',this)"><span class="nav-icon"><ion-icon name="wallet-outline"></ion-icon></span> Coin Analytics</a>
     <div class="nav-section-label">Account</div>
-    <a class="nav-item" onclick="showPanel('profile',this)"><span class="nav-icon">👤</span> Writer Profile</a>
+    <a class="nav-item" onclick="showPanel('profile',this)"><span class="nav-icon"><ion-icon name="person-outline"></ion-icon></span> Writer Profile</a>
     <a class="nav-item" onclick="showPanel('settings',this)"><span class="nav-icon">⚙️</span> Settings</a>
   </nav>
   <div class="sidebar-bottom">
@@ -635,7 +637,7 @@
       });
       
       closeModal();
-      showToast('🎉 Story published successfully!');
+      showToast('<ion-icon name="sparkles-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Story published successfully!');
       
       // Clear inputs
       document.getElementById('uploadTitle').value = '';

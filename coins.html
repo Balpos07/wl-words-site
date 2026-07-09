@@ -172,6 +172,8 @@
     @media(max-width:900px) { .main-layout{grid-template-columns:1fr;} .payment-sidebar{position:static;} .nav-links{display:none;} }
     @media(max-width:480px) { .packages-grid{grid-template-columns:1fr;} .f-row{grid-template-columns:1fr;} .pay-methods{flex-wrap:wrap;} }
   </style>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
@@ -193,7 +195,7 @@
 <!-- PAGE HERO -->
 <div class="page-hero">
   <div class="hero-inner">
-    <span class="coin-hero-icon">🪙</span>
+    <span class="coin-hero-icon"><ion-icon name="wallet-outline"></ion-icon></span>
     <span class="hero-eyebrow">Unlock the full story</span>
     <h1 class="hero-title">Buy Coins, <em>Read More</em></h1>
     <p class="hero-sub">Coins are how you unlock premium chapters on W&L Words. Buy once, unlock forever — no subscriptions, no expiry dates.</p>
@@ -202,7 +204,7 @@
 
 <!-- BALANCE STRIP -->
 <div class="balance-strip">
-  <div class="balance-item"><span class="balance-label">Your balance:</span><span class="balance-coins">🪙 120 coins</span></div>
+  <div class="balance-item"><span class="balance-label">Your balance:</span><span class="balance-coins"><ion-icon name="wallet-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> 120 coins</span></div>
   <div class="balance-divider"></div>
   <div class="balance-item"><span class="balance-label">Chapters you can unlock right now:</span><span class="balance-value">~15 chapters</span></div>
   <div class="balance-divider"></div>
@@ -222,7 +224,7 @@
 
       <div class="pkg-card" onclick="selectPkg(this, 100, 1.00, 'Starter')" data-coins="100" data-price="1.00">
         <div class="pkg-check">✓</div>
-        <span class="pkg-icon">✨</span>
+        <span class="pkg-icon"><ion-icon name="sparkles-outline"></ion-icon></span>
         <div class="pkg-coins">100</div>
         <div class="pkg-coins-label">coins</div>
         <div class="pkg-price">$1.00</div>
@@ -233,7 +235,7 @@
       <div class="pkg-card popular selected" onclick="selectPkg(this, 500, 4.50, 'Popular')" data-coins="500" data-price="4.50">
         <div class="popular-badge">⭐ Most Popular</div>
         <div class="pkg-check">✓</div>
-        <span class="pkg-icon">🌟</span>
+        <span class="pkg-icon"><ion-icon name="star-outline"></ion-icon></span>
         <div class="pkg-coins">500</div>
         <div class="pkg-coins-label">coins</div>
         <div class="pkg-price">$4.50</div>
@@ -244,7 +246,7 @@
 
       <div class="pkg-card" onclick="selectPkg(this, 1200, 10.00, 'Value')" data-coins="1200" data-price="10.00">
         <div class="pkg-check">✓</div>
-        <span class="pkg-icon">💎</span>
+        <span class="pkg-icon"><ion-icon name="diamond-outline"></ion-icon></span>
         <div class="pkg-coins">1,200</div>
         <div class="pkg-coins-label">coins</div>
         <div class="pkg-price">$10.00</div>
@@ -255,7 +257,7 @@
 
       <div class="pkg-card" onclick="selectPkg(this, 3000, 20.00, 'Ultimate')" data-coins="3000" data-price="20.00">
         <div class="pkg-check">✓</div>
-        <span class="pkg-icon">👑</span>
+        <span class="pkg-icon"><ion-icon name="ribbon-outline"></ion-icon></span>
         <div class="pkg-coins">3,000</div>
         <div class="pkg-coins-label">coins</div>
         <div class="pkg-price">$20.00</div>
@@ -268,7 +270,7 @@
 
     <!-- How it works -->
     <div class="how-card">
-      <h3>🪙 How coins work</h3>
+      <h3><ion-icon name="wallet-outline" style="vertical-align:-4px; margin-right:8px;"></ion-icon> How coins work</h3>
       <div class="how-step">
         <div class="how-num">1</div>
         <div class="how-text"><strong>Buy a coin package</strong> — choose the amount that suits you. Coins land in your account instantly after payment.</div>
@@ -289,11 +291,11 @@
 
     <!-- Trust signals -->
     <div class="trust-strip">
-      <div class="trust-item"><span class="trust-icon">🔒</span> Secure payment</div>
+      <div class="trust-item"><span class="trust-icon"><ion-icon name="lock-closed-outline"></ion-icon></span> Secure payment</div>
       <div class="trust-item"><span class="trust-icon">♾️</span> Coins never expire</div>
       <div class="trust-item"><span class="trust-icon">⚡</span> Instant delivery</div>
       <div class="trust-item"><span class="trust-icon">✝️</span> Faith-safe platform</div>
-      <div class="trust-item"><span class="trust-icon">💸</span> 80% goes to writers</div>
+      <div class="trust-item"><span class="trust-icon"><ion-icon name="cash-outline"></ion-icon></span> 80% goes to writers</div>
     </div>
   </div>
 
@@ -310,16 +312,16 @@
         </div>
         <div class="os-row">
           <span class="os-label">Coins</span>
-          <span class="os-coins" id="summaryCoins">🪙 500 + 50 bonus</span>
+          <span class="os-coins" id="summaryCoins"><ion-icon name="wallet-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> 500 + 50 bonus</span>
         </div>
         <div class="os-row">
           <span class="os-label">Current balance</span>
-          <span class="os-value">🪙 120 coins</span>
+          <span class="os-value"><ion-icon name="wallet-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> 120 coins</span>
         </div>
         <div class="os-divider"></div>
         <div class="os-row">
           <span class="os-total-label">New balance after</span>
-          <span class="os-coins" id="summaryNewBalance">🪙 670 coins</span>
+          <span class="os-coins" id="summaryNewBalance"><ion-icon name="wallet-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> 670 coins</span>
         </div>
         <div class="os-divider"></div>
         <div class="os-row">
@@ -331,10 +333,10 @@
       <!-- Payment method -->
       <div class="section-label" style="margin-bottom:0.75rem;">Payment Method</div>
       <div class="pay-methods">
-        <button class="pay-method active" onclick="setPayMethod(this,'card')"><span class="pay-method-icon">💳</span>Card</button>
-        <button class="pay-method" onclick="setPayMethod(this,'paystack')"><span class="pay-method-icon">🇳🇬</span>Paystack</button>
-        <button class="pay-method" onclick="setPayMethod(this,'paypal')"><span class="pay-method-icon">🅿️</span>PayPal</button>
-        <button class="pay-method" onclick="setPayMethod(this,'apple')"><span class="pay-method-icon">🍎</span>Apple Pay</button>
+        <button class="pay-method active" onclick="setPayMethod(this,'card')"><span class="pay-method-icon"><ion-icon name="card-outline"></ion-icon></span>Card</button>
+        <button class="pay-method" onclick="setPayMethod(this,'paystack')"><span class="pay-method-icon"><ion-icon name="cash-outline"></ion-icon></span>Paystack</button>
+        <button class="pay-method" onclick="setPayMethod(this,'paypal')"><span class="pay-method-icon"><ion-icon name="logo-paypal"></ion-icon></span>PayPal</button>
+        <button class="pay-method" onclick="setPayMethod(this,'apple')"><span class="pay-method-icon"><ion-icon name="logo-apple"></ion-icon></span>Apple Pay</button>
       </div>
 
       <!-- Card form -->
@@ -379,10 +381,10 @@
 
     <!-- Success screen (hidden by default) -->
     <div class="order-card success-screen" id="successScreen">
-      <div class="success-icon">🎉</div>
+      <div class="success-icon"><ion-icon name="sparkles-outline"></ion-icon></div>
       <div class="success-title">Coins Added!</div>
       <div class="success-sub">Your coins have landed in your account instantly. Start unlocking stories right now.</div>
-      <div class="success-balance">🪙 <span id="successBalance">670</span> coins in your wallet</div>
+      <div class="success-balance"><ion-icon name="wallet-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> <span id="successBalance">670</span> coins in your wallet</div>
       <a class="btn-start-reading" href="story.html">Continue Reading →</a>
       <a class="btn-browse-more" href="browse.html">Browse More Stories</a>
     </div>
@@ -446,9 +448,9 @@
     // Update summary
     document.getElementById('summaryPkg').textContent = name + ' Pack';
     document.getElementById('summaryCoins').textContent = bonus > 0
-      ? `🪙 ${coins.toLocaleString()} + ${bonus} bonus`
-      : `🪙 ${coins.toLocaleString()} coins`;
-    document.getElementById('summaryNewBalance').textContent = `🪙 ${(currentBalance + total).toLocaleString()} coins`;
+      ? `<ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> ${coins.toLocaleString()}` + ${bonus} bonus`
+      : `<ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> ${coins.toLocaleString()}` coins`;
+    document.getElementById('summaryNewBalance').textContent = `<ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> ${(currentBalance + total).toLocaleString()} coins`;
     document.getElementById('summaryTotal').textContent = '$' + price.toFixed(2);
     document.getElementById('btnTotal').textContent = '$' + price.toFixed(2);
   }
@@ -487,8 +489,8 @@
       successEl.classList.add('show');
       document.getElementById('successBalance').textContent = (currentBalance + selectedCoins).toLocaleString();
       // Update balance strip
-      document.querySelector('.balance-coins').textContent = `🪙 ${(currentBalance + selectedCoins).toLocaleString()} coins`;
-      showToast(`🎉 ${selectedCoins} coins added to your account!`);
+      document.querySelector('.balance-coins').textContent = `<ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> ${(currentBalance + selectedCoins).toLocaleString()} coins`;
+      showToast(`<ion-icon name="sparkles-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> ${selectedCoins}` coins added to your account!`);
     }, 2000);
   }
 

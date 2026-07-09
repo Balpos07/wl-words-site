@@ -314,6 +314,8 @@
 
     @media (prefers-reduced-motion: reduce) { .fade-in { opacity: 1; animation: none; } }
   </style>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
@@ -345,7 +347,7 @@
 <div class="search-wrap">
   <div class="search-inner">
     <div class="search-box">
-      <span class="search-icon">🔍</span>
+      <span class="search-icon"><ion-icon name="search-outline"></ion-icon></span>
       <input type="text" placeholder="Search by title, author, or keyword…" id="searchInput" oninput="filterBooks()" />
     </div>
     <select class="sort-select" id="sortSelect" onchange="filterBooks()">
@@ -379,43 +381,43 @@
       <div class="filter-title">Category</div>
       <div class="cat-filter-list">
         <div class="cat-filter-item active" onclick="setCategory(this,'All')">
-          <span class="cat-filter-left">📚 All Categories</span>
+          <span class="cat-filter-left"><ion-icon name="list-outline"></ion-icon> All Categories</span>
           <span class="cat-count">248</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Devotionals')">
-          <span class="cat-filter-left">🙏 Devotionals</span>
+          <span class="cat-filter-left"><ion-icon name="heart-half-outline"></ion-icon> Devotionals</span>
           <span class="cat-count">54</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Christian Romance')">
-          <span class="cat-filter-left">💑 Christian Romance</span>
+          <span class="cat-filter-left"><ion-icon name="heart-outline"></ion-icon> Christian Romance</span>
           <span class="cat-count">41</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Bible Study')">
-          <span class="cat-filter-left">📖 Bible Study</span>
+          <span class="cat-filter-left"><ion-icon name="book-outline"></ion-icon> Bible Study</span>
           <span class="cat-count">38</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Spiritual Warfare')">
-          <span class="cat-filter-left">⚔️ Spiritual Warfare</span>
+          <span class="cat-filter-left"><ion-icon name="shield-outline"></ion-icon> Spiritual Warfare</span>
           <span class="cat-count">27</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'African Christian Lit')">
-          <span class="cat-filter-left">🌍 African Christian Lit</span>
+          <span class="cat-filter-left"><ion-icon name="globe-outline"></ion-icon> African Christian Lit</span>
           <span class="cat-count">23</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Poetry & Psalms')">
-          <span class="cat-filter-left">✍🏽 Poetry & Psalms</span>
+          <span class="cat-filter-left"><ion-icon name="brush-outline"></ion-icon> Poetry & Psalms</span>
           <span class="cat-count">19</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Christian Youth')">
-          <span class="cat-filter-left">🎓 Christian Youth</span>
+          <span class="cat-filter-left"><ion-icon name="school-outline"></ion-icon> Christian Youth</span>
           <span class="cat-count">18</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Faith & Healing')">
-          <span class="cat-filter-left">🌿 Faith & Healing</span>
+          <span class="cat-filter-left"><ion-icon name="leaf-outline"></ion-icon> Faith & Healing</span>
           <span class="cat-count">16</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Theology & Doctrine')">
-          <span class="cat-filter-left">📚 Theology</span>
+          <span class="cat-filter-left"><ion-icon name="library-outline"></ion-icon> Theology</span>
           <span class="cat-count">12</span>
         </div>
       </div>
@@ -425,14 +427,14 @@
     <div class="filter-group">
       <div class="filter-title">Minimum Rating</div>
       <div class="stars-row">
-        <label class="star-option"><input type="radio" name="rating" value="4.5"/> <span class="stars">★★★★★</span> 4.5+</label>
-        <label class="star-option"><input type="radio" name="rating" value="4"/> <span class="stars">★★★★</span>☆ 4.0+</label>
-        <label class="star-option"><input type="radio" name="rating" value="3"/> <span class="stars">★★★</span>☆☆ 3.0+</label>
+        <label class="star-option"><input type="radio" name="rating" value="4.5"/> <span class="stars"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon></span> 4.5+</label>
+        <label class="star-option"><input type="radio" name="rating" value="4"/> <span class="stars"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star-outline"></ion-icon></span> 4.0+</label>
+        <label class="star-option"><input type="radio" name="rating" value="3"/> <span class="stars"><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star"></ion-icon><ion-icon name="star-outline"></ion-icon><ion-icon name="star-outline"></ion-icon></span> 3.0+</label>
         <label class="star-option"><input type="radio" name="rating" value="any" checked/> Any rating</label>
       </div>
     </div>
 
-    <button class="clear-btn" onclick="clearFilters()">✕ Clear all filters</button>
+    <button class="clear-btn" onclick="clearFilters()"><ion-icon name="close-circle-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Clear all filters</button>
   </aside>
 
   <!-- MAIN -->
@@ -440,16 +442,16 @@
 
     <!-- Active filter chips -->
     <div class="active-filters" id="activeFilters">
-      <div class="filter-chip">All Categories <span class="chip-x">✕</span></div>
-      <div class="filter-chip">All Content <span class="chip-x">✕</span></div>
+      <div class="filter-chip">All Categories <span class="chip-x"><ion-icon name="close-outline"></ion-icon></span></div>
+      <div class="filter-chip">All Content <span class="chip-x"><ion-icon name="close-outline"></ion-icon></span></div>
     </div>
 
     <!-- Results meta -->
     <div class="results-meta">
       <span class="results-count">Showing <strong>248</strong> books &amp; stories</span>
       <div class="view-toggle">
-        <button class="view-btn active" title="Grid view">⊞</button>
-        <button class="view-btn" title="List view">☰</button>
+        <button class="view-btn active" title="Grid view"><ion-icon name="grid-outline"></ion-icon></button>
+        <button class="view-btn" title="List view"><ion-icon name="list-outline"></ion-icon></button>
       </div>
     </div>
 
@@ -457,7 +459,7 @@
     <div class="featured-banner">
       <div class="banner-cover">The Faithful Heart</div>
       <div class="banner-text">
-        <div class="banner-eyebrow">✨ Editor's Pick this week</div>
+        <div class="banner-eyebrow"><ion-icon name="sparkles-outline"></ion-icon> Editor's Pick this week</div>
         <div class="banner-title">The Faithful Heart</div>
         <div class="banner-author">by Grace Abiodun · Christian Romance · 42 chapters</div>
         <a class="banner-btn" href="story.html">Read Chapter 1 Free →</a>
@@ -525,7 +527,7 @@
 
         let badge = '';
         if (book.pricing_type === 'free') badge = `<span class="badge-overlay badge-free">Free</span>`;
-        else if (book.pricing_type === 'coins') badge = `<span class="badge-overlay badge-coins">🪙 Coins</span>`;
+        else if (book.pricing_type === 'coins') badge = `<span class="badge-overlay badge-coins"><ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:2px;"></ion-icon> Coins</span>`;
         else if (book.pricing_type === 'purchase') badge = `<span class="badge-overlay badge-purchase">📘 Buy</span>`;
 
         let extraMeta = '';
@@ -602,11 +604,11 @@
     if(!wrap) return;
     wrap.innerHTML = '';
     if (activeCategory !== 'All') {
-      wrap.innerHTML += `<div class="filter-chip">${activeCategory} <span class="chip-x" onclick="clearCategory()">✕</span></div>`;
+      wrap.innerHTML += `<div class="filter-chip">${activeCategory} <span class="chip-x" onclick="clearCategory()"><ion-icon name="close-outline"></ion-icon></span></div>`;
     }
     if (activeAvail !== 'all') {
       const label = {coins:'Coins only',free:'Free only',purchase:'Buy only'}[activeAvail];
-      wrap.innerHTML += `<div class="filter-chip">${label} <span class="chip-x" onclick="clearAvail()">✕</span></div>`;
+      wrap.innerHTML += `<div class="filter-chip">${label} <span class="chip-x" onclick="clearAvail()"><ion-icon name="close-outline"></ion-icon></span></div>`;
     }
   }
 

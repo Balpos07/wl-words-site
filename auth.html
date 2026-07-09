@@ -94,6 +94,8 @@
     @media(max-width:900px) { body{grid-template-columns:1fr;} .left-panel{display:none;} .right-panel{padding:2.5rem 1.5rem;justify-content:flex-start;padding-top:3rem;} }
     @media(max-width:480px) { .field-row{grid-template-columns:1fr;} }
   </style>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
@@ -105,10 +107,10 @@
     <h2 class="panel-headline">Stories that feed<br/><em>your faith</em></h2>
     <p class="panel-sub">Join thousands of Christian readers and writers on the only platform built entirely around faith-centred storytelling.</p>
     <div class="panel-features">
-      <div class="panel-feature"><div class="feature-icon">📖</div><div><div class="feature-title">Read free & premium stories</div><div class="feature-desc">Thousands of devotionals, fiction, poetry, and Bible studies — all in one place.</div></div></div>
-      <div class="panel-feature"><div class="feature-icon">✍🏽</div><div><div class="feature-title">Publish your own stories</div><div class="feature-desc">Upload chapters, set your pricing, and build a readership that shares your faith.</div></div></div>
-      <div class="panel-feature"><div class="feature-icon">💸</div><div><div class="feature-title">Earn from your writing</div><div class="feature-desc">Writers get paid monthly. Your gift is worth more than just exposure.</div></div></div>
-      <div class="panel-feature"><div class="feature-icon">🔖</div><div><div class="feature-title">Save your progress</div><div class="feature-desc">Pick up exactly where you left off, on any device, any time.</div></div></div>
+      <div class="panel-feature"><div class="feature-icon"><ion-icon name="book-outline"></ion-icon></div><div><div class="feature-title">Read free & premium stories</div><div class="feature-desc">Thousands of devotionals, fiction, poetry, and Bible studies — all in one place.</div></div></div>
+      <div class="panel-feature"><div class="feature-icon"><ion-icon name="create-outline"></ion-icon></div><div><div class="feature-title">Publish your own stories</div><div class="feature-desc">Upload chapters, set your pricing, and build a readership that shares your faith.</div></div></div>
+      <div class="panel-feature"><div class="feature-icon"><ion-icon name="cash-outline"></ion-icon></div><div><div class="feature-title">Earn from your writing</div><div class="feature-desc">Writers get paid monthly. Your gift is worth more than just exposure.</div></div></div>
+      <div class="panel-feature"><div class="feature-icon"><ion-icon name="bookmark-outline"></ion-icon></div><div><div class="feature-title">Save your progress</div><div class="feature-desc">Pick up exactly where you left off, on any device, any time.</div></div></div>
     </div>
   </div>
   <div class="panel-testimonial">
@@ -142,12 +144,12 @@
 
       <div class="account-type-row">
         <button class="account-type-btn active" id="typeReader" onclick="selectType('reader')">
-          <span class="at-icon">📖</span>
+          <span class="at-icon"><ion-icon name="book-outline"></ion-icon></span>
           <div class="at-title">I'm a Reader</div>
           <div class="at-desc">Browse, read, and unlock stories</div>
         </button>
         <button class="account-type-btn" id="typeWriter" onclick="selectType('writer')">
-          <span class="at-icon">✍🏽</span>
+          <span class="at-icon"><ion-icon name="create-outline"></ion-icon></span>
           <div class="at-title">I'm a Writer</div>
           <div class="at-desc">Read and publish my own stories</div>
         </button>
@@ -162,7 +164,7 @@
         <label>Password</label>
         <div class="field-inner">
           <input type="password" id="signupPassword" placeholder="At least 8 characters" oninput="checkStrength(this)" autocomplete="new-password"/>
-          <button class="field-icon" onclick="togglePw('signupPassword',this)" type="button">👁</button>
+          <button class="field-icon" onclick="togglePw('signupPassword',this)" type="button"><ion-icon name="eye-outline"></ion-icon></button>
         </div>
         <div class="strength-bar"><div class="strength-seg" id="s1"></div><div class="strength-seg" id="s2"></div><div class="strength-seg" id="s3"></div><div class="strength-seg" id="s4"></div></div>
         <div class="strength-label" id="strengthLabel"></div>
@@ -182,14 +184,14 @@
 
     <!-- LOGIN -->
     <div class="form-section hidden" id="loginSection">
-      <h1 class="form-title">Welcome back 👋</h1>
+      <h1 class="form-title">Welcome back <ion-icon name="hand-right-outline" style="vertical-align:-4px;"></ion-icon></h1>
       <p class="form-sub">Sign in to continue reading, writing, and earning on W&L Words.</p>
       <div class="field"><label>Email Address</label><input type="email" id="loginEmail" placeholder="adaugo@example.com" autocomplete="email"/></div>
       <div class="field">
         <label>Password</label>
         <div class="field-inner">
           <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password"/>
-          <button class="field-icon" onclick="togglePw('loginPassword',this)" type="button">👁</button>
+          <button class="field-icon" onclick="togglePw('loginPassword',this)" type="button"><ion-icon name="eye-outline"></ion-icon></button>
         </div>
       </div>
       <div class="forgot-link"><a href="#" onclick="handleForgotPassword()">Forgot your password?</a></div>
@@ -228,7 +230,7 @@
   function togglePw(id, btn) {
     const inp = document.getElementById(id);
     inp.type = inp.type === 'password' ? 'text' : 'password';
-    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+    btn.innerHTML = inp.type === 'password' ? '<ion-icon name="eye-outline"></ion-icon>' : '<ion-icon name="eye-off-outline"></ion-icon>';
   }
 
   function checkStrength(inp) {
@@ -242,7 +244,7 @@
     if (/[0-9]/.test(val)) score++;
     if (/[^A-Za-z0-9]/.test(val)) score++;
     const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
-    const labels = { weak:'⚠️ Weak password', medium:'🟡 Medium — add numbers or symbols', strong:'✅ Strong password' };
+    const labels = { weak:'<ion-icon name="warning-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Weak password', medium:'<ion-icon name="ellipse" style="color: #F5A623; vertical-align:-2px; margin-right:4px;"></ion-icon> Medium — add numbers or symbols', strong:'<ion-icon name="checkmark-circle-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Strong password' };
     for (let i = 0; i < score; i++) segs[i].classList.add(cls);
     document.getElementById('strengthLabel').textContent = labels[cls];
   }
@@ -254,7 +256,7 @@
   }
   function showError(msg) {
     const el = document.getElementById('errorBanner');
-    el.textContent = '⚠️ ' + msg;
+    el.textContent = '<ion-icon name="warning-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> ' + msg;
     el.classList.add('show');
     document.getElementById('successBanner').classList.remove('show');
   }
@@ -310,7 +312,7 @@
       });
 
       setLoading('signupBtn', false, 'Create My Account');
-      showSuccess(`🎉 Welcome, ${firstName}! Your account has been created.`);
+      showSuccess(`<ion-icon name="sparkles-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Welcome, ${firstName}! Your account has been created.`);
       setTimeout(() => { window.location.href = 'index.html'; }, 2000);
       
     } catch (error) {
@@ -331,7 +333,7 @@
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setLoading('loginBtn', false, 'Sign In');
-      showSuccess('✅ Signed in! Redirecting you now…');
+      showSuccess('<ion-icon name="checkmark-circle-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Signed in! Redirecting you now…');
       setTimeout(() => { window.location.href = 'index.html'; }, 1500);
     } catch(error) {
       setLoading('loginBtn', false, 'Sign In');
@@ -345,7 +347,7 @@
     
     try {
       await sendPasswordResetEmail(auth, email);
-      showSuccess('📧 Password reset email sent! Check your inbox.');
+      showSuccess('<ion-icon name="mail-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Password reset email sent! Check your inbox.');
     } catch(error) {
       showError(error.message);
     }
