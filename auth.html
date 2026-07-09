@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join W&L Words — Wonder & Light in Words to Liberate</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet"/>
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white:#FFFFFF;--off:#FDF7FB;--blush:#F9E4EF;--rose:#E8789C;--rose-deep:#C9527A;
+      --sky:#C5DEFA;--blue:#4A82C2;--blue-deep:#2F5F98;--ink:#1A1A2E;--muted:#6E6E85;
+      --border:#F0D8E8;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--off); color:var(--ink); min-height:100vh; display:grid; grid-template-columns:1fr 1fr; }
+
+    /* LEFT PANEL */
+    .left-panel { background:linear-gradient(160deg,#1A1A2E 0%,#2F1A3E 55%,#1A2A4E 100%); display:flex; flex-direction:column; justify-content:space-between; padding:3rem; position:relative; overflow:hidden; min-height:100vh; }
+    .left-panel::before { content:''; position:absolute; top:-20%; right:-20%; width:600px; height:600px; background:radial-gradient(circle,rgba(232,120,156,0.2) 0%,transparent 60%); pointer-events:none; }
+    .left-panel::after { content:''; position:absolute; bottom:-10%; left:-10%; width:400px; height:400px; background:radial-gradient(circle,rgba(74,130,194,0.18) 0%,transparent 60%); pointer-events:none; }
+    .panel-logo { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:white; text-decoration:none; position:relative; z-index:1; }
+    .panel-logo span { color:var(--rose); }
+    .panel-center { position:relative; z-index:1; }
+    .panel-eyebrow { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1rem; color:var(--sky); margin-bottom:1.25rem; display:block; }
+    .panel-headline { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:700; color:white; line-height:1.2; margin-bottom:1.5rem; }
+    .panel-headline em { color:var(--rose); font-style:italic; display:block; }
+    .panel-sub { font-size:0.95rem; color:rgba(255,255,255,0.6); line-height:1.75; font-weight:300; max-width:380px; margin-bottom:2.5rem; }
+    .panel-features { display:flex; flex-direction:column; gap:1rem; }
+    .panel-feature { display:flex; align-items:flex-start; gap:0.85rem; }
+    .feature-icon { width:36px; height:36px; flex-shrink:0; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+    .feature-title { font-size:0.875rem; font-weight:600; color:white; margin-bottom:0.15rem; }
+    .feature-desc { font-size:0.78rem; color:rgba(255,255,255,0.5); line-height:1.5; }
+    .panel-testimonial { position:relative; z-index:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:1.5rem; }
+    .testimonial-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.05rem; color:rgba(255,255,255,0.8); line-height:1.6; margin-bottom:1rem; }
+    .testimonial-author { display:flex; align-items:center; gap:0.75rem; }
+    .t-avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--rose),var(--blue)); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-size:0.9rem; color:white; font-weight:700; }
+    .t-name { font-size:0.82rem; font-weight:600; color:white; }
+    .t-role { font-size:0.75rem; color:rgba(255,255,255,0.45); }
+    .t-stars { color:#F5A623; font-size:0.8rem; margin-left:auto; }
+
+    /* RIGHT PANEL */
+    .right-panel { display:flex; flex-direction:column; justify-content:center; align-items:center; padding:3rem 2rem; min-height:100vh; background:var(--white); }
+    .form-wrap { width:100%; max-width:440px; }
+    .auth-tabs { display:flex; background:var(--off); border:1px solid var(--border); border-radius:50px; padding:5px; margin-bottom:2.25rem; }
+    .auth-tab { flex:1; text-align:center; padding:0.65rem 1rem; border-radius:50px; font-size:0.9rem; font-weight:600; cursor:pointer; border:none; background:transparent; color:var(--muted); font-family:'Inter',sans-serif; transition:all 0.25s; }
+    .auth-tab.active { background:white; color:var(--rose-deep); box-shadow:0 2px 12px rgba(26,26,46,0.1); }
+    .form-title { font-family:'Playfair Display',serif; font-size:1.75rem; font-weight:700; color:var(--ink); margin-bottom:0.4rem; }
+    .form-sub { font-size:0.875rem; color:var(--muted); margin-bottom:2rem; font-weight:300; line-height:1.6; }
+    .account-type-row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1.5rem; }
+    .account-type-btn { padding:1rem; border-radius:14px; border:2px solid var(--border); background:white; cursor:pointer; text-align:left; transition:all 0.25s; font-family:'Inter',sans-serif; }
+    .account-type-btn:hover { border-color:var(--rose); background:var(--blush); }
+    .account-type-btn.active { border-color:var(--rose-deep); background:var(--blush); box-shadow:0 0 0 3px rgba(232,120,156,0.15); }
+    .at-icon { font-size:1.5rem; margin-bottom:0.4rem; display:block; }
+    .at-title { font-size:0.875rem; font-weight:600; color:var(--ink); }
+    .at-desc { font-size:0.72rem; color:var(--muted); margin-top:0.15rem; line-height:1.4; }
+    .divider { display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem; }
+    .divider-line { flex:1; height:1px; background:var(--border); }
+    .divider-text { font-size:0.78rem; color:var(--muted); white-space:nowrap; }
+    .field-row { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+    .field { margin-bottom:1.1rem; }
+    .field label { display:block; font-size:0.8rem; font-weight:600; color:var(--ink); margin-bottom:0.4rem; }
+    .field input { width:100%; padding:0.8rem 1rem; border:1.5px solid var(--border); border-radius:12px; font-size:0.9rem; font-family:'Inter',sans-serif; color:var(--ink); background:var(--off); outline:none; transition:all 0.2s; }
+    .field input:focus { border-color:var(--rose); background:white; box-shadow:0 0 0 3px rgba(232,120,156,0.12); }
+    .field input::placeholder { color:#B0B0C0; }
+    .field-inner { position:relative; }
+    .field-icon { position:absolute; right:0.9rem; top:50%; transform:translateY(-50%); font-size:1rem; cursor:pointer; color:var(--muted); background:none; border:none; padding:0; }
+    .field-hint { font-size:0.73rem; color:var(--muted); margin-top:0.35rem; }
+    .strength-bar { display:flex; gap:3px; margin-top:0.5rem; }
+    .strength-seg { flex:1; height:3px; border-radius:2px; background:var(--border); transition:background 0.3s; }
+    .strength-seg.weak { background:#E74C3C; }
+    .strength-seg.medium { background:#F39C12; }
+    .strength-seg.strong { background:#27AE60; }
+    .strength-label { font-size:0.72rem; color:var(--muted); margin-top:0.3rem; }
+    .check-row { display:flex; align-items:flex-start; gap:0.65rem; margin-bottom:1.5rem; }
+    .check-row input[type="checkbox"] { width:18px; height:18px; margin-top:1px; accent-color:var(--rose); flex-shrink:0; cursor:pointer; }
+    .check-row label { font-size:0.82rem; color:var(--muted); line-height:1.5; cursor:pointer; }
+    .check-row label a { color:var(--rose-deep); text-decoration:none; font-weight:500; }
+    .btn-submit { width:100%; padding:1rem; background:linear-gradient(135deg,var(--rose) 0%,var(--rose-deep) 100%); color:white; border:none; border-radius:12px; font-size:1rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.25s; box-shadow:0 6px 20px rgba(201,82,122,0.35); margin-bottom:1.25rem; }
+    .btn-submit:hover { transform:translateY(-2px); }
+    .btn-submit:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
+    .switch-text { text-align:center; font-size:0.85rem; color:var(--muted); }
+    .switch-text a { color:var(--rose-deep); font-weight:600; text-decoration:none; cursor:pointer; }
+    .forgot-link { text-align:right; font-size:0.78rem; margin-top:-0.5rem; margin-bottom:1rem; }
+    .forgot-link a { color:var(--rose-deep); text-decoration:none; font-weight:500; }
+    .error-banner { background:#FDECEA; border:1px solid #F5C6CB; border-radius:10px; padding:0.75rem 1rem; font-size:0.82rem; color:#C0392B; margin-bottom:1rem; display:none; }
+    .error-banner.show { display:block; }
+    .success-banner { background:#D4F5E9; border:1px solid #A8E6CF; border-radius:10px; padding:0.75rem 1rem; font-size:0.82rem; color:#1A7A55; margin-bottom:1rem; display:none; }
+    .success-banner.show { display:block; }
+    .form-section.hidden { display:none; }
+    .back-site { display:flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:var(--muted); text-decoration:none; margin-bottom:2rem; transition:color 0.2s; }
+    .back-site:hover { color:var(--rose-deep); }
+
+    @media(max-width:900px) { body{grid-template-columns:1fr;} .left-panel{display:none;} .right-panel{padding:2.5rem 1.5rem;justify-content:flex-start;padding-top:3rem;} }
+    @media(max-width:480px) { .field-row{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<!-- LEFT PANEL -->
+<div class="left-panel">
+  <a class="panel-logo" href="index.html">W<span>&</span>L Words</a>
+  <div class="panel-center">
+    <span class="panel-eyebrow">Welcome to W&L Words</span>
+    <h2 class="panel-headline">Stories that feed<br/><em>your faith</em></h2>
+    <p class="panel-sub">Join thousands of Christian readers and writers on the only platform built entirely around faith-centred storytelling.</p>
+    <div class="panel-features">
+      <div class="panel-feature"><div class="feature-icon">📖</div><div><div class="feature-title">Read free & premium stories</div><div class="feature-desc">Thousands of devotionals, fiction, poetry, and Bible studies — all in one place.</div></div></div>
+      <div class="panel-feature"><div class="feature-icon">✍🏽</div><div><div class="feature-title">Publish your own stories</div><div class="feature-desc">Upload chapters, set your pricing, and build a readership that shares your faith.</div></div></div>
+      <div class="panel-feature"><div class="feature-icon">💸</div><div><div class="feature-title">Earn from your writing</div><div class="feature-desc">Writers get paid monthly. Your gift is worth more than just exposure.</div></div></div>
+      <div class="panel-feature"><div class="feature-icon">🔖</div><div><div class="feature-title">Save your progress</div><div class="feature-desc">Pick up exactly where you left off, on any device, any time.</div></div></div>
+    </div>
+  </div>
+  <div class="panel-testimonial">
+    <div class="testimonial-quote">"I uploaded my first story expecting nothing. Three months later I had 4,000 readers and my first payout. W&L Words gave my writing a real home."</div>
+    <div class="testimonial-author">
+      <div class="t-avatar">N</div>
+      <div><div class="t-name">Ngozi Ibe</div><div class="t-role">Writer · Daughter of Zion series</div></div>
+      <div class="t-stars">★★★★★</div>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div class="right-panel">
+  <div class="form-wrap">
+    <a class="back-site" href="index.html">← Back to W&L Words</a>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabSignup" onclick="switchTab('signup')">Create Account</button>
+      <button class="auth-tab" id="tabLogin" onclick="switchTab('login')">Sign In</button>
+    </div>
+
+    <!-- Error/Success banners -->
+    <div class="error-banner" id="errorBanner"></div>
+    <div class="success-banner" id="successBanner"></div>
+
+    <!-- SIGN UP -->
+    <div class="form-section" id="signupSection">
+      <h1 class="form-title">Join W&L Words</h1>
+      <p class="form-sub" id="signupSub">Are you here to read, or do you also want to write and earn?</p>
+
+      <div class="account-type-row">
+        <button class="account-type-btn active" id="typeReader" onclick="selectType('reader')">
+          <span class="at-icon">📖</span>
+          <div class="at-title">I'm a Reader</div>
+          <div class="at-desc">Browse, read, and unlock stories</div>
+        </button>
+        <button class="account-type-btn" id="typeWriter" onclick="selectType('writer')">
+          <span class="at-icon">✍🏽</span>
+          <div class="at-title">I'm a Writer</div>
+          <div class="at-desc">Read and publish my own stories</div>
+        </button>
+      </div>
+
+      <div class="field-row">
+        <div class="field"><label>First Name</label><input type="text" id="firstName" placeholder="Adaugo" autocomplete="given-name"/></div>
+        <div class="field"><label>Last Name</label><input type="text" id="lastName" placeholder="Obi" autocomplete="family-name"/></div>
+      </div>
+      <div class="field"><label>Email Address</label><input type="email" id="signupEmail" placeholder="adaugo@example.com" autocomplete="email"/></div>
+      <div class="field">
+        <label>Password</label>
+        <div class="field-inner">
+          <input type="password" id="signupPassword" placeholder="At least 8 characters" oninput="checkStrength(this)" autocomplete="new-password"/>
+          <button class="field-icon" onclick="togglePw('signupPassword',this)" type="button">👁</button>
+        </div>
+        <div class="strength-bar"><div class="strength-seg" id="s1"></div><div class="strength-seg" id="s2"></div><div class="strength-seg" id="s3"></div><div class="strength-seg" id="s4"></div></div>
+        <div class="strength-label" id="strengthLabel"></div>
+      </div>
+      <div class="field" id="writerPenField" style="display:none;">
+        <label>Pen Name <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <input type="text" id="penName" placeholder="The name readers will see"/>
+        <div class="field-hint">Leave blank to use your real name</div>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="terms"/>
+        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I understand this is a Christian faith-based platform.</label>
+      </div>
+      <button class="btn-submit" id="signupBtn" onclick="handleSignup()">Create My Account</button>
+      <p class="switch-text">Already have an account? <a onclick="switchTab('login')">Sign in here</a></p>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="form-section hidden" id="loginSection">
+      <h1 class="form-title">Welcome back 👋</h1>
+      <p class="form-sub">Sign in to continue reading, writing, and earning on W&L Words.</p>
+      <div class="field"><label>Email Address</label><input type="email" id="loginEmail" placeholder="adaugo@example.com" autocomplete="email"/></div>
+      <div class="field">
+        <label>Password</label>
+        <div class="field-inner">
+          <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password"/>
+          <button class="field-icon" onclick="togglePw('loginPassword',this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="forgot-link"><a href="#" onclick="handleForgotPassword()">Forgot your password?</a></div>
+      <div class="check-row">
+        <input type="checkbox" id="rememberMe" checked/>
+        <label for="rememberMe">Keep me signed in on this device</label>
+      </div>
+      <button class="btn-submit" id="loginBtn" onclick="handleLogin()">Sign In</button>
+      <p class="switch-text">New to W&L Words? <a onclick="switchTab('signup')">Create a free account</a></p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ── INIT SUPABASE ──
+  const { createClient } = supabase;
+  const sb = createClient(
+    "https://xfgdoqpzptgyfhdbijbt.supabase.co",
+    "sb_publishable_JVmixw5c9ZyAQLTTTGftgg_l3LAj3xQ"
+  );
+
+  let accountType = 'reader';
+
+  // ── TAB SWITCH ──
+  function switchTab(tab) {
+    document.getElementById('signupSection').classList.toggle('hidden', tab !== 'signup');
+    document.getElementById('loginSection').classList.toggle('hidden', tab !== 'login');
+    document.getElementById('tabSignup').classList.toggle('active', tab === 'signup');
+    document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+    clearBanners();
+  }
+
+  // ── ACCOUNT TYPE ──
+  function selectType(type) {
+    accountType = type;
+    document.getElementById('typeReader').classList.toggle('active', type === 'reader');
+    document.getElementById('typeWriter').classList.toggle('active', type === 'writer');
+    document.getElementById('writerPenField').style.display = type === 'writer' ? 'block' : 'none';
+    document.getElementById('signupSub').textContent = type === 'writer'
+      ? 'Great! You can read everything and publish your own stories.'
+      : 'Welcome! You\'ll have full access to read and unlock stories.';
+  }
+
+  // ── PASSWORD TOGGLE ──
+  function togglePw(id, btn) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'password' ? '👁' : '🙈';
+  }
+
+  // ── PASSWORD STRENGTH ──
+  function checkStrength(inp) {
+    const val = inp.value;
+    const segs = ['s1','s2','s3','s4'].map(id => document.getElementById(id));
+    segs.forEach(s => { s.className = 'strength-seg'; });
+    if (!val) { document.getElementById('strengthLabel').textContent = ''; return; }
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+    const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
+    const labels = { weak:'⚠️ Weak password', medium:'🟡 Medium — add numbers or symbols', strong:'✅ Strong password' };
+    for (let i = 0; i < score; i++) segs[i].classList.add(cls);
+    document.getElementById('strengthLabel').textContent = labels[cls];
+  }
+
+  // ── SIGN UP ──
+  async function handleSignup() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName  = document.getElementById('lastName').value.trim();
+    const email     = document.getElementById('signupEmail').value.trim();
+    const password  = document.getElementById('signupPassword').value;
+    const terms     = document.getElementById('terms').checked;
+    const penName   = document.getElementById('penName').value.trim();
+
+    if (!firstName || !lastName) return showError('Please enter your first and last name.');
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('Please enter a valid email address.');
+    if (!password || password.length < 8) return showError('Password must be at least 8 characters.');
+    if (!terms) return showError('Please agree to the Terms of Service to continue.');
+
+    setLoading('signupBtn', true, 'Creating your account…');
+    clearBanners();
+
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: `${firstName} ${lastName}`,
+          account_type: accountType,
+          pen_name: penName || `${firstName} ${lastName}`,
+        }
+      }
+    });
+
+    setLoading('signupBtn', false, 'Create My Account');
+
+    if (error) return showError(error.message);
+
+    showSuccess(`🎉 Welcome, ${firstName}! Check your email to confirm your account, then sign in.`);
+    setTimeout(() => switchTab('login'), 3000);
+  }
+
+  // ── LOGIN ──
+  async function handleLogin() {
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    if (!email || !password) return showError('Please fill in both your email and password.');
+
+    setLoading('loginBtn', true, 'Signing in…');
+    clearBanners();
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+    setLoading('loginBtn', false, 'Sign In');
+
+    if (error) return showError(error.message);
+
+    showSuccess('✅ Signed in! Redirecting you now…');
+    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+  }
+
+  // ── FORGOT PASSWORD ──
+  async function handleForgotPassword() {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) return showError('Enter your email address above first, then click Forgot Password.');
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/auth.html'
+    });
+    if (error) return showError(error.message);
+    showSuccess('📧 Password reset email sent! Check your inbox.');
+  }
+
+  // ── HELPERS ──
+  function setLoading(btnId, loading, text) {
+    const btn = document.getElementById(btnId);
+    btn.disabled = loading;
+    btn.textContent = text;
+  }
+  function showError(msg) {
+    const el = document.getElementById('errorBanner');
+    el.textContent = '⚠️ ' + msg;
+    el.classList.add('show');
+    document.getElementById('successBanner').classList.remove('show');
+  }
+  function showSuccess(msg) {
+    const el = document.getElementById('successBanner');
+    el.textContent = msg;
+    el.classList.add('show');
+    document.getElementById('errorBanner').classList.remove('show');
+  }
+  function clearBanners() {
+    document.getElementById('errorBanner').classList.remove('show');
+    document.getElementById('successBanner').classList.remove('show');
+  }
+
+  // ── CHECK IF ALREADY LOGGED IN ──
+  sb.auth.getSession().then(({ data: { session } }) => {
+    if (session) window.location.href = 'index.html';
+  });
+</script>
+</body>
+</html>

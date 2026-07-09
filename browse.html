@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Browse Books — W&L Words</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white:    #FFFFFF;
+      --off:      #FDF7FB;
+      --blush:    #F9E4EF;
+      --rose:     #E8789C;
+      --rose-deep:#C9527A;
+      --sky:      #C5DEFA;
+      --blue:     #4A82C2;
+      --blue-deep:#2F5F98;
+      --ink:      #1A1A2E;
+      --muted:    #6E6E85;
+      --border:   #F0D8E8;
+      --sidebar:  260px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 68px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+    .logo span { color: var(--rose); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--rose-deep); }
+    .nav-ctas { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-ghost { padding: 0.5rem 1.2rem; border: 1.5px solid var(--rose); color: var(--rose-deep); background: transparent; border-radius: 50px; font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all 0.2s; }
+    .btn-ghost:hover { background: var(--blush); }
+    .btn-primary { padding: 0.5rem 1.4rem; background: var(--rose); color: white; border: none; border-radius: 50px; font-size: 0.875rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 14px rgba(232,120,156,0.35); }
+    .btn-primary:hover { background: var(--rose-deep); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 2.5rem 5%;
+    }
+    .page-header-inner { max-width: 1300px; margin: 0 auto; }
+    .breadcrumb { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+    .breadcrumb a { color: var(--rose); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--ink); margin-bottom: 0.4rem; }
+    .page-sub { font-size: 0.9rem; color: var(--muted); font-weight: 300; }
+
+    /* ── SEARCH BAR ── */
+    .search-wrap {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 5%;
+    }
+    .search-inner { max-width: 1300px; margin: 0 auto; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .search-box {
+      flex: 1; min-width: 240px;
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--off); border: 1.5px solid var(--border);
+      border-radius: 50px; padding: 0.65rem 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .search-box:focus-within { border-color: var(--rose); }
+    .search-box input {
+      border: none; background: transparent; outline: none;
+      font-size: 0.9rem; font-family: 'Inter', sans-serif;
+      color: var(--ink); width: 100%;
+    }
+    .search-box input::placeholder { color: var(--muted); }
+    .search-icon { color: var(--muted); font-size: 1rem; flex-shrink: 0; }
+    .sort-select {
+      padding: 0.65rem 1.25rem;
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      background: white;
+      font-size: 0.875rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      outline: none; cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .sort-select:focus { border-color: var(--rose); }
+
+    /* ── LAYOUT ── */
+    .browse-layout {
+      max-width: 1300px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: var(--sidebar) 1fr;
+      gap: 2rem;
+      padding: 2rem 5%;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar { position: sticky; top: 88px; }
+    .filter-group { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; }
+    .filter-title {
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Availability toggle */
+    .avail-tabs { display: flex; background: var(--off); border-radius: 50px; padding: 4px; gap: 2px; }
+    .avail-tab {
+      flex: 1; text-align: center; padding: 0.45rem 0.5rem;
+      border-radius: 50px; font-size: 0.8rem; font-weight: 500;
+      cursor: pointer; color: var(--muted);
+      transition: all 0.2s; border: none; background: transparent;
+      font-family: 'Inter', sans-serif;
+    }
+    .avail-tab.active { background: white; color: var(--rose-deep); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+    /* Category filters */
+    .cat-filter-list { display: flex; flex-direction: column; gap: 0.25rem; }
+    .cat-filter-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.5rem 0.6rem; border-radius: 10px;
+      cursor: pointer; transition: background 0.2s;
+      font-size: 0.875rem;
+    }
+    .cat-filter-item:hover { background: var(--blush); }
+    .cat-filter-item.active { background: var(--blush); color: var(--rose-deep); font-weight: 500; }
+    .cat-filter-left { display: flex; align-items: center; gap: 0.6rem; }
+    .cat-count { font-size: 0.75rem; color: var(--muted); background: var(--off); padding: 0.1rem 0.5rem; border-radius: 50px; }
+    .cat-filter-item.active .cat-count { background: white; color: var(--rose-deep); }
+
+    /* Rating filter */
+    .stars-row { display: flex; flex-direction: column; gap: 0.4rem; }
+    .star-option {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.85rem; color: var(--muted); cursor: pointer;
+      padding: 0.3rem 0.5rem; border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .star-option:hover { background: var(--blush); }
+    .star-option input { accent-color: var(--rose); }
+    .stars { color: #F5A623; font-size: 0.9rem; letter-spacing: 1px; }
+
+    /* Clear button */
+    .clear-btn {
+      width: 100%; padding: 0.6rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px; background: white;
+      font-size: 0.8rem; color: var(--muted);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+    .clear-btn:hover { border-color: var(--rose); color: var(--rose-deep); }
+
+    /* ── MAIN CONTENT ── */
+    .main-content {}
+
+    /* Active filter chips */
+    .active-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .filter-chip {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.35rem 0.85rem; background: var(--blush);
+      border-radius: 50px; font-size: 0.8rem;
+      color: var(--rose-deep); font-weight: 500;
+      cursor: pointer; transition: background 0.2s;
+      border: 1px solid rgba(232,120,156,0.3);
+    }
+    .filter-chip:hover { background: #f5c8d8; }
+    .chip-x { font-size: 0.9rem; font-weight: 400; }
+
+    /* Results meta */
+    .results-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .results-count { font-size: 0.85rem; color: var(--muted); }
+    .results-count strong { color: var(--ink); }
+    .view-toggle { display: flex; gap: 0.4rem; }
+    .view-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1.5px solid var(--border); background: white;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; transition: all 0.2s;
+    }
+    .view-btn.active { background: var(--blush); border-color: var(--rose); }
+    .view-btn:hover { border-color: var(--rose); }
+
+    /* ── BOOK CARDS ── */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1.5rem;
+    }
+    .book-card {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+    .book-card:hover { box-shadow: 0 12px 36px rgba(26,26,46,0.13); transform: translateY(-5px); }
+    .book-cover {
+      width: 100%; aspect-ratio: 2/3;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.78rem; font-weight: 600;
+      color: white; text-align: center; padding: 1rem;
+      line-height: 1.4; position: relative;
+    }
+    .badge-overlay {
+      position: absolute; top: 0.6rem; left: 0.6rem;
+      font-size: 0.65rem; font-weight: 700;
+      padding: 0.2rem 0.55rem; border-radius: 50px;
+    }
+    .badge-free { background: rgba(255,255,255,0.95); color: #1A7A55; }
+    .badge-coins { background: rgba(255,255,255,0.95); color: #A06010; }
+    .badge-purchase { background: rgba(255,255,255,0.95); color: var(--blue-deep); }
+    .book-info { padding: 1rem; }
+    .book-title { font-family: 'Playfair Display', serif; font-size: 0.9rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem; line-height: 1.3; }
+    .book-author { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .book-meta { display: flex; align-items: center; justify-content: space-between; }
+    .book-rating { font-size: 0.75rem; color: #F5A623; }
+    .book-reads { font-size: 0.72rem; color: var(--muted); }
+    .book-price { font-size: 0.8rem; font-weight: 600; color: var(--rose-deep); }
+
+    /* covers */
+    .c1  { background: linear-gradient(150deg,#7B5EA7,#4A3580); }
+    .c2  { background: linear-gradient(150deg,#E8789C,#B24570); }
+    .c3  { background: linear-gradient(150deg,#4A82C2,#2F5F98); }
+    .c4  { background: linear-gradient(150deg,#C9527A,#8B2045); }
+    .c5  { background: linear-gradient(150deg,#52A8C4,#2A708C); }
+    .c6  { background: linear-gradient(150deg,#A87DC9,#6A47A0); }
+    .c7  { background: linear-gradient(150deg,#D4845A,#9E5230); }
+    .c8  { background: linear-gradient(150deg,#5DB89C,#2E8070); }
+    .c9  { background: linear-gradient(150deg,#C9A84C,#8A6820); }
+    .c10 { background: linear-gradient(150deg,#E88050,#B04820); }
+    .c11 { background: linear-gradient(150deg,#6B8FC9,#3A5A9A); }
+    .c12 { background: linear-gradient(150deg,#C96B8F,#8A3A5A); }
+
+    /* ── FEATURED BANNER ── */
+    .featured-banner {
+      background: linear-gradient(135deg, var(--rose-deep) 0%, #8B2045 100%);
+      border-radius: 20px; padding: 2rem 2.5rem;
+      display: flex; align-items: center; gap: 2rem;
+      margin-bottom: 2rem; position: relative; overflow: hidden;
+      cursor: pointer;
+    }
+    .featured-banner::after {
+      content: '';
+      position: absolute; right: -40px; top: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 65%);
+    }
+    .banner-cover {
+      flex-shrink: 0; width: 80px; height: 112px;
+      border-radius: 8px; background: rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 0.65rem;
+      color: white; text-align: center; padding: 0.5rem;
+      font-weight: 600; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .banner-text { flex: 1; position: relative; z-index: 1; }
+    .banner-eyebrow { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .banner-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: white; margin-bottom: 0.4rem; }
+    .banner-author { font-size: 0.82rem; color: rgba(255,255,255,0.75); margin-bottom: 0.75rem; }
+    .banner-btn { display: inline-block; padding: 0.45rem 1.2rem; background: white; color: var(--rose-deep); border-radius: 50px; font-size: 0.8rem; font-weight: 600; text-decoration: none; }
+
+    /* ── LOAD MORE ── */
+    .load-more-wrap { text-align: center; margin-top: 3rem; padding-bottom: 4rem; }
+    .btn-load-more {
+      padding: 0.85rem 2.5rem;
+      border: 1.5px solid var(--rose);
+      color: var(--rose-deep); background: white;
+      border-radius: 50px; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: all 0.25s;
+    }
+    .btn-load-more:hover { background: var(--blush); transform: translateY(-2px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .browse-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; display: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 480px) {
+      .books-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in { opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s ease forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: none; } }
+    .book-card:nth-child(1)  { animation-delay: 0.05s; }
+    .book-card:nth-child(2)  { animation-delay: 0.10s; }
+    .book-card:nth-child(3)  { animation-delay: 0.15s; }
+    .book-card:nth-child(4)  { animation-delay: 0.20s; }
+    .book-card:nth-child(5)  { animation-delay: 0.25s; }
+    .book-card:nth-child(6)  { animation-delay: 0.30s; }
+    .book-card:nth-child(7)  { animation-delay: 0.35s; }
+    .book-card:nth-child(8)  { animation-delay: 0.40s; }
+    .book-card:nth-child(9)  { animation-delay: 0.45s; }
+    .book-card:nth-child(10) { animation-delay: 0.50s; }
+    .book-card:nth-child(11) { animation-delay: 0.55s; }
+    .book-card:nth-child(12) { animation-delay: 0.60s; }
+
+    @media (prefers-reduced-motion: reduce) { .fade-in { opacity: 1; animation: none; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="index.html">W<span>&</span>L Words</a>
+  <ul class="nav-links">
+    <li><a href="browse.html" class="active">Browse Books</a></li>
+    <li><a href="browse.html">Free Stories</a></li>
+    <li><a href="browse.html">Categories</a></li>
+    <li><a href="auth.html">Write With Us</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a class="btn-ghost" href="auth.html">Sign In</a>
+    <a class="btn-primary" href="browse.html">Start Reading</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Browse</div>
+    <h1 class="page-title">Browse the Library</h1>
+    <p class="page-sub">Thousands of Christian stories — devotionals, fiction, poetry, theology, and more.</p>
+  </div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-wrap">
+  <div class="search-inner">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search by title, author, or keyword…" id="searchInput" oninput="filterBooks()" />
+    </div>
+    <select class="sort-select" id="sortSelect" onchange="filterBooks()">
+      <option value="trending">Sort: Trending</option>
+      <option value="newest">Sort: Newest</option>
+      <option value="rating">Sort: Top Rated</option>
+      <option value="free">Sort: Free First</option>
+    </select>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="browse-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Availability -->
+    <div class="filter-group">
+      <div class="filter-title">Availability</div>
+      <div class="avail-tabs">
+        <button class="avail-tab active" onclick="setAvail(this,'all')">All</button>
+        <button class="avail-tab" onclick="setAvail(this,'free')">Free</button>
+        <button class="avail-tab" onclick="setAvail(this,'coins')">Coins</button>
+        <button class="avail-tab" onclick="setAvail(this,'purchase')">Buy</button>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="filter-group">
+      <div class="filter-title">Category</div>
+      <div class="cat-filter-list">
+        <div class="cat-filter-item active" onclick="setCategory(this,'All')">
+          <span class="cat-filter-left">📚 All Categories</span>
+          <span class="cat-count">248</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Devotionals')">
+          <span class="cat-filter-left">🙏 Devotionals</span>
+          <span class="cat-count">54</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Christian Romance')">
+          <span class="cat-filter-left">💑 Christian Romance</span>
+          <span class="cat-count">41</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Bible Study')">
+          <span class="cat-filter-left">📖 Bible Study</span>
+          <span class="cat-count">38</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Spiritual Warfare')">
+          <span class="cat-filter-left">⚔️ Spiritual Warfare</span>
+          <span class="cat-count">27</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'African Christian Lit')">
+          <span class="cat-filter-left">🌍 African Christian Lit</span>
+          <span class="cat-count">23</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Poetry & Psalms')">
+          <span class="cat-filter-left">✍🏽 Poetry & Psalms</span>
+          <span class="cat-count">19</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Christian Youth')">
+          <span class="cat-filter-left">🎓 Christian Youth</span>
+          <span class="cat-count">18</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Faith & Healing')">
+          <span class="cat-filter-left">🌿 Faith & Healing</span>
+          <span class="cat-count">16</span>
+        </div>
+        <div class="cat-filter-item" onclick="setCategory(this,'Theology & Doctrine')">
+          <span class="cat-filter-left">📚 Theology</span>
+          <span class="cat-count">12</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating -->
+    <div class="filter-group">
+      <div class="filter-title">Minimum Rating</div>
+      <div class="stars-row">
+        <label class="star-option"><input type="radio" name="rating" value="4.5"/> <span class="stars">★★★★★</span> 4.5+</label>
+        <label class="star-option"><input type="radio" name="rating" value="4"/> <span class="stars">★★★★</span>☆ 4.0+</label>
+        <label class="star-option"><input type="radio" name="rating" value="3"/> <span class="stars">★★★</span>☆☆ 3.0+</label>
+        <label class="star-option"><input type="radio" name="rating" value="any" checked/> Any rating</label>
+      </div>
+    </div>
+
+    <button class="clear-btn" onclick="clearFilters()">✕ Clear all filters</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <!-- Active filter chips -->
+    <div class="active-filters" id="activeFilters">
+      <div class="filter-chip">All Categories <span class="chip-x">✕</span></div>
+      <div class="filter-chip">All Content <span class="chip-x">✕</span></div>
+    </div>
+
+    <!-- Results meta -->
+    <div class="results-meta">
+      <span class="results-count">Showing <strong>248</strong> books &amp; stories</span>
+      <div class="view-toggle">
+        <button class="view-btn active" title="Grid view">⊞</button>
+        <button class="view-btn" title="List view">☰</button>
+      </div>
+    </div>
+
+    <!-- Featured banner -->
+    <div class="featured-banner">
+      <div class="banner-cover">The Faithful Heart</div>
+      <div class="banner-text">
+        <div class="banner-eyebrow">✨ Editor's Pick this week</div>
+        <div class="banner-title">The Faithful Heart</div>
+        <div class="banner-author">by Grace Abiodun · Christian Romance · 42 chapters</div>
+        <a class="banner-btn" href="story.html">Read Chapter 1 Free →</a>
+      </div>
+    </div>
+
+    <!-- BOOKS GRID -->
+    <div class="books-grid" id="booksGrid">
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="free" data-cat="Devotionals">
+        <div class="book-cover c1">Grace at Midnight<span class="badge-overlay badge-free">Free</span></div>
+        <div class="book-info">
+          <div class="book-title">Grace at Midnight</div>
+          <div class="book-author">Adaeze Okonkwo</div>
+          <div class="book-meta"><span class="book-rating">★ 4.8</span><span class="book-reads">12.4k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="coins" data-cat="Christian Romance">
+        <div class="book-cover c2">Letters to Heaven<span class="badge-overlay badge-coins">🪙 Coins</span></div>
+        <div class="book-info">
+          <div class="book-title">Letters to Heaven</div>
+          <div class="book-author">Priscilla Mensah</div>
+          <div class="book-meta"><span class="book-rating">★ 4.6</span><span class="book-reads">8.1k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="free" data-cat="Poetry & Psalms">
+        <div class="book-cover c3">Rivers of Light<span class="badge-overlay badge-free">Free</span></div>
+        <div class="book-info">
+          <div class="book-title">Rivers of Light</div>
+          <div class="book-author">Emmanuel Taiwo</div>
+          <div class="book-meta"><span class="book-rating">★ 4.9</span><span class="book-reads">20.7k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="coins" data-cat="Christian Romance">
+        <div class="book-cover c4">The Faithful Heart<span class="badge-overlay badge-coins">🪙 Coins</span></div>
+        <div class="book-info">
+          <div class="book-title">The Faithful Heart</div>
+          <div class="book-author">Grace Abiodun</div>
+          <div class="book-meta"><span class="book-rating">★ 4.7</span><span class="book-reads">15.3k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="free" data-cat="Devotionals">
+        <div class="book-cover c5">Still Waters<span class="badge-overlay badge-free">Free</span></div>
+        <div class="book-info">
+          <div class="book-title">Still Waters</div>
+          <div class="book-author">Ruth Chibuike</div>
+          <div class="book-meta"><span class="book-rating">★ 4.5</span><span class="book-reads">9.2k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="coins" data-cat="Spiritual Warfare">
+        <div class="book-cover c6">Called &amp; Chosen<span class="badge-overlay badge-coins">🪙 Coins</span></div>
+        <div class="book-info">
+          <div class="book-title">Called & Chosen</div>
+          <div class="book-author">Daniel Eze</div>
+          <div class="book-meta"><span class="book-rating">★ 4.6</span><span class="book-reads">6.8k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="purchase" data-cat="Theology & Doctrine">
+        <div class="book-cover c7">The Waiting Room<span class="badge-overlay badge-purchase">📘 Buy</span></div>
+        <div class="book-info">
+          <div class="book-title">The Waiting Room</div>
+          <div class="book-author">Folake Adeyemi</div>
+          <div class="book-meta"><span class="book-rating">★ 4.9</span><span class="book-price">$4.99</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="free" data-cat="African Christian Lit">
+        <div class="book-cover c8">Daughter of Zion<span class="badge-overlay badge-free">Free</span></div>
+        <div class="book-info">
+          <div class="book-title">Daughter of Zion</div>
+          <div class="book-author">Ngozi Ibe</div>
+          <div class="book-meta"><span class="book-rating">★ 4.8</span><span class="book-reads">11.0k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="purchase" data-cat="Bible Study">
+        <div class="book-cover c9">The Word Made Plain<span class="badge-overlay badge-purchase">📘 Buy</span></div>
+        <div class="book-info">
+          <div class="book-title">The Word Made Plain</div>
+          <div class="book-author">Samuel Osei</div>
+          <div class="book-meta"><span class="book-rating">★ 4.7</span><span class="book-price">$6.99</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="coins" data-cat="Christian Youth">
+        <div class="book-cover c10">Young &amp; Chosen<span class="badge-overlay badge-coins">🪙 Coins</span></div>
+        <div class="book-info">
+          <div class="book-title">Young & Chosen</div>
+          <div class="book-author">Amara Nwosu</div>
+          <div class="book-meta"><span class="book-rating">★ 4.5</span><span class="book-reads">7.4k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="free" data-cat="Faith & Healing">
+        <div class="book-cover c11">Broken &amp; Whole<span class="badge-overlay badge-free">Free</span></div>
+        <div class="book-info">
+          <div class="book-title">Broken & Whole</div>
+          <div class="book-author">Blessing Okoro</div>
+          <div class="book-meta"><span class="book-rating">★ 4.8</span><span class="book-reads">13.6k reads</span></div>
+        </div>
+      </div>
+
+      <div class="book-card fade-in" onclick="window.location.href='story.html'" data-type="purchase" data-cat="African Christian Lit">
+        <div class="book-cover c12">Anointed Steps<span class="badge-overlay badge-purchase">📘 Buy</span></div>
+        <div class="book-info">
+          <div class="book-title">Anointed Steps</div>
+          <div class="book-author">Chidi Okafor</div>
+          <div class="book-meta"><span class="book-rating">★ 4.6</span><span class="book-price">$3.99</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Load More -->
+    <div class="load-more-wrap">
+      <button class="btn-load-more">Load more books</button>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ── FILTER LOGIC ──
+  let activeAvail = 'all';
+  let activeCategory = 'All';
+
+  function setAvail(btn, val) {
+    document.querySelectorAll('.avail-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeAvail = val;
+    filterBooks();
+  }
+
+  function setCategory(el, cat) {
+    document.querySelectorAll('.cat-filter-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    activeCategory = cat;
+    filterBooks();
+  }
+
+  function filterBooks() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.book-card');
+    let visible = 0;
+
+    cards.forEach(card => {
+      const type = card.dataset.type;
+      const cat  = card.dataset.cat;
+      const title = card.querySelector('.book-title').textContent.toLowerCase();
+      const author = card.querySelector('.book-author').textContent.toLowerCase();
+
+      const availMatch = activeAvail === 'all' || type === activeAvail;
+      const catMatch   = activeCategory === 'All' || cat === activeCategory;
+      const searchMatch = !query || title.includes(query) || author.includes(query);
+
+      const show = availMatch && catMatch && searchMatch;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    document.querySelector('.results-count').innerHTML =
+      `Showing <strong>${visible}</strong> books &amp; stories`;
+    updateChips();
+  }
+
+  function updateChips() {
+    const wrap = document.getElementById('activeFilters');
+    wrap.innerHTML = '';
+    if (activeCategory !== 'All') {
+      wrap.innerHTML += `<div class="filter-chip">${activeCategory} <span class="chip-x" onclick="clearCategory()">✕</span></div>`;
+    }
+    if (activeAvail !== 'all') {
+      const label = {coins:'Coins only',free:'Free only',purchase:'Buy only'}[activeAvail];
+      wrap.innerHTML += `<div class="filter-chip">${label} <span class="chip-x" onclick="clearAvail()">✕</span></div>`;
+    }
+  }
+
+  function clearCategory() {
+    setCategory(document.querySelector('.cat-filter-item'), 'All');
+  }
+  function clearAvail() {
+    setAvail(document.querySelector('.avail-tab'), 'all');
+  }
+  function clearFilters() {
+    clearCategory(); clearAvail();
+    document.getElementById('searchInput').value = '';
+    filterBooks();
+  }
+
+  // View toggle (grid / list — UI only for now)
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

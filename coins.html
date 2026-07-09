@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buy Coins — W&L Words</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white:#FFFFFF;--off:#FDF7FB;--blush:#F9E4EF;--rose:#E8789C;--rose-deep:#C9527A;
+      --sky:#C5DEFA;--blue:#4A82C2;--blue-deep:#2F5F98;--ink:#1A1A2E;--muted:#6E6E85;
+      --border:#F0D8E8;--gold:#F5A623;--gold-bg:#FFF8E8;--gold-border:#F0D898;
+      --success:#1A7A55;--success-bg:#D4F5E9;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); min-height: 100vh; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; height: 68px; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+    .logo span { color: var(--rose); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--rose-deep); }
+    .nav-ctas { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-ghost { padding: 0.5rem 1.2rem; border: 1.5px solid var(--rose); color: var(--rose-deep); background: transparent; border-radius: 50px; font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; }
+    .btn-nav-primary { padding: 0.5rem 1.4rem; background: var(--rose); color: white; border: none; border-radius: 50px; font-size: 0.875rem; font-weight: 600; cursor: pointer; text-decoration: none; box-shadow: 0 4px 14px rgba(232,120,156,0.35); }
+
+    /* PAGE HEADER */
+    .page-hero {
+      background: linear-gradient(160deg, #1A1A2E 0%, #2F1A3E 60%, #1A2A4E 100%);
+      padding: 4rem 5% 3.5rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before { content: ''; position: absolute; top: -30%; left: 50%; transform: translateX(-50%); width: 700px; height: 700px; background: conic-gradient(from 260deg at 50% 0%, transparent 0deg, rgba(249,228,239,0.12) 15deg, transparent 30deg, rgba(197,222,250,0.1) 50deg, transparent 65deg); pointer-events: none; animation: spin 30s linear infinite; }
+    @keyframes spin { to { transform: translateX(-50%) rotate(360deg); } }
+    .hero-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .coin-hero-icon { font-size: 4rem; margin-bottom: 1rem; display: block; animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .hero-eyebrow { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--sky); margin-bottom: 0.75rem; display: block; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3rem); font-weight: 700; color: white; line-height: 1.2; margin-bottom: 1rem; }
+    .hero-title em { color: var(--rose); font-style: italic; }
+    .hero-sub { font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 1.75; font-weight: 300; }
+
+    /* BALANCE STRIP */
+    .balance-strip { background: var(--gold-bg); border-bottom: 1px solid var(--gold-border); padding: 1rem 5%; display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+    .balance-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; }
+    .balance-label { color: var(--muted); }
+    .balance-value { font-weight: 700; color: var(--ink); }
+    .balance-coins { font-size: 1.1rem; font-weight: 700; color: #A06010; }
+    .balance-divider { width: 1px; height: 24px; background: var(--gold-border); }
+
+    /* MAIN LAYOUT */
+    .main-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 5%; display: grid; grid-template-columns: 1fr 380px; gap: 2.5rem; align-items: start; }
+
+    /* COIN PACKAGES */
+    .packages-section {}
+    .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1.25rem; display: block; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .section-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; }
+
+    .packages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+    .pkg-card {
+      background: white; border: 2px solid var(--border); border-radius: 20px;
+      padding: 1.5rem; cursor: pointer; transition: all 0.25s; position: relative;
+      text-align: center;
+    }
+    .pkg-card:hover { border-color: var(--rose); box-shadow: 0 8px 28px rgba(232,120,156,0.15); transform: translateY(-3px); }
+    .pkg-card.selected { border-color: var(--rose-deep); box-shadow: 0 0 0 4px rgba(201,82,122,0.12); background: var(--blush); }
+    .pkg-card.popular { border-color: var(--rose); }
+    .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--rose), var(--rose-deep)); color: white; font-size: 0.68rem; font-weight: 700; padding: 0.25rem 0.9rem; border-radius: 50px; white-space: nowrap; }
+    .pkg-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+    .pkg-coins { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #A06010; line-height: 1; margin-bottom: 0.25rem; }
+    .pkg-coins-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .pkg-price { font-size: 1.3rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .pkg-per { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .pkg-bonus { display: inline-block; background: var(--success-bg); color: var(--success); font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.65rem; border-radius: 50px; }
+    .pkg-unlocks { font-size: 0.75rem; color: var(--muted); margin-top: 0.5rem; }
+    .pkg-check { position: absolute; top: 0.9rem; right: 0.9rem; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; transition: all 0.2s; }
+    .pkg-card.selected .pkg-check { background: var(--rose-deep); border-color: var(--rose-deep); color: white; }
+
+    /* HOW IT WORKS */
+    .how-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; margin-bottom: 2rem; }
+    .how-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.25rem; }
+    .how-step { display: flex; align-items: flex-start; gap: 0.85rem; margin-bottom: 1rem; }
+    .how-step:last-child { margin-bottom: 0; }
+    .how-num { width: 28px; height: 28px; border-radius: 50%; background: var(--blush); border: 1.5px solid var(--rose); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--rose-deep); flex-shrink: 0; }
+    .how-text { font-size: 0.85rem; color: var(--muted); line-height: 1.6; padding-top: 0.3rem; }
+    .how-text strong { color: var(--ink); }
+
+    /* TRUST STRIP */
+    .trust-strip { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--muted); }
+    .trust-icon { font-size: 1rem; }
+
+    /* ORDER / PAYMENT SIDEBAR */
+    .payment-sidebar { position: sticky; top: 88px; }
+    .order-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 1.75rem; margin-bottom: 1.25rem; }
+    .order-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+
+    /* Selected package summary */
+    .order-summary { background: var(--gold-bg); border: 1px solid var(--gold-border); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem; }
+    .os-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; font-size: 0.875rem; }
+    .os-row:last-child { margin-bottom: 0; }
+    .os-label { color: var(--muted); }
+    .os-value { font-weight: 600; color: var(--ink); }
+    .os-coins { font-weight: 700; color: #A06010; font-size: 1rem; }
+    .os-divider { height: 1px; background: var(--gold-border); margin: 0.75rem 0; }
+    .os-total-label { font-weight: 600; color: var(--ink); }
+    .os-total-value { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--ink); }
+
+    /* Payment method */
+    .pay-methods { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .pay-method {
+      flex: 1; padding: 0.6rem 0.5rem; border-radius: 10px; text-align: center;
+      border: 1.5px solid var(--border); background: white; cursor: pointer;
+      font-size: 0.75rem; font-weight: 500; color: var(--muted);
+      transition: all 0.2s; font-family: 'Inter', sans-serif;
+    }
+    .pay-method:hover { border-color: var(--rose); color: var(--rose-deep); }
+    .pay-method.active { border-color: var(--rose-deep); background: var(--blush); color: var(--rose-deep); }
+    .pay-method-icon { font-size: 1.2rem; display: block; margin-bottom: 0.25rem; }
+
+    /* Card form */
+    .card-form { display: block; }
+    .f-field { margin-bottom: 1rem; }
+    .f-label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; }
+    .f-input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border); border-radius: 12px; font-size: 0.875rem; font-family: 'Inter', sans-serif; color: var(--ink); background: var(--off); outline: none; transition: all 0.2s; }
+    .f-input:focus { border-color: var(--rose); background: white; box-shadow: 0 0 0 3px rgba(232,120,156,0.12); }
+    .f-input::placeholder { color: #B0B0C0; }
+    .f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .card-icons { display: flex; gap: 0.4rem; margin-bottom: 1rem; }
+    .card-icon { padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.7rem; font-weight: 700; color: var(--muted); background: white; }
+
+    /* Pay button */
+    .btn-pay { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--rose), var(--rose-deep)); color: white; border: none; border-radius: 14px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.25s; box-shadow: 0 6px 20px rgba(201,82,122,0.35); margin-bottom: 0.75rem; position: relative; overflow: hidden; }
+    .btn-pay:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,82,122,0.45); }
+    .btn-pay.loading::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent); animation: shimmer 1.2s infinite; }
+    @keyframes shimmer { from{transform:translateX(-100%)} to{transform:translateX(100%)} }
+    .pay-note { font-size: 0.75rem; color: var(--muted); text-align: center; line-height: 1.6; }
+    .pay-note a { color: var(--rose-deep); text-decoration: none; }
+
+    /* Success screen */
+    .success-screen { display: none; text-align: center; padding: 2rem 1rem; }
+    .success-screen.show { display: block; }
+    .success-icon { font-size: 4rem; margin-bottom: 1rem; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes popIn { from{transform:scale(0)} to{transform:scale(1)} }
+    .success-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .success-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+    .success-balance { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--gold-bg); border: 1px solid var(--gold-border); border-radius: 50px; padding: 0.6rem 1.5rem; font-weight: 700; color: #A06010; font-size: 1rem; margin-bottom: 1.5rem; }
+    .btn-start-reading { display: block; width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--rose), var(--rose-deep)); color: white; border: none; border-radius: 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: none; margin-bottom: 0.75rem; transition: all 0.2s; }
+    .btn-start-reading:hover { transform: translateY(-1px); }
+    .btn-browse-more { display: block; width: 100%; padding: 0.85rem; border: 1.5px solid var(--border); background: white; border-radius: 14px; font-size: 0.9rem; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; color: var(--ink); text-decoration: none; transition: all 0.2s; }
+    .btn-browse-more:hover { border-color: var(--rose); color: var(--rose-deep); }
+
+    /* FAQ */
+    .faq-section { max-width: 1100px; margin: 0 auto; padding: 0 5% 4rem; }
+    .faq-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .faq-item { background: white; border: 1px solid var(--border); border-radius: 14px; margin-bottom: 0.75rem; overflow: hidden; }
+    .faq-q { padding: 1.1rem 1.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
+    .faq-q:hover { background: var(--off); }
+    .faq-q.open { color: var(--rose-deep); }
+    .faq-arrow { transition: transform 0.3s; font-size: 0.75rem; }
+    .faq-q.open .faq-arrow { transform: rotate(180deg); }
+    .faq-a { font-size: 0.875rem; color: var(--muted); line-height: 1.7; padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.2s; }
+    .faq-a.open { max-height: 200px; padding: 0 1.5rem 1.25rem; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--ink); color: white; padding: 0.85rem 1.75rem; border-radius: 50px; font-size: 0.875rem; font-weight: 500; box-shadow: 0 8px 30px rgba(0,0,0,0.25); transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); z-index: 999; white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media(max-width:900px) { .main-layout{grid-template-columns:1fr;} .payment-sidebar{position:static;} .nav-links{display:none;} }
+    @media(max-width:480px) { .packages-grid{grid-template-columns:1fr;} .f-row{grid-template-columns:1fr;} .pay-methods{flex-wrap:wrap;} }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="index.html">W<span>&</span>L Words</a>
+  <ul class="nav-links">
+    <li><a href="browse.html">Browse Books</a></li>
+    <li><a href="browse.html">Free Stories</a></li>
+    <li><a href="browse.html">Categories</a></li>
+    <li><a href="auth.html">Write With Us</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a class="btn-ghost" href="auth.html">Sign In</a>
+    <a class="btn-nav-primary" href="browse.html">Start Reading</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-inner">
+    <span class="coin-hero-icon">🪙</span>
+    <span class="hero-eyebrow">Unlock the full story</span>
+    <h1 class="hero-title">Buy Coins, <em>Read More</em></h1>
+    <p class="hero-sub">Coins are how you unlock premium chapters on W&L Words. Buy once, unlock forever — no subscriptions, no expiry dates.</p>
+  </div>
+</div>
+
+<!-- BALANCE STRIP -->
+<div class="balance-strip">
+  <div class="balance-item"><span class="balance-label">Your balance:</span><span class="balance-coins">🪙 120 coins</span></div>
+  <div class="balance-divider"></div>
+  <div class="balance-item"><span class="balance-label">Chapters you can unlock right now:</span><span class="balance-value">~15 chapters</span></div>
+  <div class="balance-divider"></div>
+  <div class="balance-item"><span class="balance-label">Exchange rate:</span><span class="balance-value">100 coins = $1.00</span></div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+
+  <!-- LEFT: PACKAGES + INFO -->
+  <div class="packages-section">
+    <span class="section-label">Choose a package</span>
+    <h2 class="section-title">Top up your coins</h2>
+    <p class="section-sub">The more you buy, the better the value. All packages are a one-time purchase — no recurring charges ever.</p>
+
+    <div class="packages-grid">
+
+      <div class="pkg-card" onclick="selectPkg(this, 100, 1.00, 'Starter')" data-coins="100" data-price="1.00">
+        <div class="pkg-check">✓</div>
+        <span class="pkg-icon">✨</span>
+        <div class="pkg-coins">100</div>
+        <div class="pkg-coins-label">coins</div>
+        <div class="pkg-price">$1.00</div>
+        <div class="pkg-per">$0.010 per coin</div>
+        <div class="pkg-unlocks">Unlocks ~12 chapters</div>
+      </div>
+
+      <div class="pkg-card popular selected" onclick="selectPkg(this, 500, 4.50, 'Popular')" data-coins="500" data-price="4.50">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <div class="pkg-check">✓</div>
+        <span class="pkg-icon">🌟</span>
+        <div class="pkg-coins">500</div>
+        <div class="pkg-coins-label">coins</div>
+        <div class="pkg-price">$4.50</div>
+        <div class="pkg-per">$0.009 per coin · save 10%</div>
+        <span class="pkg-bonus">+50 bonus coins</span>
+        <div class="pkg-unlocks">Unlocks ~68 chapters</div>
+      </div>
+
+      <div class="pkg-card" onclick="selectPkg(this, 1200, 10.00, 'Value')" data-coins="1200" data-price="10.00">
+        <div class="pkg-check">✓</div>
+        <span class="pkg-icon">💎</span>
+        <div class="pkg-coins">1,200</div>
+        <div class="pkg-coins-label">coins</div>
+        <div class="pkg-price">$10.00</div>
+        <div class="pkg-per">$0.008 per coin · save 20%</div>
+        <span class="pkg-bonus">+200 bonus coins</span>
+        <div class="pkg-unlocks">Unlocks ~175 chapters</div>
+      </div>
+
+      <div class="pkg-card" onclick="selectPkg(this, 3000, 20.00, 'Ultimate')" data-coins="3000" data-price="20.00">
+        <div class="pkg-check">✓</div>
+        <span class="pkg-icon">👑</span>
+        <div class="pkg-coins">3,000</div>
+        <div class="pkg-coins-label">coins</div>
+        <div class="pkg-price">$20.00</div>
+        <div class="pkg-per">$0.0067 per coin · save 33%</div>
+        <span class="pkg-bonus">+750 bonus coins</span>
+        <div class="pkg-unlocks">Unlocks ~468 chapters</div>
+      </div>
+
+    </div>
+
+    <!-- How it works -->
+    <div class="how-card">
+      <h3>🪙 How coins work</h3>
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-text"><strong>Buy a coin package</strong> — choose the amount that suits you. Coins land in your account instantly after payment.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-text"><strong>Browse and read</strong> — the first 3 chapters of every story are always free. You'll see a 🔒 icon on chapters that need coins.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-text"><strong>Unlock with one tap</strong> — click the locked chapter, confirm the coin cost, and it opens immediately. Yours to read forever.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <div class="how-text"><strong>Writers get paid</strong> — 80% of every coin you spend goes directly to the writer. Your reading supports their gift.</div>
+      </div>
+    </div>
+
+    <!-- Trust signals -->
+    <div class="trust-strip">
+      <div class="trust-item"><span class="trust-icon">🔒</span> Secure payment</div>
+      <div class="trust-item"><span class="trust-icon">♾️</span> Coins never expire</div>
+      <div class="trust-item"><span class="trust-icon">⚡</span> Instant delivery</div>
+      <div class="trust-item"><span class="trust-icon">✝️</span> Faith-safe platform</div>
+      <div class="trust-item"><span class="trust-icon">💸</span> 80% goes to writers</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: ORDER + PAYMENT -->
+  <div class="payment-sidebar">
+    <div class="order-card">
+
+      <!-- Order summary -->
+      <div class="order-title">Order Summary</div>
+      <div class="order-summary">
+        <div class="os-row">
+          <span class="os-label">Package</span>
+          <span class="os-value" id="summaryPkg">Popular Pack</span>
+        </div>
+        <div class="os-row">
+          <span class="os-label">Coins</span>
+          <span class="os-coins" id="summaryCoins">🪙 500 + 50 bonus</span>
+        </div>
+        <div class="os-row">
+          <span class="os-label">Current balance</span>
+          <span class="os-value">🪙 120 coins</span>
+        </div>
+        <div class="os-divider"></div>
+        <div class="os-row">
+          <span class="os-total-label">New balance after</span>
+          <span class="os-coins" id="summaryNewBalance">🪙 670 coins</span>
+        </div>
+        <div class="os-divider"></div>
+        <div class="os-row">
+          <span class="os-total-label">Total</span>
+          <span class="os-total-value" id="summaryTotal">$4.50</span>
+        </div>
+      </div>
+
+      <!-- Payment method -->
+      <div class="section-label" style="margin-bottom:0.75rem;">Payment Method</div>
+      <div class="pay-methods">
+        <button class="pay-method active" onclick="setPayMethod(this,'card')"><span class="pay-method-icon">💳</span>Card</button>
+        <button class="pay-method" onclick="setPayMethod(this,'paystack')"><span class="pay-method-icon">🇳🇬</span>Paystack</button>
+        <button class="pay-method" onclick="setPayMethod(this,'paypal')"><span class="pay-method-icon">🅿️</span>PayPal</button>
+        <button class="pay-method" onclick="setPayMethod(this,'apple')"><span class="pay-method-icon">🍎</span>Apple Pay</button>
+      </div>
+
+      <!-- Card form -->
+      <div class="card-form" id="cardForm">
+        <div class="card-icons">
+          <span class="card-icon">VISA</span>
+          <span class="card-icon">MC</span>
+          <span class="card-icon">AMEX</span>
+        </div>
+        <div class="f-field">
+          <label class="f-label">Cardholder Name</label>
+          <input class="f-input" type="text" placeholder="Adaugo Obi" autocomplete="cc-name"/>
+        </div>
+        <div class="f-field">
+          <label class="f-label">Card Number</label>
+          <input class="f-input" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" autocomplete="cc-number"/>
+        </div>
+        <div class="f-row">
+          <div class="f-field">
+            <label class="f-label">Expiry Date</label>
+            <input class="f-input" type="text" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)" autocomplete="cc-exp"/>
+          </div>
+          <div class="f-field">
+            <label class="f-label">CVV</label>
+            <input class="f-input" type="text" placeholder="123" maxlength="4" autocomplete="cc-csc"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alternative method message -->
+      <div id="altPayMsg" style="display:none; background:var(--off); border:1px solid var(--border); border-radius:12px; padding:1.25rem; text-align:center; margin-bottom:1rem; font-size:0.85rem; color:var(--muted); line-height:1.6;">
+        You'll be redirected to complete payment securely. Your coins will appear instantly after confirmation.
+      </div>
+
+      <button class="btn-pay" id="payBtn" onclick="handlePayment()">
+        🪙 Buy Coins — <span id="btnTotal">$4.50</span>
+      </button>
+      <p class="pay-note">
+        By purchasing you agree to our <a href="#">Terms of Service</a>. Coins are non-refundable once used to unlock chapters. Unused coins can be refunded within 7 days.
+      </p>
+    </div>
+
+    <!-- Success screen (hidden by default) -->
+    <div class="order-card success-screen" id="successScreen">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Coins Added!</div>
+      <div class="success-sub">Your coins have landed in your account instantly. Start unlocking stories right now.</div>
+      <div class="success-balance">🪙 <span id="successBalance">670</span> coins in your wallet</div>
+      <a class="btn-start-reading" href="story.html">Continue Reading →</a>
+      <a class="btn-browse-more" href="browse.html">Browse More Stories</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <h2 class="faq-title">Frequently Asked Questions</h2>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Do coins expire? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">No. Your coins never expire. Once you buy them, they stay in your account until you choose to spend them — whether that's tomorrow or two years from now.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">What happens when I unlock a chapter? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Once you spend coins to unlock a chapter, it's yours permanently. You can read it as many times as you want, on any device, without spending coins again. Just log in and it's there.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">How much of my purchase goes to the writer? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">80% of every coin you spend on a story goes directly to that writer. W&L Words takes only 20% to cover platform costs. We believe writers should be paid well for their gift.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Can I get a refund on my coins? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Unused coins can be refunded within 7 days of purchase. Once coins have been spent to unlock chapters, those specific coins cannot be refunded. Contact support@wlwords.com for refund requests.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Is my payment information safe? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Yes. We never store your card details on our servers. All payments are processed by Stripe (international) or Paystack (Nigeria/Africa), both of which are PCI-DSS compliant and trusted by millions of businesses worldwide.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">Can I buy coins as a gift for someone else? <span class="faq-arrow">▼</span></div>
+    <div class="faq-a">Gift coins are coming soon! We're building a gifting feature so you can send coins to friends and family. Sign up for our newsletter to be notified when it launches.</div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  let selectedCoins = 550; // 500 + 50 bonus
+  let selectedPrice = 4.50;
+  let selectedPkg = 'Popular';
+  let currentBalance = 120;
+
+  // SELECT PACKAGE
+  function selectPkg(card, coins, price, name) {
+    document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+
+    // Calculate bonus
+    const bonusMap = { 100: 0, 500: 50, 1200: 200, 3000: 750 };
+    const bonus = bonusMap[coins] || 0;
+    const total = coins + bonus;
+
+    selectedCoins = total;
+    selectedPrice = price;
+    selectedPkg = name;
+
+    // Update summary
+    document.getElementById('summaryPkg').textContent = name + ' Pack';
+    document.getElementById('summaryCoins').textContent = bonus > 0
+      ? `🪙 ${coins.toLocaleString()} + ${bonus} bonus`
+      : `🪙 ${coins.toLocaleString()} coins`;
+    document.getElementById('summaryNewBalance').textContent = `🪙 ${(currentBalance + total).toLocaleString()} coins`;
+    document.getElementById('summaryTotal').textContent = '$' + price.toFixed(2);
+    document.getElementById('btnTotal').textContent = '$' + price.toFixed(2);
+  }
+
+  // SET PAYMENT METHOD
+  function setPayMethod(btn, method) {
+    document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const isCard = method === 'card';
+    document.getElementById('cardForm').style.display = isCard ? 'block' : 'none';
+    document.getElementById('altPayMsg').style.display = isCard ? 'none' : 'block';
+  }
+
+  // CARD FORMATTING
+  function formatCard(inp) {
+    let v = inp.value.replace(/\D/g, '').substring(0, 16);
+    inp.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+  function formatExpiry(inp) {
+    let v = inp.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+    inp.value = v;
+  }
+
+  // HANDLE PAYMENT
+  function handlePayment() {
+    const btn = document.getElementById('payBtn');
+    btn.classList.add('loading');
+    btn.textContent = 'Processing…';
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      // Show success
+      document.querySelector('.order-card:not(.success-screen)').style.display = 'none';
+      const successEl = document.getElementById('successScreen');
+      successEl.classList.add('show');
+      document.getElementById('successBalance').textContent = (currentBalance + selectedCoins).toLocaleString();
+      // Update balance strip
+      document.querySelector('.balance-coins').textContent = `🪙 ${(currentBalance + selectedCoins).toLocaleString()} coins`;
+      showToast(`🎉 ${selectedCoins} coins added to your account!`);
+    }, 2000);
+  }
+
+  // FAQ TOGGLE
+  function toggleFaq(q) {
+    const a = q.nextElementSibling;
+    const isOpen = q.classList.contains('open');
+    document.querySelectorAll('.faq-q').forEach(el => { el.classList.remove('open'); el.nextElementSibling.classList.remove('open'); });
+    if (!isOpen) { q.classList.add('open'); a.classList.add('open'); }
+  }
+
+  // TOAST
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+</script>
+</body>
+</html>

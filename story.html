@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Faithful Heart — W&L Words</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white:     #FFFFFF;
+      --off:       #FDF7FB;
+      --blush:     #F9E4EF;
+      --rose:      #E8789C;
+      --rose-deep: #C9527A;
+      --sky:       #C5DEFA;
+      --blue:      #4A82C2;
+      --blue-deep: #2F5F98;
+      --ink:       #1A1A2E;
+      --muted:     #6E6E85;
+      --border:    #F0D8E8;
+      --gold:      #F5A623;
+      /* Reading theme vars — overridden by JS */
+      --read-bg:   #FFFFFF;
+      --read-text: #1A1A2E;
+      --read-muted:#6E6E85;
+      --read-size: 18px;
+      --read-line: 1.9;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); overflow-x: hidden; }
+
+    /* ══ NAV ══ */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 68px;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--ink); text-decoration: none; }
+    .logo span { color: var(--rose); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--rose-deep); }
+    .nav-ctas { display: flex; gap: 0.75rem; align-items: center; }
+    .btn-ghost { padding: 0.5rem 1.2rem; border: 1.5px solid var(--rose); color: var(--rose-deep); background: transparent; border-radius: 50px; font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; }
+    .btn-primary { padding: 0.5rem 1.4rem; background: var(--rose); color: white; border: none; border-radius: 50px; font-size: 0.875rem; font-weight: 600; cursor: pointer; text-decoration: none; box-shadow: 0 4px 14px rgba(232,120,156,0.35); }
+
+    /* ══ VIEWS ══ */
+    #bookDetailView { display: block; }
+    #readingView    { display: none; }
+
+    /* ══ BOOK DETAIL — HERO ══ */
+    .book-hero {
+      background: linear-gradient(160deg, #1A1A2E 0%, #2F1A3E 60%, #1A2A4E 100%);
+      padding: 4rem 5% 3rem; position: relative; overflow: hidden;
+    }
+    .book-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(232,120,156,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .book-hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 3rem; align-items: start; position: relative; z-index: 1;
+    }
+    .book-cover-lg {
+      width: 180px; height: 252px; flex-shrink: 0;
+      background: linear-gradient(150deg, #C9527A, #8B2045);
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 6px 0 0 rgba(0,0,0,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1rem;
+      font-weight: 600; color: white; text-align: center; padding: 1.25rem;
+      line-height: 1.4; position: relative;
+    }
+    .book-cover-lg::after {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+      background: rgba(0,0,0,0.25); border-radius: 12px 0 0 12px;
+    }
+    .book-hero-info { color: white; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(232,120,156,0.25); border: 1px solid rgba(232,120,156,0.4);
+      color: var(--rose); border-radius: 50px; padding: 0.3rem 0.9rem;
+      font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700;
+      line-height: 1.15; margin-bottom: 0.5rem;
+    }
+    .hero-author {
+      font-size: 1rem; color: rgba(255,255,255,0.65); margin-bottom: 1.25rem;
+    }
+    .hero-author a { color: var(--sky); text-decoration: none; font-weight: 500; }
+    .hero-stats { display: flex; gap: 2rem; margin-bottom: 1.75rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: white; }
+    .hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+    .hero-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .tag {
+      padding: 0.25rem 0.8rem; border-radius: 50px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.75rem; color: rgba(255,255,255,0.7);
+    }
+    .hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn-read {
+      padding: 0.85rem 2rem; background: var(--rose); color: white;
+      border: none; border-radius: 50px; font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      box-shadow: 0 6px 20px rgba(201,82,122,0.45);
+      transition: all 0.25s;
+    }
+    .btn-read:hover { background: var(--rose-deep); transform: translateY(-2px); }
+    .btn-bookmark {
+      padding: 0.85rem 1.5rem; background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.25); color: white;
+      border-radius: 50px; font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.25s;
+    }
+    .btn-bookmark:hover { background: rgba(255,255,255,0.18); }
+
+    /* ══ DETAIL BODY ══ */
+    .detail-body { max-width: 1100px; margin: 0 auto; padding: 3rem 5%; display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; }
+
+    /* Description */
+    .detail-main {}
+    .section-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; }
+    .description {
+      font-size: 1rem; line-height: 1.8; color: #3A3A5A; font-weight: 300;
+      margin-bottom: 2rem;
+    }
+    .description p { margin-bottom: 1rem; }
+
+    /* Chapters list */
+    .chapters-section { background: white; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; }
+    .chapters-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .chapters-header h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; }
+    .chapters-count { font-size: 0.8rem; color: var(--muted); }
+    .chapter-row {
+      display: flex; align-items: center;
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);
+      cursor: pointer; transition: background 0.2s; gap: 1rem;
+    }
+    .chapter-row:last-child { border-bottom: none; }
+    .chapter-row:hover { background: var(--off); }
+    .chapter-row.locked { cursor: default; }
+    .chapter-row.locked:hover { background: white; }
+    .ch-num { font-size: 0.75rem; font-weight: 600; color: var(--muted); width: 28px; flex-shrink: 0; }
+    .ch-info { flex: 1; }
+    .ch-title { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+    .ch-meta { font-size: 0.75rem; color: var(--muted); }
+    .ch-badge {
+      font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.65rem;
+      border-radius: 50px; flex-shrink: 0;
+    }
+    .ch-free { background: #D4F5E9; color: #1A7A55; }
+    .ch-lock { background: #FFF0D0; color: #A06010; display: flex; align-items: center; gap: 0.3rem; }
+
+    /* Sidebar */
+    .detail-sidebar {}
+    .sidebar-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .sidebar-card h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; }
+
+    /* Coin purchase card */
+    .coin-card { background: linear-gradient(135deg, #FFF8E8, #FFF0D0); border: 1px solid #F0D898; }
+    .coin-balance { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+    .coin-icon { font-size: 2rem; }
+    .coin-amount { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: #A06010; }
+    .coin-label { font-size: 0.78rem; color: #8A6820; }
+    .coin-btn {
+      width: 100%; padding: 0.75rem; background: linear-gradient(135deg, #F5A623, #D4840A);
+      color: white; border: none; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s;
+    }
+    .coin-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(213,132,10,0.35); }
+    .coin-note { font-size: 0.75rem; color: #8A6820; text-align: center; margin-top: 0.6rem; }
+
+    /* Author card */
+    .author-card {}
+    .author-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .author-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; color: white; font-weight: 700;
+    }
+    .author-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; }
+    .author-handle { font-size: 0.78rem; color: var(--muted); }
+    .author-bio { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .follow-btn { width: 100%; padding: 0.6rem; border: 1.5px solid var(--rose); color: var(--rose-deep); background: transparent; border-radius: 50px; font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; }
+    .follow-btn:hover { background: var(--blush); }
+
+    /* Rating card */
+    .rating-big { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+    .rating-stars { font-size: 1.2rem; color: var(--gold); margin-bottom: 0.25rem; }
+    .rating-count { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; }
+    .rating-bar-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.4rem; }
+    .rating-bar-label { font-size: 0.75rem; color: var(--muted); width: 20px; }
+    .rating-bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 50px; overflow: hidden; }
+    .rating-bar-fill { height: 100%; background: var(--gold); border-radius: 50px; }
+    .rating-bar-pct { font-size: 0.72rem; color: var(--muted); width: 28px; text-align: right; }
+
+    /* ══ READING VIEW ══ */
+    #readingView { background: var(--read-bg); min-height: 100vh; }
+
+    /* Reading toolbar */
+    .read-toolbar {
+      position: sticky; top: 0; z-index: 150;
+      display: flex; align-items: center;
+      padding: 0 5%; height: 56px; gap: 1rem;
+      background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .dark-mode .read-toolbar { background: rgba(18,18,28,0.97); border-color: rgba(255,255,255,0.08); }
+    .back-btn {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      background: none; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; padding: 0.4rem 0.75rem;
+      border-radius: 50px; transition: all 0.2s;
+    }
+    .back-btn:hover { background: var(--blush); color: var(--rose-deep); }
+    .dark-mode .back-btn:hover { background: rgba(255,255,255,0.08); color: white; }
+    .toolbar-center { flex: 1; text-align: center; }
+    .toolbar-ch-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+    .dark-mode .toolbar-ch-title { color: rgba(255,255,255,0.85); }
+    .toolbar-controls { display: flex; align-items: center; gap: 0.4rem; }
+    .tool-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      border: 1.5px solid var(--border); background: white;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; transition: all 0.2s;
+      position: relative;
+    }
+    .dark-mode .tool-btn { background: #1E1E30; border-color: rgba(255,255,255,0.1); }
+    .tool-btn:hover { border-color: var(--rose); background: var(--blush); }
+    .dark-mode .tool-btn:hover { background: rgba(255,255,255,0.1); }
+    .tool-btn.active { background: var(--blush); border-color: var(--rose); }
+
+    /* Progress bar */
+    .read-progress-track {
+      height: 3px; background: var(--border); position: relative; overflow: visible;
+      transition: background 0.3s;
+    }
+    .dark-mode .read-progress-track { background: rgba(255,255,255,0.08); }
+    .read-progress-fill {
+      height: 100%; background: linear-gradient(90deg, var(--rose), var(--blue));
+      border-radius: 0 2px 2px 0; transition: width 0.3s ease;
+      width: 22%;
+    }
+
+    /* Reading content */
+    .reading-wrap {
+      max-width: 680px; margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+      transition: all 0.3s;
+    }
+    .ch-heading {
+      margin-bottom: 2.5rem; padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .dark-mode .ch-heading { border-color: rgba(255,255,255,0.08); }
+    .ch-label {
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--rose); margin-bottom: 0.6rem; display: block;
+    }
+    .ch-main-title {
+      font-family: 'Playfair Display', serif; font-size: 2rem;
+      font-weight: 700; color: var(--read-text); line-height: 1.25;
+      transition: color 0.3s;
+    }
+    .ch-sub { font-size: 0.85rem; color: var(--read-muted); margin-top: 0.5rem; }
+
+    /* Prose */
+    .prose {
+      font-family: 'Lora', Georgia, serif;
+      font-size: var(--read-size);
+      line-height: var(--read-line);
+      color: var(--read-text);
+      transition: color 0.3s, font-size 0.2s;
+    }
+    .prose p { margin-bottom: 1.6em; }
+    .prose p:first-child::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8em; font-weight: 700;
+      float: left; line-height: 0.8; margin: 0.1em 0.12em -0.05em 0;
+      color: var(--rose-deep);
+    }
+    .prose blockquote {
+      border-left: 3px solid var(--rose);
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      margin: 2rem 0; font-style: italic;
+      color: var(--read-muted);
+    }
+
+    /* Locked chapter gate */
+    .lock-gate {
+      background: white; border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.5rem 2rem; text-align: center;
+      margin-top: 3rem; position: relative; overflow: hidden;
+    }
+    .dark-mode .lock-gate { background: #1E1E30; border-color: rgba(255,255,255,0.1); }
+    .lock-gate::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent, var(--blush));
+      pointer-events: none;
+    }
+    .dark-mode .lock-gate::before { background: linear-gradient(to bottom, transparent, rgba(18,18,28,0.8)); }
+    .lock-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .lock-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .dark-mode .lock-title { color: white; }
+    .lock-sub { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+    .lock-cost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: #FFF8E8; border: 1px solid #F0D898;
+      border-radius: 50px; padding: 0.5rem 1.25rem;
+      font-size: 0.9rem; font-weight: 600; color: #A06010;
+      margin-bottom: 1.5rem;
+    }
+    .unlock-btn {
+      display: block; width: 100%; padding: 0.9rem;
+      background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+      color: white; border: none; border-radius: 50px;
+      font-size: 1rem; font-weight: 600; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: all 0.25s;
+      box-shadow: 0 6px 20px rgba(201,82,122,0.35);
+    }
+    .unlock-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(201,82,122,0.45); }
+    .get-coins-link { display: block; font-size: 0.82rem; color: var(--muted); margin-top: 0.75rem; text-decoration: none; }
+    .get-coins-link:hover { color: var(--rose-deep); }
+
+    /* Chapter nav */
+    .ch-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 4rem; padding-top: 2rem;
+      border-top: 1px solid var(--border); gap: 1rem;
+      transition: border-color 0.3s;
+    }
+    .dark-mode .ch-nav { border-color: rgba(255,255,255,0.08); }
+    .ch-nav-btn {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.75rem 1.4rem; border-radius: 50px;
+      border: 1.5px solid var(--border); background: white;
+      font-size: 0.875rem; font-weight: 500; color: var(--ink);
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: all 0.25s;
+    }
+    .dark-mode .ch-nav-btn { background: #1E1E30; border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+    .ch-nav-btn:hover { border-color: var(--rose); background: var(--blush); color: var(--rose-deep); }
+    .dark-mode .ch-nav-btn:hover { background: rgba(255,255,255,0.08); }
+    .ch-nav-btn:disabled { opacity: 0.4; cursor: default; }
+    .ch-nav-btn:disabled:hover { border-color: var(--border); background: white; color: var(--ink); }
+    .ch-nav-center { text-align: center; }
+    .ch-nav-label { font-size: 0.75rem; color: var(--muted); }
+    .ch-nav-progress { font-size: 0.85rem; font-weight: 600; color: var(--rose-deep); margin-top: 0.2rem; }
+
+    /* Font settings panel */
+    .settings-panel {
+      position: absolute; top: 56px; right: 5%;
+      background: white; border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.25rem; width: 260px;
+      box-shadow: 0 12px 40px rgba(26,26,46,0.15);
+      display: none; z-index: 160;
+    }
+    .dark-mode .settings-panel { background: #1E1E30; border-color: rgba(255,255,255,0.1); }
+    .settings-panel.open { display: block; }
+    .sp-label { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; display: block; }
+    .font-size-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .fs-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1.5px solid var(--border); background: white;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-family: 'Inter', sans-serif; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .dark-mode .fs-btn { background: #2A2A40; border-color: rgba(255,255,255,0.1); color: white; }
+    .fs-btn:hover { border-color: var(--rose); background: var(--blush); }
+    .fs-display { flex: 1; text-align: center; font-size: 0.85rem; font-weight: 500; color: var(--ink); }
+    .dark-mode .fs-display { color: rgba(255,255,255,0.8); }
+    .theme-btns { display: flex; gap: 0.5rem; }
+    .theme-btn {
+      flex: 1; padding: 0.5rem 0.25rem; border-radius: 8px;
+      border: 1.5px solid var(--border); cursor: pointer;
+      font-size: 0.75rem; font-weight: 500; text-align: center;
+      transition: all 0.2s;
+    }
+    .theme-btn.active { border-color: var(--rose); background: var(--blush); color: var(--rose-deep); }
+    .theme-btn[data-theme="dark"] { background: #1A1A2E; color: white; border-color: #333; }
+    .theme-btn[data-theme="dark"].active { border-color: var(--rose); }
+    .theme-btn[data-theme="sepia"] { background: #F8F0E0; color: #5A4020; border-color: #E0D0B0; }
+    .theme-btn[data-theme="sepia"].active { border-color: #A08030; }
+
+    /* Dark mode overrides */
+    .dark-mode { --read-bg: #12121C; --read-text: rgba(255,255,255,0.87); --read-muted: rgba(255,255,255,0.45); }
+    .dark-mode #readingView { background: #12121C; }
+    .sepia-mode { --read-bg: #F8F0E0; --read-text: #3A2A10; --read-muted: #7A6040; }
+    .sepia-mode #readingView { background: #F8F0E0; }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 900px) {
+      .book-hero-inner { grid-template-columns: 1fr; }
+      .book-cover-lg { width: 130px; height: 182px; font-size: 0.85rem; }
+      .detail-body { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 480px) {
+      .hero-stats { gap: 1.25rem; }
+      .reading-wrap { padding: 2rem 1.25rem 5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="mainNav">
+  <a class="logo" href="index.html">W<span>&</span>L Words</a>
+  <ul class="nav-links">
+    <li><a href="browse.html">Browse Books</a></li>
+    <li><a href="browse.html">Free Stories</a></li>
+    <li><a href="browse.html">Categories</a></li>
+    <li><a href="auth.html">Write With Us</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a class="btn-ghost" href="auth.html">Sign In</a>
+    <a class="btn-primary" href="browse.html">Start Reading</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════ -->
+<!--  BOOK DETAIL VIEW                 -->
+<!-- ══════════════════════════════════ -->
+<div id="bookDetailView">
+
+  <!-- Book Hero -->
+  <div class="book-hero">
+    <div class="book-hero-inner">
+      <div class="book-cover-lg">The Faithful Heart</div>
+      <div class="book-hero-info">
+        <div class="hero-badge">💑 Christian Romance</div>
+        <h1 class="hero-title">The Faithful Heart</h1>
+        <p class="hero-author">by <a href="#">Grace Abiodun</a> · Lagos, Nigeria</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="hero-stat-num">42</div><div class="hero-stat-label">Chapters</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">15.3k</div><div class="hero-stat-label">Readers</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">4.7 ★</div><div class="hero-stat-label">Rating</div></div>
+          <div class="hero-stat"><div class="hero-stat-num">2025</div><div class="hero-stat-label">Published</div></div>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">Faith</span>
+          <span class="tag">Romance</span>
+          <span class="tag">Redemption</span>
+          <span class="tag">Nigerian Setting</span>
+          <span class="tag">Second Chances</span>
+        </div>
+        <div class="hero-ctas">
+          <button class="btn-read" onclick="openReading(1)">📖 Read Chapter 1 — Free</button>
+          <button class="btn-bookmark">🔖 Save for Later</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Body -->
+  <div class="detail-body">
+    <div class="detail-main">
+
+      <!-- Description -->
+      <div class="section-label">About this story</div>
+      <div class="description">
+        <p>Adaugo has spent five years rebuilding her life after a broken engagement nearly destroyed her faith and her sense of self. Now a celebrated wedding planner in Lagos, she keeps love at a careful distance — until a client assigns her to plan the wedding of the one man who got away.</p>
+        <p>Emeka Nwosu has never stopped believing that God brings second chances. But convincing Adaugo that their story isn't finished will take more than words — it will take a miracle, the kind that only comes when two stubborn hearts finally let go and trust.</p>
+        <p>Set across Lagos and Abuja, <em>The Faithful Heart</em> is a tender story about what happens when faith is tested not by tragedy, but by hope.</p>
+      </div>
+
+      <!-- Chapters -->
+      <div class="section-label" style="margin-top:2rem;">Chapters</div>
+      <div class="chapters-section">
+        <div class="chapters-header">
+          <h3>Table of Contents</h3>
+          <span class="chapters-count">42 chapters · 3 free</span>
+        </div>
+
+        <div class="chapter-row" onclick="openReading(1)">
+          <span class="ch-num">1</span>
+          <div class="ch-info">
+            <div class="ch-title">The Wedding That Wasn't</div>
+            <div class="ch-meta">2,800 words · 12 min read</div>
+          </div>
+          <span class="ch-badge ch-free">Free</span>
+        </div>
+        <div class="chapter-row" onclick="openReading(2)">
+          <span class="ch-num">2</span>
+          <div class="ch-info">
+            <div class="ch-title">Five Years Later</div>
+            <div class="ch-meta">3,100 words · 14 min read</div>
+          </div>
+          <span class="ch-badge ch-free">Free</span>
+        </div>
+        <div class="chapter-row" onclick="openReading(3)">
+          <span class="ch-num">3</span>
+          <div class="ch-info">
+            <div class="ch-title">The Impossible Client</div>
+            <div class="ch-meta">2,600 words · 11 min read</div>
+          </div>
+          <span class="ch-badge ch-free">Free</span>
+        </div>
+        <div class="chapter-row locked">
+          <span class="ch-num">4</span>
+          <div class="ch-info">
+            <div class="ch-title">A Face from the Past</div>
+            <div class="ch-meta">3,400 words · 15 min read</div>
+          </div>
+          <span class="ch-badge ch-lock">🔒 8 coins</span>
+        </div>
+        <div class="chapter-row locked">
+          <span class="ch-num">5</span>
+          <div class="ch-info">
+            <div class="ch-title">What Prayer Looks Like Now</div>
+            <div class="ch-meta">2,900 words · 13 min read</div>
+          </div>
+          <span class="ch-badge ch-lock">🔒 8 coins</span>
+        </div>
+        <div class="chapter-row locked">
+          <span class="ch-num">6</span>
+          <div class="ch-info">
+            <div class="ch-title">The First Conversation</div>
+            <div class="ch-meta">3,200 words · 14 min read</div>
+          </div>
+          <span class="ch-badge ch-lock">🔒 8 coins</span>
+        </div>
+        <div class="chapter-row locked" style="border-bottom:none;">
+          <span class="ch-num" style="color:var(--border);">···</span>
+          <div class="ch-info">
+            <div class="ch-title" style="color:var(--muted);">36 more chapters</div>
+            <div class="ch-meta">8 coins each to unlock</div>
+          </div>
+          <span class="ch-badge ch-lock">🔒</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="detail-sidebar">
+
+      <!-- Coin card -->
+      <div class="sidebar-card coin-card">
+        <h4 style="color:#8A6820;">🪙 Your Coin Balance</h4>
+        <div class="coin-balance">
+          <span class="coin-icon">🪙</span>
+          <div>
+            <div class="coin-amount">120</div>
+            <div class="coin-label">coins available</div>
+          </div>
+        </div>
+        <button class="coin-btn">+ Buy More Coins</button>
+        <p class="coin-note">100 coins = $1.00 · Pay once, unlock forever</p>
+      </div>
+
+      <!-- Author card -->
+      <div class="sidebar-card author-card">
+        <h4>About the Author</h4>
+        <div class="author-row">
+          <div class="author-avatar">G</div>
+          <div>
+            <div class="author-name">Grace Abiodun</div>
+            <div class="author-handle">Lagos, Nigeria · 6 stories</div>
+          </div>
+        </div>
+        <p class="author-bio">Grace writes faith-rooted romance inspired by her Nigerian roots and personal journey with God. Her stories explore love, forgiveness, and what it means to trust again.</p>
+        <button class="follow-btn">+ Follow Grace</button>
+      </div>
+
+      <!-- Rating card -->
+      <div class="sidebar-card">
+        <h4>Reader Ratings</h4>
+        <div class="rating-big">4.7</div>
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-count">from 1,842 ratings</div>
+        <div class="rating-bar-row"><span class="rating-bar-label">5</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:78%"></div></div><span class="rating-bar-pct">78%</span></div>
+        <div class="rating-bar-row"><span class="rating-bar-label">4</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:14%"></div></div><span class="rating-bar-pct">14%</span></div>
+        <div class="rating-bar-row"><span class="rating-bar-label">3</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:5%"></div></div><span class="rating-bar-pct">5%</span></div>
+        <div class="rating-bar-row"><span class="rating-bar-label">2</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:2%"></div></div><span class="rating-bar-pct">2%</span></div>
+        <div class="rating-bar-row"><span class="rating-bar-label">1</span><div class="rating-bar-track"><div class="rating-bar-fill" style="width:1%"></div></div><span class="rating-bar-pct">1%</span></div>
+      </div>
+    </aside>
+  </div>
+</div><!-- /bookDetailView -->
+
+
+<!-- ══════════════════════════════════ -->
+<!--  READING VIEW                     -->
+<!-- ══════════════════════════════════ -->
+<div id="readingView">
+
+  <!-- Reading toolbar -->
+  <div class="read-toolbar" id="readToolbar">
+    <button class="back-btn" onclick="closeReading()">← Back to Book</button>
+    <div class="toolbar-center">
+      <div class="toolbar-ch-title" id="toolbarTitle">Chapter 1 · The Wedding That Wasn't</div>
+    </div>
+    <div class="toolbar-controls">
+      <button class="tool-btn" title="Bookmark" onclick="this.classList.toggle('active')">🔖</button>
+      <button class="tool-btn" title="Font settings" id="settingsBtn" onclick="toggleSettings()">Aa</button>
+    </div>
+
+    <!-- Settings panel -->
+    <div class="settings-panel" id="settingsPanel">
+      <span class="sp-label">Font Size</span>
+      <div class="font-size-row">
+        <button class="fs-btn" onclick="changeFontSize(-1)">A−</button>
+        <div class="fs-display" id="fsDisplay">18px</div>
+        <button class="fs-btn" onclick="changeFontSize(1)">A+</button>
+      </div>
+      <span class="sp-label">Reading Theme</span>
+      <div class="theme-btns">
+        <button class="theme-btn active" data-theme="light" onclick="setTheme('light',this)">☀️ Light</button>
+        <button class="theme-btn" data-theme="sepia" onclick="setTheme('sepia',this)">📜 Sepia</button>
+        <button class="theme-btn" data-theme="dark" onclick="setTheme('dark',this)">🌙 Dark</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="read-progress-track">
+    <div class="read-progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Reading content -->
+  <div class="reading-wrap" id="readingWrap">
+
+    <div class="ch-heading">
+      <span class="ch-label" id="chLabel">Chapter 1</span>
+      <h2 class="ch-main-title" id="chMainTitle">The Wedding That Wasn't</h2>
+      <p class="ch-sub">2,800 words · ~12 min read · Free chapter</p>
+    </div>
+
+    <div class="prose" id="proseContent">
+      <!-- Chapter 1 content -->
+    </div>
+
+    <!-- Locked gate (hidden by default, shown for locked chapters) -->
+    <div class="lock-gate" id="lockGate" style="display:none;">
+      <div class="lock-icon">🔒</div>
+      <h3 class="lock-title">Unlock this chapter</h3>
+      <p class="lock-sub">This chapter is available to unlock with coins. Once you unlock it, it's yours forever — no expiry, no re-purchasing.</p>
+      <div class="lock-cost">🪙 8 coins to unlock</div>
+      <button class="unlock-btn" onclick="unlockChapter()">Unlock with 8 Coins</button>
+      <a class="get-coins-link" href="coins.html">Don't have coins? Get 100 coins for $1.00 →</a>
+    </div>
+
+    <!-- Chapter navigation -->
+    <div class="ch-nav" id="chNav">
+      <button class="ch-nav-btn" id="prevBtn" onclick="goChapter(-1)" disabled>← Previous</button>
+      <div class="ch-nav-center">
+        <div class="ch-nav-label">Your progress</div>
+        <div class="ch-nav-progress" id="chProgress">Chapter 1 of 42</div>
+      </div>
+      <button class="ch-nav-btn" id="nextBtn" onclick="goChapter(1)">Next →</button>
+    </div>
+
+  </div>
+</div><!-- /readingView -->
+
+<script>
+  // ── CHAPTER DATA ──
+  const chapters = [
+    {
+      num: 1, title: "The Wedding That Wasn't", free: true,
+      label: "Chapter 1", time: "~12 min read · Free chapter",
+      content: `
+        <p>The bouquet hit the marble floor before anyone could catch it, and Adaugo Obi knew, with the particular certainty that only God and a woman's gut can produce, that today was going to be the worst day of her professional life.</p>
+
+        <p>Three hundred guests sat in white linen chairs inside the Eko Hotel ballroom, their perfume a collective cloud of expectation. The orchids had arrived at six that morning, exactly as ordered. The string quartet was positioned, the champagne flutes were filled, the photographer — the very expensive, very temperamental photographer from Abuja — was circling the room like a well-dressed hawk. Everything was perfect. Everything was always perfect when Adaugo planned a wedding.</p>
+
+        <p>Except for the groom. Who was not here.</p>
+
+        <blockquote>"He called from the airport," the best man whispered, his bow tie askew, his forehead shining with what Adaugo had learned to identify as the particular sweat of a man delivering terrible news. "He said he couldn't do it. He said to tell her — he said to tell everyone he's sorry."</blockquote>
+
+        <p>Adaugo looked at the man for a long moment. Then she looked at the door through which the bride, Chiamaka Osei-Mensah, daughter of Dr. and Mrs. Franklin Osei-Mensah of Victoria Island, would soon walk. She thought about her commission. She thought about the two-page review that would appear on Instagram by morning. She thought about the five years she had spent building Beloved Events from a notebook and a borrowed folding table into the most sought-after wedding planning company in Lagos.</p>
+
+        <p>And then she put those thoughts aside, the way her grandmother had always taught her to put aside anything that got in the way of doing what was right, and she walked to the door.</p>
+
+        <p>What happened in the next forty-five minutes would be retold, embellished, and eventually mythologized in the Lagos social circuit for years. Adaugo sent the quartet home. She arranged for the champagne to be quietly redirected to a back room. She spoke to the mothers — both of them, a feat requiring the diplomatic skill of a UN envoy — and she sat with Chiamaka herself for seventeen minutes in a small anteroom that smelled of lilies and heartbreak.</p>
+
+        <p>She did not cry. Adaugo Obi had a rule about crying at weddings. None of the tears could be hers.</p>
+
+        <p>By the time the guests were redirected to a hastily reframed "celebration brunch," she had already called the hotel manager, adjusted the catering order, and sent a personal note — handwritten, because some things still required a human hand — to each member of the string quartet with a full payment and a small apology.</p>
+
+        <p>It was only in the taxi home, somewhere on Carter Bridge with the Lagos traffic as still and indifferent as ever, that she allowed herself one question. Not for Chiamaka. Not for the groom whose name she was already beginning to forget. For herself.</p>
+
+        <p>She thought of Emeka. She always thought of Emeka when weddings broke open. She thought of the church in Lekki, the morning that never became an afternoon, the guests who had been kinder than she deserved, and her own mother's face, which had held an expression Adaugo still could not name after all these years.</p>
+
+        <p>She pressed her forehead against the cool of the taxi window.</p>
+
+        <p>"God," she said, under her breath, to no one and to the only One who had always been listening. "I'm tired."</p>
+
+        <p>The traffic moved. Lagos went on being Lagos. And Adaugo went home, put the kettle on, and opened her calendar for the following week, which contained fourteen client meetings, two venue visits, and a florist dispute she had been avoiding since Tuesday.</p>
+
+        <p>She did not think about what it meant that the only time she felt truly competent was when she was managing other people's love stories. She did not think about it because she had learned, in five years of very disciplined not-thinking, that some questions were not meant to be answered alone.</p>
+
+        <p>That was a Wednesday.</p>
+
+        <p>On Friday, a new client enquiry landed in her inbox with the subject line: <em>Wedding Planning — Urgent — Referred by Pastor Chukwu.</em></p>
+
+        <p>She would read it Saturday morning, over her second cup of tea, and she would feel the particular stillness that comes just before something changes everything.</p>
+
+        <p>But that was Saturday. And first, there was Thursday to survive.</p>
+      `
+    },
+    {
+      num: 2, title: "Five Years Later", free: true,
+      label: "Chapter 2", time: "~14 min read · Free chapter",
+      content: `
+        <p>Five years is long enough to become a different person. Adaugo knew this because the woman she had been at twenty-six — nervous, hopeful, terrifyingly in love — would not recognise the woman who now stood at the head of a conference table in a glass-walled office in Victoria Island, explaining to a room full of corporate clients why the floral arrangement they had chosen would not photograph well.</p>
+
+        <p>The old Adaugo would have agreed with the client. The new one simply knew better.</p>
+
+        <p>"The hydrangeas will wilt under the lighting you've chosen for the reception hall," she said, tapping the mood board. "I'd suggest garden roses — the blush variety — or we work with what the hydrangeas actually need and change the lighting. Either is achievable. The choice is yours."</p>
+
+        <p>The client chose the roses. They always did. Adaugo had learned that people mostly wanted to feel that the decision was theirs, and she had gotten very good at arranging the options so that the right answer was also the obvious one.</p>
+
+        <p>She thought sometimes that this was not entirely a healthy skill to have developed.</p>
+      `
+    },
+    {
+      num: 3, title: "The Impossible Client", free: true,
+      label: "Chapter 3", time: "~11 min read · Free chapter",
+      content: `
+        <p>The email had come from a PA, which was either a sign of great importance or great difficulty. In Adaugo's experience, it was usually both.</p>
+
+        <p>The client — referred only as "Mr. E. Nwosu, Lagos/Abuja" — required a full wedding plan for a ceremony in April. Six weeks away. The budget was generous to the point of being almost absurd. The requirements were listed in a way that suggested someone who knew exactly what they wanted and had not yet learned that wanting and getting were different arts.</p>
+
+        <p>Pastor Chukwu had referred them personally, which meant she could not simply decline. The pastor had baptised her, counselled her, and sat with her mother on the worst Sunday of 2019. There were debts that could not be paid in money.</p>
+
+        <p>She replied to the PA that she would be available for an initial consultation on Tuesday at eleven.</p>
+
+        <p>She did not yet know that she was agreeing to the most important meeting of her life. She thought she was agreeing to a difficult client and a very short timeline.</p>
+
+        <p>She made a note to order extra pens. She always thought more clearly when she had extra pens.</p>
+      `
+    },
+    { num: 4, title: "A Face from the Past", free: false, label: "Chapter 4", time: "~15 min read · 8 coins", content: "" },
+    { num: 5, title: "What Prayer Looks Like Now", free: false, label: "Chapter 5", time: "~13 min read · 8 coins", content: "" },
+    { num: 6, title: "The First Conversation", free: false, label: "Chapter 6", time: "~14 min read · 8 coins", content: "" },
+  ];
+
+  let currentChapter = 1;
+  let fontSizes = [14, 16, 18, 20, 22, 24];
+  let fontIdx = 2;
+  let unlockedChapters = new Set([1, 2, 3]);
+
+  function openReading(num) {
+    currentChapter = num;
+    document.getElementById('bookDetailView').style.display = 'none';
+    document.getElementById('readingView').style.display = 'block';
+    document.getElementById('mainNav').style.display = 'none';
+    window.scrollTo(0, 0);
+    renderChapter();
+  }
+
+  function closeReading() {
+    document.getElementById('bookDetailView').style.display = 'block';
+    document.getElementById('readingView').style.display = 'none';
+    document.getElementById('mainNav').style.display = 'flex';
+    window.scrollTo(0, 0);
+  }
+
+  function renderChapter() {
+    const ch = chapters[currentChapter - 1];
+    if (!ch) return;
+
+    document.title = `${ch.title} — W&L Words`;
+    document.getElementById('toolbarTitle').textContent = `${ch.label} · ${ch.title}`;
+    document.getElementById('chLabel').textContent = ch.label;
+    document.getElementById('chMainTitle').textContent = ch.title;
+    document.querySelector('#readingWrap .ch-sub').textContent = ch.time;
+    document.getElementById('chProgress').textContent = `Chapter ${ch.num} of ${chapters.length}`;
+    document.getElementById('prevBtn').disabled = ch.num === 1;
+    document.getElementById('nextBtn').disabled = ch.num === chapters.length;
+
+    const isLocked = !ch.free && !unlockedChapters.has(ch.num);
+    document.getElementById('proseContent').innerHTML = isLocked ? '' : ch.content;
+    document.getElementById('lockGate').style.display = isLocked ? 'block' : 'none';
+    document.getElementById('chNav').style.display = isLocked ? 'none' : 'flex';
+
+    // partial preview for locked
+    if (isLocked) {
+      document.getElementById('proseContent').innerHTML = `<p style="color:var(--read-muted);font-style:italic;">Continue the story from where Chapter ${ch.num - 1} left off…</p>`;
+    }
+
+    updateProgress();
+  }
+
+  function goChapter(dir) {
+    const next = currentChapter + dir;
+    if (next < 1 || next > chapters.length) return;
+    currentChapter = next;
+    window.scrollTo(0, 0);
+    renderChapter();
+  }
+
+  function unlockChapter() {
+    unlockedChapters.add(currentChapter);
+    renderChapter();
+    // Update coin display
+    const coinEl = document.querySelector('.coin-amount');
+    if (coinEl) coinEl.textContent = parseInt(coinEl.textContent) - 8;
+  }
+
+  // Progress bar on scroll
+  window.addEventListener('scroll', updateProgress);
+  function updateProgress() {
+    const wrap = document.getElementById('readingWrap');
+    if (!wrap) return;
+    const total = document.body.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? Math.min(100, (window.scrollY / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  // Font size
+  function changeFontSize(dir) {
+    fontIdx = Math.max(0, Math.min(fontSizes.length - 1, fontIdx + dir));
+    const sz = fontSizes[fontIdx];
+    document.documentElement.style.setProperty('--read-size', sz + 'px');
+    document.getElementById('fsDisplay').textContent = sz + 'px';
+  }
+
+  // Theme
+  function setTheme(theme, btn) {
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.body.classList.remove('dark-mode', 'sepia-mode');
+    if (theme === 'dark')  document.body.classList.add('dark-mode');
+    if (theme === 'sepia') document.body.classList.add('sepia-mode');
+  }
+
+  // Settings panel toggle
+  function toggleSettings() {
+    document.getElementById('settingsPanel').classList.toggle('open');
+    document.getElementById('settingsBtn').classList.toggle('active');
+  }
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#settingsPanel') && !e.target.closest('#settingsBtn')) {
+      document.getElementById('settingsPanel').classList.remove('open');
+      document.getElementById('settingsBtn').classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>
