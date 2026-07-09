@@ -572,14 +572,9 @@
 
   <!-- Decorative book strip -->
   <div class="book-strip" aria-hidden="true" id="homeBookStrip">
-    <div class="book-card" style="--r:-3deg"><div class="book-cover bc1">Grace at Midnight</div></div>
-    <div class="book-card" style="--r:2deg"><div class="book-cover bc2">Letters to Heaven</div></div>
-    <div class="book-card" style="--r:-1.5deg"><div class="book-cover bc3">Rivers of Light</div></div>
-    <div class="book-card" style="--r:3deg"><div class="book-cover bc4">The Faithful Heart</div></div>
-    <div class="book-card" style="--r:-2.5deg"><div class="book-cover bc5">Still Waters</div></div>
-    <div class="book-card" style="--r:1.5deg"><div class="book-cover bc6">Called &amp; Chosen</div></div>
-    <div class="book-card" style="--r:-2deg"><div class="book-cover bc7">The Waiting Room</div></div>
-    <div class="book-card" style="--r:2.5deg"><div class="book-cover bc8">Daughter of Zion</div></div>
+    <div style="width:100%;text-align:center;padding:2rem;color:rgba(255,255,255,0.6);font-family:'Playfair Display',serif;font-style:italic;">
+      Stories uploaded by writers will appear here soon.
+    </div>
   </div>
 </section>
 
@@ -643,41 +638,8 @@
       <a class="see-all" href="browse.html">See all books →</a>
     </div>
     <div class="books-grid" id="featuredGrid">
-      <div class="book-item reveal" onclick="window.location.href='story.html'" style="cursor:pointer">
-        <div class="book-item-cover bc1">Grace at Midnight</div>
-        <span class="book-badge badge-free">Free</span>
-        <div class="book-item-title">Grace at Midnight</div>
-        <div class="book-item-author">by Adaeze Okonkwo</div>
-      </div>
-      <div class="book-item reveal" onclick="window.location.href='story.html'" style="cursor:pointer">
-        <div class="book-item-cover bc2">Letters to Heaven</div>
-        <span class="book-badge badge-coins">🪙 Coins</span>
-        <div class="book-item-title">Letters to Heaven</div>
-        <div class="book-item-author">by Priscilla Mensah</div>
-      </div>
-      <div class="book-item reveal" onclick="window.location.href='story.html'" style="cursor:pointer">
-        <div class="book-item-cover bc3">Rivers of Light</div>
-        <span class="book-badge badge-free">Free</span>
-        <div class="book-item-title">Rivers of Light</div>
-        <div class="book-item-author">by Emmanuel Taiwo</div>
-      </div>
-      <div class="book-item reveal" onclick="window.location.href='story.html'" style="cursor:pointer">
-        <div class="book-item-cover bc4">The Faithful Heart</div>
-        <span class="book-badge badge-coins">🪙 Coins</span>
-        <div class="book-item-title">The Faithful Heart</div>
-        <div class="book-item-author">by Grace Abiodun</div>
-      </div>
-      <div class="book-item reveal" onclick="window.location.href='story.html'" style="cursor:pointer">
-        <div class="book-item-cover bc5">Still Waters</div>
-        <span class="book-badge badge-free">Free</span>
-        <div class="book-item-title">Still Waters</div>
-        <div class="book-item-author">by Ruth Chibuike</div>
-      </div>
-      <div class="book-item reveal" onclick="window.location.href='story.html'" style="cursor:pointer">
-        <div class="book-item-cover bc6">Called &amp; Chosen</div>
-        <span class="book-badge badge-coins">🪙 Coins</span>
-        <div class="book-item-title">Called &amp; Chosen</div>
-        <div class="book-item-author">by Daniel Eze</div>
+      <div style="grid-column:1/-1;text-align:center;padding:4rem 1rem;color:var(--muted);font-style:italic;">
+        New and trending books will appear here soon.
       </div>
     </div>
   </div>
@@ -808,7 +770,7 @@
 
         // Build strip item
         const r = rotations[i % rotations.length];
-        stripHtml += `<div class="book-card" style="--r:${r}"><div class="book-cover ${cover}">${book.title}</div></div>`;
+        stripHtml += `<div class="book-card" style="--r:${r}; cursor:pointer;" onclick="window.location.href='story.html?id=${doc.id}'"><div class="book-cover ${cover}">${book.title}</div></div>`;
 
         // Build featured item (only up to 6 for the grid)
         if (i < 6) {
