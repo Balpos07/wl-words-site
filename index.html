@@ -535,6 +535,8 @@
       .hero::before { animation: none; }
     }
   </style>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
 
@@ -595,32 +597,32 @@
   </div>
   <div class="hiw-grid">
     <div class="hiw-card reveal">
-      <div class="hiw-icon icon-pink">📖</div>
+      <div class="hiw-icon icon-pink"><ion-icon name="book-outline"></ion-icon></div>
       <h3>Read for Free</h3>
       <p>Browse thousands of free devotionals, short stories, and classic Christian texts — no subscription needed. Just open and read.</p>
     </div>
     <div class="hiw-card reveal">
-      <div class="hiw-icon icon-blue">🪙</div>
+      <div class="hiw-icon icon-blue"><ion-icon name="wallet-outline"></ion-icon></div>
       <h3>Unlock Premium Stories</h3>
       <p>Buy coins with real money and spend them to unlock chapters in serialized stories. Read at your own pace — once you unlock, it's yours forever.</p>
     </div>
     <div class="hiw-card reveal">
-      <div class="hiw-icon icon-mixed">📚</div>
+      <div class="hiw-icon icon-mixed"><ion-icon name="library-outline"></ion-icon></div>
       <h3>Purchase Full Books</h3>
       <p>Shop a curated collection of published Christian books — devotionals, fiction, poetry, and theology — and read them inside the app.</p>
     </div>
     <div class="hiw-card reveal">
-      <div class="hiw-icon icon-pink">✍🏽</div>
+      <div class="hiw-icon icon-pink"><ion-icon name="create-outline"></ion-icon></div>
       <h3>Upload Your Stories</h3>
       <p>Writers upload chapters, set their own pricing, and build a readership. You control what's free and what readers pay to unlock.</p>
     </div>
     <div class="hiw-card reveal">
-      <div class="hiw-icon icon-blue">💸</div>
+      <div class="hiw-icon icon-blue"><ion-icon name="cash-outline"></ion-icon></div>
       <h3>Earn Every Month</h3>
       <p>When readers unlock your chapters, you earn real money — paid out monthly directly to your account, with full earnings transparency.</p>
     </div>
     <div class="hiw-card reveal">
-      <div class="hiw-icon icon-mixed">🕊️</div>
+      <div class="hiw-icon icon-mixed"><ion-icon name="leaf-outline"></ion-icon></div>
       <h3>Rooted in Faith</h3>
       <p>Every story on W&L Words is faith-centred. This isn't a general reading app — it's a home built specifically for the Christian voice.</p>
     </div>
@@ -652,18 +654,18 @@
     <h2 class="section-title">Find your kind of story</h2>
   </div>
   <div class="cats-grid">
-    <div class="cat-pill reveal"><span class="cat-emoji">🙏</span><span class="cat-name">Devotionals</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">📖</span><span class="cat-name">Bible Study</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">💑</span><span class="cat-name">Christian Romance</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">⚔️</span><span class="cat-name">Spiritual Warfare</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🌿</span><span class="cat-name">Faith & Healing</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">✍🏽</span><span class="cat-name">Poetry & Psalms</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🏠</span><span class="cat-name">Family & Marriage</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🌍</span><span class="cat-name">African Christian Lit</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🎓</span><span class="cat-name">Christian Youth</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">💼</span><span class="cat-name">Faith & Business</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">🕊️</span><span class="cat-name">Prophecy & Vision</span></div>
-    <div class="cat-pill reveal"><span class="cat-emoji">📚</span><span class="cat-name">Theology & Doctrine</span></div>
+    <div class="cat-pill reveal"><ion-icon name="heart-half-outline" class="cat-emoji"></ion-icon><span class="cat-name">Devotionals</span></div>
+    <div class="cat-pill reveal"><ion-icon name="book-outline" class="cat-emoji"></ion-icon><span class="cat-name">Bible Study</span></div>
+    <div class="cat-pill reveal"><ion-icon name="heart-outline" class="cat-emoji"></ion-icon><span class="cat-name">Christian Romance</span></div>
+    <div class="cat-pill reveal"><ion-icon name="shield-outline" class="cat-emoji"></ion-icon><span class="cat-name">Spiritual Warfare</span></div>
+    <div class="cat-pill reveal"><ion-icon name="leaf-outline" class="cat-emoji"></ion-icon><span class="cat-name">Faith & Healing</span></div>
+    <div class="cat-pill reveal"><ion-icon name="brush-outline" class="cat-emoji"></ion-icon><span class="cat-name">Poetry & Psalms</span></div>
+    <div class="cat-pill reveal"><ion-icon name="home-outline" class="cat-emoji"></ion-icon><span class="cat-name">Family & Marriage</span></div>
+    <div class="cat-pill reveal"><ion-icon name="globe-outline" class="cat-emoji"></ion-icon><span class="cat-name">African Christian Lit</span></div>
+    <div class="cat-pill reveal"><ion-icon name="school-outline" class="cat-emoji"></ion-icon><span class="cat-name">Christian Youth</span></div>
+    <div class="cat-pill reveal"><ion-icon name="briefcase-outline" class="cat-emoji"></ion-icon><span class="cat-name">Faith & Business</span></div>
+    <div class="cat-pill reveal"><ion-icon name="eye-outline" class="cat-emoji"></ion-icon><span class="cat-name">Prophecy & Vision</span></div>
+    <div class="cat-pill reveal"><ion-icon name="library-outline" class="cat-emoji"></ion-icon><span class="cat-name">Theology & Doctrine</span></div>
   </div>
 </section>
 
@@ -776,8 +778,8 @@
         if (i < 6) {
           let badge = '';
           if (book.pricing_type === 'free') badge = `<span class="book-badge badge-free">Free</span>`;
-          else if (book.pricing_type === 'coins') badge = `<span class="book-badge badge-coins">🪙 Coins</span>`;
-          else if (book.pricing_type === 'purchase') badge = `<span class="book-badge badge-purchase">💳 Buy</span>`;
+          else if (book.pricing_type === 'coins') badge = `<span class="book-badge badge-coins"><ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:2px;"></ion-icon> Coins</span>`;
+          else if (book.pricing_type === 'purchase') badge = `<span class="book-badge badge-purchase"><ion-icon name="card-outline" style="vertical-align:-2px;margin-right:2px;"></ion-icon> Buy</span>`;
 
           featuredHtml += `
           <div class="book-item reveal visible" onclick="window.location.href='story.html?id=${doc.id}'" style="cursor:pointer">
