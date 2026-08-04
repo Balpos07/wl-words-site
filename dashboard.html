@@ -1222,7 +1222,19 @@
       cursor: pointer;
       color: var(--ink);
     }
+    .mobile-close-btn { display: none; position: absolute; right: 1.25rem; top: 1.5rem; font-size: 1.8rem; color: rgba(255,255,255,0.7); cursor: pointer; }
     @media(max-width:768px) {
+      .mobile-close-btn { display: block; }
+      .topbar { padding: 0 0.75rem; }
+      .content { padding: 1rem 0.5rem 3rem; }
+      .earnings-hero { padding: 1.25rem; flex-direction: column; align-items: flex-start; }
+      .empty-overview { padding: 2rem 1rem; }
+      .top-upload-btn .btn-text { display: none; }
+      .top-upload-btn { padding: 0.5rem; border-radius: 8px; }
+      .page-heading { font-size: 1.1rem; }
+      .topbar-right { gap: 0.5rem; }
+      .empty-overview-title { font-size: 1.4rem; }
+      .hamburger { margin-right: 0.5rem; }
       .hamburger {
         display: block;
       }
@@ -1240,7 +1252,7 @@
       }
 
       .stat-cards {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -1251,7 +1263,8 @@
 <body>
 
   <aside class="sidebar">
-    <div class="sidebar-logo">
+    <div class="sidebar-logo" style="position:relative;">
+      <div class="mobile-close-btn" onclick="toggleSidebar()"><ion-icon name="close-outline"></ion-icon></div>
       <a class="logo-text" href="index.html">W<span>&</span>L Words</a>
       <div class="logo-sub">Writer Dashboard</div>
     </div>
@@ -1292,13 +1305,14 @@
         <div class="hamburger" onclick="toggleSidebar()"><ion-icon name="menu-outline"></ion-icon></div>
         <div>
         <div class="page-title-sm" id="topbarLabel">Overview</div>
-        <div class="page-heading" id="topbarHeading">Good morning!</div>
+        <div class="page-heading" id="topbarHeading">Good morning, Writer 🌸</div>
+        </div>
       </div>
       <div class="topbar-right">
         <div class="notif-btn"><ion-icon name="notifications-outline"></ion-icon>
           <div class="notif-dot"></div>
         </div>
-        <button class="btn-upload" onclick="openModal()">+ Upload Story</button>
+        <button class="btn-upload top-upload-btn" onclick="openModal()"><ion-icon name="add-outline"></ion-icon><span class="btn-text" style="margin-left: 4px;">Upload Story</span></button>
       </div>
     </div>
 
