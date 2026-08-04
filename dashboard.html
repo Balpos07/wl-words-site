@@ -1276,7 +1276,7 @@
     <div class="topbar">
       <div>
         <div class="page-title-sm" id="topbarLabel">Overview</div>
-        <div class="page-heading" id="topbarHeading">Good morning ðŸŒ¸</div>
+        <div class="page-heading" id="topbarHeading">Good morning!</div>
       </div>
       <div class="topbar-right">
         <div class="notif-btn"><ion-icon name="notifications-outline"></ion-icon>
@@ -1705,7 +1705,7 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    window.panelTitles = { overview: ['Overview', 'Good morning ðŸŒ¸'], stories: ['Content', 'My Stories'], earnings: ['Money', 'Earnings & Payouts'], coins: ['Money', 'Coin Analytics'], profile: ['Account', 'Writer Profile'], settings: ['Account', 'Settings'] };
+    window.panelTitles = { overview: ['Overview', 'Good morning!'], stories: ['Content', 'My Stories'], earnings: ['Money', 'Earnings & Payouts'], coins: ['Money', 'Coin Analytics'], profile: ['Account', 'Writer Profile'], settings: ['Account', 'Settings'] };
 
     function showPanel(name, navEl) {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -1748,6 +1748,23 @@
   </script>
 
   <!-- Firebase SDK & Upload Logic -->
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) sidebar.classList.toggle('open');
+    }
+    
+    // Close sidebar when clicking a nav item on mobile
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    document.querySelector('.sidebar').classList.remove('open');
+                }
+            });
+        });
+    });
+  </script>
   <script type="module">
     import { auth, db, collection, addDoc, doc, getDoc, getDocs, query, where, updateDoc } from './firebase-config.js';
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
