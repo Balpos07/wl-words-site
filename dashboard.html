@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Writer Dashboard â€” W&L Words</title>
+  <title>Writer Dashboard &mdash; W&L Words</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap"
     rel="stylesheet" />
@@ -1302,7 +1302,7 @@
           <div class="earnings-hero">
             <div class="eh-left">
               <div class="eh-label">
-                Total Earnings â€”
+                Total Earnings &mdash;
                 <select id="monthFilter" class="month-dropdown">
                   <!-- Populated by JS -->
                 </select>
@@ -1321,7 +1321,7 @@
                 <div class="eh-stat-label">Chapters Unlocked</div>
               </div>
               <div class="eh-stat">
-                <div class="eh-stat-num" id="avgRating">0.0â˜…</div>
+                <div class="eh-stat-num" id="avgRating">0.0<ion-icon name="star"></ion-icon></div>
                 <div class="eh-stat-label">Avg Rating</div>
               </div>
             </div>
@@ -1417,7 +1417,7 @@
       <!-- STORIES -->
       <div class="panel" id="panel-stories">
         <div class="stories-toolbar">
-          <div class="search-sm"><span>ðŸ”</span><input type="text" placeholder="Search your storiesâ€¦" /></div>
+          <div class="search-sm"><span><ion-icon name="search-outline"></ion-icon></span><input type="text" placeholder="Search your stories&hellip;" /></div>
           <select class="filter-sm">
             <option>All Status</option>
             <option>Live</option>
@@ -1571,7 +1571,7 @@
     <div class="modal">
       <div class="modal-header">
         <div class="modal-title">Upload a New Story</div>
-        <button class="modal-close" onclick="closeModal()">âœ•</button>
+        <button class="modal-close" onclick="closeModal()"><ion-icon name="close-outline"></ion-icon></button>
       </div>
       <div class="m-field"><label class="m-label">Story Title *</label><input id="uploadTitle" class="m-input"
           type="text" placeholder="e.g. The Grace That Found Me" /></div>
@@ -1579,7 +1579,7 @@
           placeholder="A brief summary readers will see on the browse pageâ€¦"></textarea></div>
       <div class="m-row">
         <div class="m-field"><label class="m-label">Category *</label><select id="uploadCategory" class="m-input">
-            <option value="">Select categoryâ€¦</option>
+            <option value="">Select category&hellip;</option>
             <option>Devotionals</option>
             <option>Christian Romance</option>
             <option>Spiritual Warfare</option>
@@ -1630,7 +1630,7 @@
           placeholder="e.g. faith, redemption, Lagos, second chances" /></div>
       <div class="modal-footer">
         <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-        <button class="btn-save" onclick="handleUpload()">Save & Continue to Chapters â†’</button>
+        <button class="btn-save" onclick="handleUpload()">Save & Continue to Chapters &rarr;</button>
       </div>
     </div>
   </div>
@@ -1640,7 +1640,7 @@
     <div class="modal">
       <div class="modal-header">
         <div class="modal-title">Edit Story</div>
-        <button class="modal-close" onclick="closeEditModal()">âœ•</button>
+        <button class="modal-close" onclick="closeEditModal()"><ion-icon name="close-outline"></ion-icon></button>
       </div>
       <div class="m-field"><label class="m-label">Story Title *</label><input id="editTitle" class="m-input"
           type="text" /></div>
@@ -1648,7 +1648,7 @@
           class="m-input"></textarea></div>
       <div class="m-row">
         <div class="m-field"><label class="m-label">Category *</label><select id="editCategory" class="m-input">
-            <option value="">Select categoryâ€¦</option>
+            <option value="">Select category&hellip;</option>
             <option>Devotionals</option>
             <option>Christian Romance</option>
             <option>Spiritual Warfare</option>
@@ -1838,7 +1838,7 @@
           else if (data.pricing_type === 'purchase') pricingBadge = '<ion-icon name="shuffle-outline" style="vertical-align:-2px;margin-right:2px;"></ion-icon> Mixed';
 
           const statusClass = data.status === 'live' ? 'status-live' : 'status-draft';
-          const statusText = data.status === 'live' ? 'â— Live' : 'â— Draft';
+          const statusText = data.status === 'live' ? '<ion-icon name="radio-button-on" style="color:var(--rose)"></ion-icon> Live' : 'â— Draft';
 
           html += `
           <tr>
