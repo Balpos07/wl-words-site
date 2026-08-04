@@ -17,7 +17,9 @@ import {
   addDoc,
   query,
   orderBy,
-  limit
+  limit,
+  where,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 // (Optional) Analytics could be imported similarly if needed, but omitted here to keep it simple.
 
@@ -51,7 +53,9 @@ export {
   addDoc,
   query,
   orderBy,
-  limit
+  limit,
+  where,
+  updateDoc
 };
 
 // Global Auth State Observer (runs automatically on every page load)

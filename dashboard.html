@@ -1,526 +1,1848 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Writer Dashboard — W&L Words</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writer Dashboard â€” W&L Words</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --white:#FFFFFF;--off:#FDF7FB;--blush:#F9E4EF;--rose:#E8789C;--rose-deep:#C9527A;
-      --sky:#C5DEFA;--blue:#4A82C2;--blue-deep:#2F5F98;--ink:#1A1A2E;--muted:#6E6E85;
-      --border:#F0D8E8;--gold:#F5A623;--success:#1A7A55;--success-bg:#D4F5E9;--sidebar-w:260px;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    html{scroll-behavior:smooth;}
-    body{font-family:'Inter',sans-serif;background:var(--off);color:var(--ink);display:flex;min-height:100vh;}
+
+    :root {
+      --white: #FFFFFF;
+      --off: #FDF7FB;
+      --blush: #F9E4EF;
+      --rose: #E8789C;
+      --rose-deep: #C9527A;
+      --sky: #C5DEFA;
+      --blue: #4A82C2;
+      --blue-deep: #2F5F98;
+      --ink: #1A1A2E;
+      --muted: #6E6E85;
+      --border: #F0D8E8;
+      --gold: #F5A623;
+      --success: #1A7A55;
+      --success-bg: #D4F5E9;
+      --sidebar-w: 260px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--off);
+      color: var(--ink);
+      display: flex;
+      min-height: 100vh;
+    }
 
     /* SIDEBAR */
-    .sidebar{width:var(--sidebar-w);flex-shrink:0;background:var(--ink);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto;}
-    .sidebar-logo{padding:1.75rem 1.5rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.07);}
-    .logo-text{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:white;text-decoration:none;display:block;}
-    .logo-text span{color:var(--rose);}
-    .logo-sub{font-size:0.7rem;color:rgba(255,255,255,0.35);margin-top:0.2rem;text-transform:uppercase;letter-spacing:0.08em;}
-    .writer-info{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:0.85rem;}
-    .writer-avatar{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--rose),var(--blue));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;color:white;font-weight:700;}
-    .writer-name{font-size:0.875rem;font-weight:600;color:white;}
-    .writer-badge{display:inline-block;font-size:0.65rem;font-weight:600;background:rgba(232,120,156,0.2);color:var(--rose);border:1px solid rgba(232,120,156,0.3);border-radius:50px;padding:0.1rem 0.5rem;margin-top:0.2rem;}
-    .sidebar-nav{padding:1rem 0;flex:1;}
-    .nav-section-label{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.25);padding:0.75rem 1.5rem 0.4rem;}
-    .nav-item{display:flex;align-items:center;gap:0.85rem;padding:0.75rem 1.5rem;cursor:pointer;color:rgba(255,255,255,0.55);font-size:0.875rem;font-weight:500;transition:all 0.2s;border-left:3px solid transparent;text-decoration:none;}
-    .nav-item:hover{color:white;background:rgba(255,255,255,0.05);}
-    .nav-item.active{color:white;background:rgba(232,120,156,0.12);border-left-color:var(--rose);}
-    .nav-icon{font-size:1.1rem;width:20px;text-align:center;}
-    .nav-badge{margin-left:auto;background:var(--rose);color:white;font-size:0.65rem;font-weight:700;padding:0.1rem 0.5rem;border-radius:50px;}
-    .sidebar-bottom{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,0.07);}
-    .btn-visit{display:flex;align-items:center;gap:0.6rem;padding:0.65rem 1rem;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6);font-size:0.8rem;font-weight:500;cursor:pointer;text-decoration:none;transition:all 0.2s;font-family:'Inter',sans-serif;width:100%;justify-content:center;}
-    .btn-visit:hover{background:rgba(255,255,255,0.1);color:white;}
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 1.75rem 1.5rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      display: block;
+    }
+
+    .logo-text span {
+      color: var(--rose);
+    }
+
+    .logo-sub {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 0.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .writer-info {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .writer-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--rose), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: white;
+      font-weight: 700;
+    }
+
+    .writer-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .writer-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      background: rgba(232, 120, 156, 0.2);
+      color: var(--rose);
+      border: 1px solid rgba(232, 120, 156, 0.3);
+      border-radius: 50px;
+      padding: 0.1rem 0.5rem;
+      margin-top: 0.2rem;
+    }
+
+    .sidebar-nav {
+      padding: 1rem 0;
+      flex: 1;
+    }
+
+    .nav-section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255, 255, 255, 0.25);
+      padding: 0.75rem 1.5rem 0.4rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-item:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item.active {
+      color: white;
+      background: rgba(232, 120, 156, 0.12);
+      border-left-color: var(--rose);
+    }
+
+    .nav-icon {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--rose);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.1rem 0.5rem;
+      border-radius: 50px;
+    }
+
+    .sidebar-bottom {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .btn-visit {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-visit:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
 
     /* MAIN */
-    .main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;}
-    .topbar{background:white;border-bottom:1px solid var(--border);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-    .page-title-sm{font-size:0.75rem;color:var(--muted);}
-    .page-heading{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--ink);}
-    .topbar-right{display:flex;align-items:center;gap:1rem;}
-    .btn-upload{display:flex;align-items:center;gap:0.5rem;padding:0.6rem 1.25rem;background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:white;border:none;border-radius:50px;font-size:0.875rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 4px 14px rgba(232,120,156,0.35);transition:all 0.2s;}
-    .btn-upload:hover{transform:translateY(-1px);}
-    .notif-btn{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--border);background:white;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;position:relative;}
-    .notif-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--rose);border:2px solid white;}
-    .content{padding:2rem 2.5rem 4rem;}
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .page-title-sm {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .page-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-upload {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 14px rgba(232, 120, 156, 0.35);
+      transition: all 0.2s;
+    }
+
+    .btn-upload:hover {
+      transform: translateY(-1px);
+    }
+
+    .notif-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      position: relative;
+    }
+
+    .notif-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--rose);
+      border: 2px solid white;
+    }
+
+    .content {
+      padding: 2rem 2.5rem 4rem;
+    }
 
     /* PANELS */
-    .panel{display:none;}.panel.active{display:block;}
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
 
     /* OVERVIEW */
-    .earnings-hero{background:linear-gradient(135deg,var(--ink) 0%,#2F1A3E 60%,#1A2A4E 100%);border-radius:20px;padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:1.75rem;position:relative;overflow:hidden;}
-    .earnings-hero::before{content:'';position:absolute;top:-30%;right:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(232,120,156,0.18) 0%,transparent 60%);pointer-events:none;}
-    .eh-left{position:relative;z-index:1;}
-    .eh-label{font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.45);margin-bottom:0.5rem;}
-    .eh-amount{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:white;line-height:1;margin-bottom:0.4rem;}
-    .eh-sub{font-size:0.82rem;color:rgba(255,255,255,0.5);}
-    .eh-sub strong{color:var(--sky);}
-    .eh-right{display:flex;gap:2rem;position:relative;z-index:1;}
-    .eh-stat{text-align:center;}
-    .eh-stat-num{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:white;}
-    .eh-stat-label{font-size:0.72rem;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.08em;margin-top:0.2rem;}
-    .btn-payout{padding:0.7rem 1.75rem;background:var(--rose);color:white;border:none;border-radius:50px;font-size:0.875rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;box-shadow:0 4px 16px rgba(201,82,122,0.4);transition:all 0.2s;position:relative;z-index:1;}
-    .btn-payout:hover{background:var(--rose-deep);transform:translateY(-1px);}
+    .earnings-hero {
+      background: linear-gradient(135deg, var(--ink) 0%, #2F1A3E 60%, #1A2A4E 100%);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+      position: relative;
+      overflow: hidden;
+    }
 
-    .stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.75rem;}
-    .stat-card{background:white;border:1px solid var(--border);border-radius:16px;padding:1.25rem 1.5rem;transition:box-shadow 0.2s;}
-    .stat-card:hover{box-shadow:0 6px 20px rgba(26,26,46,0.08);}
-    .sc-icon{font-size:1.4rem;margin-bottom:0.75rem;}
-    .sc-value{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:var(--ink);line-height:1;margin-bottom:0.3rem;}
-    .sc-label{font-size:0.78rem;color:var(--muted);font-weight:500;}
-    .sc-change{font-size:0.72rem;margin-top:0.4rem;font-weight:600;}
-    .sc-up{color:var(--success);}
+    .earnings-hero::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(232, 120, 156, 0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
 
-    .chart-card{background:white;border:1px solid var(--border);border-radius:20px;padding:1.75rem;margin-bottom:1.75rem;}
-    .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
-    .chart-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;}
-    .chart-tabs{display:flex;gap:0.3rem;}
-    .chart-tab{padding:0.35rem 0.9rem;border-radius:50px;font-size:0.78rem;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--muted);transition:all 0.2s;font-family:'Inter',sans-serif;}
-    .chart-tab.active{background:var(--blush);border-color:var(--rose);color:var(--rose-deep);}
-    svg.chart{width:100%;height:200px;overflow:visible;}
-    .chart-x-labels{display:flex;justify-content:space-between;padding:0.5rem 0 0;}
-    .chart-x-label{font-size:0.72rem;color:var(--muted);}
+    .eh-left {
+      position: relative;
+      z-index: 1;
+    }
 
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.75rem;}
-    .card{background:white;border:1px solid var(--border);border-radius:20px;padding:1.5rem;}
-    .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
-    .card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;}
-    .see-all-link{font-size:0.78rem;color:var(--rose-deep);text-decoration:none;font-weight:600;cursor:pointer;}
+    .eh-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 0.5rem;
+    }
 
-    .story-mini{display:flex;align-items:center;gap:0.85rem;padding:0.75rem 0;border-bottom:1px solid var(--border);}
-    .story-mini:last-child{border-bottom:none;padding-bottom:0;}
-    .sm-cover{width:40px;height:56px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.5rem;font-weight:600;color:white;font-family:'Playfair Display',serif;text-align:center;}
-    .sm-info{flex:1;min-width:0;}
-    .sm-title{font-size:0.875rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .sm-meta{font-size:0.72rem;color:var(--muted);margin-top:0.15rem;}
-    .sm-earn{font-size:0.82rem;font-weight:600;color:var(--success);text-align:right;flex-shrink:0;}
+    .eh-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
 
-    .activity-item{display:flex;align-items:flex-start;gap:0.85rem;padding:0.75rem 0;border-bottom:1px solid var(--border);}
-    .activity-item:last-child{border-bottom:none;}
-    .activity-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
-    .act-blue{background:#E3EEFA;}.act-pink{background:var(--blush);}.act-gold{background:#FFF0D0;}.act-green{background:var(--success-bg);}
-    .activity-desc{font-size:0.82rem;color:var(--ink);line-height:1.5;}
-    .activity-desc strong{color:var(--rose-deep);}
-    .activity-time{font-size:0.72rem;color:var(--muted);margin-top:0.2rem;}
+    .eh-sub {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .eh-sub strong {
+      color: var(--sky);
+    }
+
+    .eh-right {
+      display: flex;
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eh-stat {
+      text-align: center;
+    }
+
+    .eh-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .eh-stat-label {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 0.2rem;
+    }
+
+    .btn-payout {
+      padding: 0.7rem 1.75rem;
+      background: var(--rose);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 16px rgba(201, 82, 122, 0.4);
+      transition: all 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-payout:hover {
+      background: var(--rose-deep);
+      transform: translateY(-1px);
+    }
+
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      box-shadow: 0 6px 20px rgba(26, 26, 46, 0.08);
+    }
+
+    .sc-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .sc-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .sc-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .sc-change {
+      font-size: 0.72rem;
+      margin-top: 0.4rem;
+      font-weight: 600;
+    }
+
+    .sc-up {
+      color: var(--success);
+    }
+
+    .chart-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .chart-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .chart-tabs {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .chart-tab {
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: white;
+      color: var(--muted);
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .chart-tab.active {
+      background: var(--blush);
+      border-color: var(--rose);
+      color: var(--rose-deep);
+    }
+
+    svg.chart {
+      width: 100%;
+      height: 200px;
+      overflow: visible;
+    }
+
+    .chart-x-labels {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0 0;
+    }
+
+    .chart-x-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .see-all-link {
+      font-size: 0.78rem;
+      color: var(--rose-deep);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .story-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .story-mini:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .sm-cover {
+      width: 40px;
+      height: 56px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.5rem;
+      font-weight: 600;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+    }
+
+    .sm-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sm-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sm-meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .sm-earn {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--success);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .activity-item:last-child {
+      border-bottom: none;
+    }
+
+    .activity-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .act-blue {
+      background: #E3EEFA;
+    }
+
+    .act-pink {
+      background: var(--blush);
+    }
+
+    .act-gold {
+      background: #FFF0D0;
+    }
+
+    .act-green {
+      background: var(--success-bg);
+    }
+
+    .activity-desc {
+      font-size: 0.82rem;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .activity-desc strong {
+      color: var(--rose-deep);
+    }
+
+    .activity-time {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
 
     /* STORIES TABLE */
-    .stories-toolbar{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;}
-    .search-sm{display:flex;align-items:center;gap:0.5rem;background:white;border:1.5px solid var(--border);border-radius:50px;padding:0.55rem 1rem;flex:1;min-width:200px;}
-    .search-sm input{border:none;background:transparent;outline:none;font-size:0.85rem;font-family:'Inter',sans-serif;color:var(--ink);width:100%;}
-    .filter-sm{padding:0.55rem 1rem;border:1.5px solid var(--border);border-radius:50px;background:white;font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;cursor:pointer;color:var(--ink);}
-    .story-table{width:100%;border-collapse:collapse;background:white;border-radius:20px;overflow:hidden;border:1px solid var(--border);}
-    .story-table th{background:var(--off);padding:0.85rem 1.25rem;font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);text-align:left;border-bottom:1px solid var(--border);}
-    .story-table td{padding:1rem 1.25rem;border-bottom:1px solid var(--border);vertical-align:middle;}
-    .story-table tr:last-child td{border-bottom:none;}
-    .story-table tr:hover td{background:var(--off);}
-    .st-cover-cell{display:flex;align-items:center;gap:0.85rem;}
-    .st-cover{width:36px;height:50px;border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.42rem;font-weight:600;color:white;font-family:'Playfair Display',serif;text-align:center;}
-    .st-title{font-size:0.875rem;font-weight:600;color:var(--ink);}
-    .st-chapters{font-size:0.72rem;color:var(--muted);margin-top:0.15rem;}
-    .status-pill{display:inline-block;padding:0.2rem 0.7rem;border-radius:50px;font-size:0.7rem;font-weight:600;}
-    .status-live{background:var(--success-bg);color:var(--success);}
-    .status-draft{background:#F0F0F8;color:var(--muted);}
-    .story-actions{display:flex;gap:0.4rem;}
-    .action-btn{padding:0.35rem 0.75rem;border-radius:8px;font-size:0.75rem;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--ink);font-family:'Inter',sans-serif;transition:all 0.2s;}
-    .action-btn:hover{border-color:var(--rose);color:var(--rose-deep);background:var(--blush);}
-    .action-btn.danger:hover{border-color:#C0392B;color:#C0392B;background:#FDECEA;}
+    .stories-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-sm {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      padding: 0.55rem 1rem;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-sm input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      width: 100%;
+    }
+
+    .filter-sm {
+      padding: 0.55rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      background: white;
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .story-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .story-table th {
+      background: var(--off);
+      padding: 0.85rem 1.25rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .story-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .story-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .story-table tr:hover td {
+      background: var(--off);
+    }
+
+    .st-cover-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .st-cover {
+      width: 36px;
+      height: 50px;
+      border-radius: 5px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.42rem;
+      font-weight: 600;
+      color: white;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+    }
+
+    .st-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .st-chapters {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .status-live {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .status-draft {
+      background: #F0F0F8;
+      color: var(--muted);
+    }
+
+    .story-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .action-btn {
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: white;
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      border-color: var(--rose);
+      color: var(--rose-deep);
+      background: var(--blush);
+    }
+
+    .action-btn.danger:hover {
+      border-color: #C0392B;
+      color: #C0392B;
+      background: #FDECEA;
+    }
 
     /* EARNINGS */
-    .earnings-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.75rem;}
-    .payout-history{background:white;border:1px solid var(--border);border-radius:20px;overflow:hidden;}
-    .payout-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
-    .payout-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:1rem;padding:1rem 1.5rem;border-bottom:1px solid var(--border);align-items:center;font-size:0.85rem;}
-    .payout-row:last-child{border-bottom:none;}
-    .payout-row.header{background:var(--off);font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}
-    .pay-status{display:inline-block;padding:0.2rem 0.7rem;border-radius:50px;font-size:0.7rem;font-weight:600;}
-    .pay-paid{background:var(--success-bg);color:var(--success);}
-    .pay-pending{background:#FFF0D0;color:#A06010;}
-    .pay-amount{font-weight:600;color:var(--ink);}
-    .pay-writer{font-weight:700;color:var(--success);}
+    .earnings-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .payout-history {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .payout-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .payout-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr auto;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+      font-size: 0.85rem;
+    }
+
+    .payout-row:last-child {
+      border-bottom: none;
+    }
+
+    .payout-row.header {
+      background: var(--off);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .pay-status {
+      display: inline-block;
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .pay-paid {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+
+    .pay-pending {
+      background: #FFF0D0;
+      color: #A06010;
+    }
+
+    .pay-amount {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .pay-writer {
+      font-weight: 700;
+      color: var(--success);
+    }
 
     /* MODAL */
-    .modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,0.6);backdrop-filter:blur(4px);z-index:500;display:none;align-items:center;justify-content:center;padding:1.5rem;}
-    .modal-overlay.open{display:flex;}
-    .modal{background:white;border-radius:24px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:2.5rem;box-shadow:0 20px 60px rgba(26,26,46,0.3);}
-    .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;}
-    .modal-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;}
-    .modal-close{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:white;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;}
-    .modal-close:hover{background:var(--blush);border-color:var(--rose);}
-    .m-field{margin-bottom:1.25rem;}
-    .m-label{display:block;font-size:0.8rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;}
-    .m-input{width:100%;padding:0.75rem 1rem;border:1.5px solid var(--border);border-radius:12px;font-size:0.875rem;font-family:'Inter',sans-serif;color:var(--ink);background:var(--off);outline:none;transition:all 0.2s;}
-    .m-input:focus{border-color:var(--rose);background:white;box-shadow:0 0 0 3px rgba(232,120,156,0.12);}
-    textarea.m-input{resize:vertical;min-height:90px;}
-    select.m-input{cursor:pointer;}
-    .m-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;}
-    .pricing-toggle{display:flex;background:var(--off);border:1px solid var(--border);border-radius:50px;padding:4px;gap:2px;margin-bottom:1.25rem;}
-    .price-tab{flex:1;text-align:center;padding:0.5rem;border-radius:50px;font-size:0.8rem;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--muted);font-family:'Inter',sans-serif;transition:all 0.2s;}
-    .price-tab.active{background:white;color:var(--rose-deep);box-shadow:0 2px 8px rgba(0,0,0,0.08);}
-    .upload-area{border:2px dashed var(--border);border-radius:16px;padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:1.25rem;}
-    .upload-area:hover{border-color:var(--rose);background:var(--blush);}
-    .upload-icon{font-size:2rem;margin-bottom:0.75rem;}
-    .upload-label{font-size:0.875rem;font-weight:500;color:var(--ink);margin-bottom:0.25rem;}
-    .upload-hint{font-size:0.75rem;color:var(--muted);}
-    .modal-footer{display:flex;gap:0.75rem;margin-top:1.5rem;}
-    .btn-cancel{flex:1;padding:0.85rem;border:1.5px solid var(--border);border-radius:12px;background:white;font-size:0.9rem;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;color:var(--ink);transition:all 0.2s;}
-    .btn-cancel:hover{border-color:var(--rose);color:var(--rose-deep);}
-    .btn-save{flex:2;padding:0.85rem;background:linear-gradient(135deg,var(--rose),var(--rose-deep));color:white;border:none;border-radius:12px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;box-shadow:0 4px 14px rgba(232,120,156,0.35);}
-    .btn-save:hover{transform:translateY(-1px);}
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 26, 46, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(26, 26, 46, 0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.75rem;
+    }
+
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: white;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--blush);
+      border-color: var(--rose);
+    }
+
+    .m-field {
+      margin-bottom: 1.25rem;
+    }
+
+    .m-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .m-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      background: var(--off);
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .m-input:focus {
+      border-color: var(--rose);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(232, 120, 156, 0.12);
+    }
+
+    textarea.m-input {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    select.m-input {
+      cursor: pointer;
+    }
+
+    .m-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .pricing-toggle {
+      display: flex;
+      background: var(--off);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 4px;
+      gap: 2px;
+      margin-bottom: 1.25rem;
+    }
+
+    .price-tab {
+      flex: 1;
+      text-align: center;
+      padding: 0.5rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+    }
+
+    .price-tab.active {
+      background: white;
+      color: var(--rose-deep);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 1.25rem;
+    }
+
+    .upload-area:hover {
+      border-color: var(--rose);
+      background: var(--blush);
+    }
+
+    .upload-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .upload-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .upload-hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .modal-footer {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 0.85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: white;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      transition: all 0.2s;
+    }
+
+    .btn-cancel:hover {
+      border-color: var(--rose);
+      color: var(--rose-deep);
+    }
+
+    .btn-save {
+      flex: 2;
+      padding: 0.85rem;
+      background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+      box-shadow: 0 4px 14px rgba(232, 120, 156, 0.35);
+    }
+
+    .btn-save:hover {
+      transform: translateY(-1px);
+    }
 
     /* TOAST */
-    .toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:white;padding:0.85rem 1.5rem;border-radius:12px;font-size:0.875rem;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,0.25);transform:translateY(100px);opacity:0;transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);z-index:600;}
-    .toast.show{transform:translateY(0);opacity:1;}
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--ink);
+      color: white;
+      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 600;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
 
     /* COVERS */
-    .c1{background:linear-gradient(150deg,#C9527A,#8B2045);}
-    .c2{background:linear-gradient(150deg,#7B5EA7,#4A3580);}
-    .c3{background:linear-gradient(150deg,#4A82C2,#2F5F98);}
-    .c4{background:linear-gradient(150deg,#52A8C4,#2A708C);}
+    .c1 {
+      background: linear-gradient(150deg, #C9527A, #8B2045);
+    }
 
-    @media(max-width:1100px){.stat-cards{grid-template-columns:repeat(2,1fr);}.two-col{grid-template-columns:1fr;}}
-    @media(max-width:768px){.sidebar{transform:translateX(-100%);}.main{margin-left:0;}.stat-cards{grid-template-columns:1fr 1fr;}}
+    .c2 {
+      background: linear-gradient(150deg, #7B5EA7, #4A3580);
+    }
+
+    .c3 {
+      background: linear-gradient(150deg, #4A82C2, #2F5F98);
+    }
+
+    .c4 {
+      background: linear-gradient(150deg, #52A8C4, #2A708C);
+    }
+
+    .month-dropdown {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      outline: none;
+      cursor: pointer;
+      margin-left: 0.5rem;
+    }
+
+    .month-dropdown option {
+      background: var(--ink);
+      color: white;
+    }
+
+    .empty-overview {
+      text-align: center;
+      padding: 5rem 2rem;
+      background: white;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .empty-overview-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .empty-overview-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+
+    .empty-overview-text {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    @media(max-width:1100px) {
+      .stat-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .stat-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
   </style>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
 
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <a class="logo-text" href="index.html">W<span>&</span>L Words</a>
-    <div class="logo-sub">Writer Dashboard</div>
-  </div>
-  <div class="writer-info">
-    <div class="writer-avatar">G</div>
-    <div><div class="writer-name">Grace Abiodun</div><span class="writer-badge">✍🏽 Writer</span></div>
-  </div>
-  <nav class="sidebar-nav">
-    <div class="nav-section-label">Overview</div>
-    <a class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon"><ion-icon name="bar-chart-outline"></ion-icon></span> Dashboard</a>
-    <div class="nav-section-label">Content</div>
-    <a class="nav-item" onclick="showPanel('stories',this)"><span class="nav-icon"><ion-icon name="library-outline"></ion-icon></span> My Stories <span class="nav-badge">4</span></a>
-    <a class="nav-item" onclick="openModal()"><span class="nav-icon">➕</span> Upload New Story</a>
-    <div class="nav-section-label">Money</div>
-    <a class="nav-item" onclick="showPanel('earnings',this)"><span class="nav-icon"><ion-icon name="cash-outline"></ion-icon></span> Earnings & Payouts</a>
-    <a class="nav-item" onclick="showPanel('coins',this)"><span class="nav-icon"><ion-icon name="wallet-outline"></ion-icon></span> Coin Analytics</a>
-    <div class="nav-section-label">Account</div>
-    <a class="nav-item" onclick="showPanel('profile',this)"><span class="nav-icon"><ion-icon name="person-outline"></ion-icon></span> Writer Profile</a>
-    <a class="nav-item" onclick="showPanel('settings',this)"><span class="nav-icon">⚙️</span> Settings</a>
-  </nav>
-  <div class="sidebar-bottom">
-    <a class="btn-visit" href="index.html">🌐 View Public Site</a>
-  </div>
-</aside>
-
-<div class="main">
-  <div class="topbar">
-    <div>
-      <div class="page-title-sm" id="topbarLabel">Overview</div>
-      <div class="page-heading" id="topbarHeading">Good morning, Grace 🌸</div>
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a class="logo-text" href="index.html">W<span>&</span>L Words</a>
+      <div class="logo-sub">Writer Dashboard</div>
     </div>
-    <div class="topbar-right">
-      <div class="notif-btn">🔔<div class="notif-dot"></div></div>
-      <button class="btn-upload" onclick="openModal()">+ Upload Story</button>
+    <div class="writer-info">
+      <div class="writer-avatar"></div>
+      <div>
+        <div class="writer-name">Writer</div><span class="writer-badge">âœðŸ½ Writer</span>
+      </div>
     </div>
-  </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <a class="nav-item active" onclick="showPanel('overview',this)"><span class="nav-icon"><ion-icon
+            name="bar-chart-outline"></ion-icon></span> Dashboard</a>
+      <div class="nav-section-label">Content</div>
+      <a class="nav-item" onclick="showPanel('stories',this)"><span class="nav-icon"><ion-icon
+            name="library-outline"></ion-icon></span> My Stories <span class="nav-badge">4</span></a>
+      <a class="nav-item" onclick="openModal()"><span class="nav-icon"><ion-icon name="add-outline"></ion-icon></span>
+        Upload New Story</a>
+      <div class="nav-section-label">Money</div>
+      <a class="nav-item" onclick="showPanel('earnings',this)"><span class="nav-icon"><ion-icon
+            name="cash-outline"></ion-icon></span> Earnings & Payouts</a>
+      <a class="nav-item" onclick="showPanel('coins',this)"><span class="nav-icon"><ion-icon
+            name="wallet-outline"></ion-icon></span> Coin Analytics</a>
+      <div class="nav-section-label">Account</div>
+      <a class="nav-item" onclick="showPanel('profile',this)"><span class="nav-icon"><ion-icon
+            name="person-outline"></ion-icon></span> Writer Profile</a>
+      <a class="nav-item" onclick="showPanel('settings',this)"><span class="nav-icon"><ion-icon
+            name="settings-outline"></ion-icon></span> Settings</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a class="btn-visit" href="index.html">ðŸŒ View Public Site</a>
+    </div>
+  </aside>
 
-  <div class="content">
-
-    <!-- OVERVIEW -->
-    <div class="panel active" id="panel-overview">
-      <div class="earnings-hero">
-        <div class="eh-left">
-          <div class="eh-label">Total Earnings — June 2025</div>
-          <div class="eh-amount">$142.80</div>
-          <div class="eh-sub">Payout on <strong>July 15</strong> · $114.24 to you (80%) · $28.56 to platform (20%)</div>
-        </div>
-        <div class="eh-right">
-          <div class="eh-stat"><div class="eh-stat-num">4,201</div><div class="eh-stat-label">Total Readers</div></div>
-          <div class="eh-stat"><div class="eh-stat-num">891</div><div class="eh-stat-label">Chapters Unlocked</div></div>
-          <div class="eh-stat"><div class="eh-stat-num">4.7★</div><div class="eh-stat-label">Avg Rating</div></div>
-        </div>
-        <button class="btn-payout" onclick="showToast('💳 Payout request submitted! Funds arrive within 3–5 business days.')">Request Early Payout</button>
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <div class="page-title-sm" id="topbarLabel">Overview</div>
+        <div class="page-heading" id="topbarHeading">Good morning ðŸŒ¸</div>
       </div>
-
-      <div class="stat-cards">
-        <div class="stat-card"><div class="sc-icon">📖</div><div class="sc-value">3</div><div class="sc-label">Active Stories</div><div class="sc-change sc-up">↑ 1 new this month</div></div>
-        <div class="stat-card"><div class="sc-icon">📝</div><div class="sc-value">62</div><div class="sc-label">Total Chapters</div><div class="sc-change sc-up">↑ 8 added this month</div></div>
-        <div class="stat-card"><div class="sc-icon">🔖</div><div class="sc-value">1,240</div><div class="sc-label">Bookmarks</div><div class="sc-change sc-up">↑ 14% this week</div></div>
-        <div class="stat-card"><div class="sc-icon">⭐</div><div class="sc-value">1,842</div><div class="sc-label">Total Ratings</div><div class="sc-change sc-up">↑ 203 new this month</div></div>
+      <div class="topbar-right">
+        <div class="notif-btn"><ion-icon name="notifications-outline"></ion-icon>
+          <div class="notif-dot"></div>
+        </div>
+        <button class="btn-upload" onclick="openModal()">+ Upload Story</button>
       </div>
+    </div>
 
-      <div class="chart-card">
-        <div class="chart-header">
-          <div class="chart-title">Earnings This Week</div>
-          <div class="chart-tabs">
-            <button class="chart-tab active">7 days</button>
-            <button class="chart-tab" onclick="switchChartTab(this)">30 days</button>
-            <button class="chart-tab" onclick="switchChartTab(this)">3 months</button>
+    <div class="content">
+
+      <!-- OVERVIEW -->
+      <div class="panel active" id="panel-overview">
+        <div id="empty-overview" class="empty-overview" style="display:none;">
+          <div class="empty-overview-icon"><ion-icon name="document-text-outline"></ion-icon></div>
+          <div class="empty-overview-title">Your Writer Journey Begins Here</div>
+          <div class="empty-overview-text">Upload your first story to start seeing stats, earnings, and reader
+            engagement.</div>
+          <button class="btn-upload" style="margin:0 auto;" onclick="openModal()">+ Upload Your First Story</button>
+        </div>
+
+        <div id="stats-overview">
+          <div class="earnings-hero">
+            <div class="eh-left">
+              <div class="eh-label">
+                Total Earnings â€”
+                <select id="monthFilter" class="month-dropdown">
+                  <!-- Populated by JS -->
+                </select>
+              </div>
+              <div class="eh-amount" id="totalEarnings">$0.00</div>
+              <div class="eh-sub" id="earningsSub">Payout on <strong>--</strong> Â· $0.00 to you (80%) Â· $0.00 to
+                platform (20%)</div>
+            </div>
+            <div class="eh-right">
+              <div class="eh-stat">
+                <div class="eh-stat-num" id="totalReaders">0</div>
+                <div class="eh-stat-label">Total Readers</div>
+              </div>
+              <div class="eh-stat">
+                <div class="eh-stat-num" id="totalChaptersUnlocked">0</div>
+                <div class="eh-stat-label">Chapters Unlocked</div>
+              </div>
+              <div class="eh-stat">
+                <div class="eh-stat-num" id="avgRating">0.0â˜…</div>
+                <div class="eh-stat-label">Avg Rating</div>
+              </div>
+            </div>
+            <button class="btn-payout"
+              onclick="showToast('<ion-icon name=&quot;card-outline&quot; style=&quot;vertical-align:-2px;margin-right:4px;&quot;></ion-icon> Payout request submitted! Funds arrive within 3â€“5 business days.')">Request
+              Early Payout</button>
+          </div>
+
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="sc-icon"><ion-icon name="book-outline"></ion-icon></div>
+              <div class="sc-value" id="statActiveStories">0</div>
+              <div class="sc-label">Active Stories</div>
+              <div class="sc-change sc-up" id="statActiveStoriesChange">--</div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-icon"><ion-icon name="document-text-outline"></ion-icon></div>
+              <div class="sc-value" id="statTotalChapters">0</div>
+              <div class="sc-label">Total Chapters</div>
+              <div class="sc-change sc-up" id="statTotalChaptersChange">--</div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-icon"><ion-icon name="bookmark-outline"></ion-icon></div>
+              <div class="sc-value" id="statBookmarks">0</div>
+              <div class="sc-label">Bookmarks</div>
+              <div class="sc-change sc-up" id="statBookmarksChange">--</div>
+            </div>
+            <div class="stat-card">
+              <div class="sc-icon"><ion-icon name="star-outline"></ion-icon></div>
+              <div class="sc-value" id="statTotalRatings">0</div>
+              <div class="sc-label">Total Ratings</div>
+              <div class="sc-change sc-up" id="statTotalRatingsChange">--</div>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">Earnings This Week</div>
+              <div class="chart-tabs">
+                <button class="chart-tab active">7 days</button>
+                <button class="chart-tab" onclick="switchChartTab(this)">30 days</button>
+                <button class="chart-tab" onclick="switchChartTab(this)">3 months</button>
+              </div>
+            </div>
+            <svg class="chart" viewBox="0 0 700 180" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8789C" stop-opacity="0.25" />
+                  <stop offset="100%" stop-color="#E8789C" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="36" x2="700" y2="36" stroke="#F0D8E8" stroke-width="1" />
+              <line x1="0" y1="72" x2="700" y2="72" stroke="#F0D8E8" stroke-width="1" />
+              <line x1="0" y1="108" x2="700" y2="108" stroke="#F0D8E8" stroke-width="1" />
+              <line x1="0" y1="144" x2="700" y2="144" stroke="#F0D8E8" stroke-width="1" />
+              <path d="M0,180 L700,180" id="chartArea" fill="url(#chartGrad)" />
+              <path d="M0,180 L700,180" id="chartLine" fill="none" stroke="#E8789C" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <text x="706" y="40" font-size="10" fill="#6E6E85" dominant-baseline="middle">$0</text>
+              <text x="706" y="80" font-size="10" fill="#6E6E85" dominant-baseline="middle">$0</text>
+              <text x="706" y="120" font-size="10" fill="#6E6E85" dominant-baseline="middle">$0</text>
+            </svg>
+            <div class="chart-x-labels">
+              <span class="chart-x-label">Mon</span><span class="chart-x-label">Tue</span><span
+                class="chart-x-label">Wed</span><span class="chart-x-label">Thu</span><span
+                class="chart-x-label">Fri</span><span class="chart-x-label">Sat</span><span
+                class="chart-x-label">Sun</span>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Top Performing Stories</div><a class="see-all-link"
+                  onclick="showPanel('stories',document.querySelectorAll('.nav-item')[1])">See all</a>
+              </div>
+              <div id="topPerformingStories">
+                <div style="color:var(--muted);font-size:0.85rem;padding: 1rem 0;">No stories yet.</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Recent Activity</div>
+              </div>
+              <div id="recentActivity">
+                <div style="color:var(--muted);font-size:0.85rem;padding: 1rem 0;">No recent activity.</div>
+              </div>
+            </div>
           </div>
         </div>
-        <svg class="chart" viewBox="0 0 700 180" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#E8789C" stop-opacity="0.25"/>
-              <stop offset="100%" stop-color="#E8789C" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <line x1="0" y1="36" x2="700" y2="36" stroke="#F0D8E8" stroke-width="1"/>
-          <line x1="0" y1="72" x2="700" y2="72" stroke="#F0D8E8" stroke-width="1"/>
-          <line x1="0" y1="108" x2="700" y2="108" stroke="#F0D8E8" stroke-width="1"/>
-          <line x1="0" y1="144" x2="700" y2="144" stroke="#F0D8E8" stroke-width="1"/>
-          <path d="M0,120 C58,120 58,80 116,80 C174,80 174,50 233,50 C291,50 291,90 350,90 C408,90 408,30 466,30 C525,30 525,60 583,60 C641,60 641,40 700,40 L700,180 L0,180 Z" fill="url(#chartGrad)"/>
-          <path d="M0,120 C58,120 58,80 116,80 C174,80 174,50 233,50 C291,50 291,90 350,90 C408,90 408,30 466,30 C525,30 525,60 583,60 C641,60 641,40 700,40" fill="none" stroke="#E8789C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="0" cy="120" r="4" fill="#E8789C"/>
-          <circle cx="116" cy="80" r="4" fill="#E8789C"/>
-          <circle cx="233" cy="50" r="4" fill="#E8789C"/>
-          <circle cx="350" cy="90" r="4" fill="#E8789C"/>
-          <circle cx="466" cy="30" r="5" fill="#C9527A" stroke="white" stroke-width="2"/>
-          <circle cx="583" cy="60" r="4" fill="#E8789C"/>
-          <circle cx="700" cy="40" r="4" fill="#E8789C"/>
-          <text x="706" y="40" font-size="10" fill="#6E6E85" dominant-baseline="middle">$32</text>
-          <text x="706" y="80" font-size="10" fill="#6E6E85" dominant-baseline="middle">$24</text>
-          <text x="706" y="120" font-size="10" fill="#6E6E85" dominant-baseline="middle">$16</text>
-        </svg>
-        <div class="chart-x-labels">
-          <span class="chart-x-label">Mon</span><span class="chart-x-label">Tue</span><span class="chart-x-label">Wed</span><span class="chart-x-label">Thu</span><span class="chart-x-label">Fri</span><span class="chart-x-label">Sat</span><span class="chart-x-label">Sun</span>
-        </div>
       </div>
 
-      <div class="two-col">
+      <!-- STORIES -->
+      <div class="panel" id="panel-stories">
+        <div class="stories-toolbar">
+          <div class="search-sm"><span>ðŸ”</span><input type="text" placeholder="Search your storiesâ€¦" /></div>
+          <select class="filter-sm">
+            <option>All Status</option>
+            <option>Live</option>
+            <option>Draft</option>
+          </select>
+          <button class="btn-upload" onclick="openModal()">+ New Story</button>
+        </div>
+        <table class="story-table">
+          <thead>
+            <tr>
+              <th>Story</th>
+              <th>Status</th>
+              <th>Chapters</th>
+              <th>Readers</th>
+              <th>Earnings</th>
+              <th>Pricing</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="storyTableBody">
+            <tr>
+              <td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading stories...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <!-- CHAPTER MANAGER -->
+      <div class="panel" id="panel-chapter-manager">
         <div class="card">
-          <div class="card-header"><div class="card-title">Top Performing Stories</div><a class="see-all-link" onclick="showPanel('stories',document.querySelectorAll('.nav-item')[1])">See all</a></div>
-          <div class="story-mini"><div class="sm-cover c1">The Faithful Heart</div><div class="sm-info"><div class="sm-title">The Faithful Heart</div><div class="sm-meta">15.3k reads · 42 chapters · 4.7★</div></div><div class="sm-earn">$98.40</div></div>
-          <div class="story-mini"><div class="sm-cover c2">Daughter of Zion</div><div class="sm-info"><div class="sm-title">Daughter of Zion</div><div class="sm-meta">11k reads · 14 chapters · 4.8★</div></div><div class="sm-earn">$31.60</div></div>
-          <div class="story-mini"><div class="sm-cover c3">Rivers of Light</div><div class="sm-info"><div class="sm-title">Rivers of Light</div><div class="sm-meta">4.2k reads · 6 chapters · Free</div></div><div class="sm-earn">—</div></div>
+          <div class="card-header" style="justify-content: flex-start; gap: 1rem;">
+            <button class="btn-ghost" onclick="showPanel('stories', document.querySelectorAll('.nav-item')[1])" style="padding: 0.4rem 1rem;"><ion-icon name="arrow-back-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Back</button>
+            <div class="card-title" id="cmStoryTitle">Story Chapters</div>
+          </div>
+          <div class="stories-toolbar" style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border);">
+             <button class="btn-upload" onclick="openChapterModal()">+ New Chapter</button>
+          </div>
+          <table class="story-table">
+            <thead>
+              <tr>
+                <th>Chapter</th>
+                <th>Title</th>
+                <th>Pricing</th>
+                <th>Published</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="chapterTableBody">
+              <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;">No chapters yet.</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">Recent Activity</div></div>
-          <div class="activity-item"><div class="activity-icon act-gold">🪙</div><div><div class="activity-desc"><strong>47 coins earned</strong> from chapter unlocks on The Faithful Heart</div><div class="activity-time">2 hours ago</div></div></div>
-          <div class="activity-item"><div class="activity-icon act-pink">⭐</div><div><div class="activity-desc"><strong>12 new ratings</strong> on Daughter of Zion — avg 4.9★ this week</div><div class="activity-time">5 hours ago</div></div></div>
-          <div class="activity-item"><div class="activity-icon act-blue">📖</div><div><div class="activity-desc"><strong>320 new readers</strong> discovered The Faithful Heart through search</div><div class="activity-time">Yesterday</div></div></div>
-          <div class="activity-item"><div class="activity-icon act-green">💸</div><div><div class="activity-desc"><strong>$87.20 paid out</strong> for May earnings — arrived in your account</div><div class="activity-time">June 15</div></div></div>
+      </div>
+
+      <!-- EARNINGS -->
+      <div class="panel" id="panel-earnings">
+        <div class="earnings-summary">
+          <div class="stat-card">
+            <div class="sc-icon">💰</div>
+            <div class="sc-value" id="earningsThisMonth">$0.00</div>
+            <div class="sc-label">Earned this month</div>
+            <div class="sc-change sc-up" id="earningsThisMonthChange">--</div>
+          </div>
+          <div class="stat-card">
+            <div class="sc-icon">✅</div>
+            <div class="sc-value" id="earningsTotalPaid">$0.00</div>
+            <div class="sc-label">Total paid out</div>
+            <div class="sc-change sc-up">Lifetime Earnings</div>
+          </div>
+          <div class="stat-card">
+            <div class="sc-icon">⏳</div>
+            <div class="sc-value" id="earningsPending">$0.00</div>
+            <div class="sc-label">Pending (your 80%)</div>
+            <div class="sc-change" style="color:var(--blue-deep);">Pays out next 15th</div>
+          </div>
+        </div>
+        <div class="payout-history">
+          <div class="payout-header">
+            <div class="card-title">Payout History</div>
+            <button class="btn-payout" onclick="showToast('Payout request submitted!')">Request Payout</button>
+          </div>
+          <div class="payout-row header"><span>Period</span><span>Gross Earned</span><span>Your Share (80%)</span><span>Status</span><span>Receipt</span></div>
+          <div id="payoutHistoryList">
+            <div style="color:var(--muted);font-size:0.85rem;padding: 1rem 1.5rem;">No payout history yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER PANELS -->
+      <div class="panel" id="panel-coins">
+        <div class="card" style="text-align:center;padding:4rem 2rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;">🪙</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;">Coin Analytics</div>
+          <div style="color:var(--muted);font-size:0.9rem;">Coming soon — track exactly which chapters earn the most coins and when readers unlock them.</div>
+        </div>
+      </div>
+      <div class="panel" id="panel-profile">
+        <div class="card" style="max-width: 600px; margin: 0 auto; padding: 2rem;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;">Writer Profile</div>
+          <div class="m-field">
+            <label class="m-label">Pen Name</label>
+            <input id="profilePenName" class="m-input" type="text" placeholder="Your public author name" />
+          </div>
+          <div class="m-field">
+            <label class="m-label">Bio</label>
+            <textarea id="profileBio" class="m-input" placeholder="Tell readers about yourself..." style="min-height: 100px;"></textarea>
+          </div>
+          <div class="m-field">
+            <label class="m-label">Twitter/X Link (optional)</label>
+            <input id="profileTwitter" class="m-input" type="text" placeholder="https://x.com/yourhandle" />
+          </div>
+          <div class="m-field">
+            <label class="m-label">Instagram Link (optional)</label>
+            <input id="profileInstagram" class="m-input" type="text" placeholder="https://instagram.com/yourhandle" />
+          </div>
+          <button class="btn-primary" style="width:100%; padding: 0.8rem;" onclick="window.saveProfile()">Save Profile</button>
+        </div>
+      </div>
+      <div class="panel" id="panel-settings">
+        <div class="card" style="max-width: 600px; margin: 0 auto; padding: 2rem;">
+          <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:1.5rem;">Settings & Payouts</div>
+          <h3 style="font-size:1rem; margin-bottom:1rem; color:var(--text-main);">Account Info</h3>
+          <div class="m-field">
+            <label class="m-label">Account Email</label>
+            <input id="settingsEmail" class="m-input" type="text" disabled style="background-color: var(--bg-hover);" />
+            <small style="color:var(--muted);">Email cannot be changed directly.</small>
+          </div>
+          
+          <h3 style="font-size:1rem; margin-top:2rem; margin-bottom:1rem; color:var(--text-main);">Payout Details (Bank Transfer)</h3>
+          <div class="m-field">
+            <label class="m-label">Bank Name</label>
+            <input id="settingsBankName" class="m-input" type="text" placeholder="e.g. GTBank, Zenith" />
+          </div>
+          <div class="m-field">
+            <label class="m-label">Account Number</label>
+            <input id="settingsAccountNo" class="m-input" type="text" placeholder="10-digit account number" />
+          </div>
+          <div class="m-field">
+            <label class="m-label">Account Name</label>
+            <input id="settingsAccountName" class="m-input" type="text" placeholder="Exact name on the account" />
+          </div>
+          <button class="btn-primary" style="width:100%; padding: 0.8rem; margin-top: 1rem;" onclick="window.saveSettings()">Save Settings</button>
         </div>
       </div>
     </div>
-
-    <!-- STORIES -->
-    <div class="panel" id="panel-stories">
-      <div class="stories-toolbar">
-        <div class="search-sm"><span>🔍</span><input type="text" placeholder="Search your stories…"/></div>
-        <select class="filter-sm"><option>All Status</option><option>Live</option><option>Draft</option></select>
-        <button class="btn-upload" onclick="openModal()">+ New Story</button>
-      </div>
-      <table class="story-table">
-        <thead><tr><th>Story</th><th>Status</th><th>Chapters</th><th>Readers</th><th>Earnings</th><th>Pricing</th><th>Actions</th></tr></thead>
-        <tbody id="storyTableBody">
-          <tr>
-            <td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading stories...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- EARNINGS -->
-    <div class="panel" id="panel-earnings">
-      <div class="earnings-summary">
-        <div class="stat-card"><div class="sc-icon">💰</div><div class="sc-value">$142.80</div><div class="sc-label">Earned this month</div><div class="sc-change sc-up">↑ 38% vs May</div></div>
-        <div class="stat-card"><div class="sc-icon">✅</div><div class="sc-value">$319.40</div><div class="sc-label">Total paid out</div><div class="sc-change sc-up">Since Jan 2025</div></div>
-        <div class="stat-card"><div class="sc-icon">⏳</div><div class="sc-value">$114.24</div><div class="sc-label">Pending (your 80%)</div><div class="sc-change" style="color:var(--blue-deep);">Pays out July 15</div></div>
-      </div>
-      <div class="payout-history">
-        <div class="payout-header"><div class="card-title">Payout History</div><button class="btn-payout" onclick="showToast('💳 Payout request submitted!')">Request Payout</button></div>
-        <div class="payout-row header"><span>Period</span><span>Gross Earned</span><span>Your Share (80%)</span><span>Status</span><span>Receipt</span></div>
-        <div class="payout-row"><span>June 2025</span><span class="pay-amount">$142.80</span><span class="pay-writer">$114.24</span><span><span class="pay-status pay-pending">⏳ Pending</span></span><span style="color:var(--muted);font-size:0.78rem;">Jul 15</span></div>
-        <div class="payout-row"><span>May 2025</span><span class="pay-amount">$109.00</span><span class="pay-writer">$87.20</span><span><span class="pay-status pay-paid">✅ Paid</span></span><span style="color:var(--rose-deep);font-size:0.78rem;cursor:pointer;">View</span></div>
-        <div class="payout-row"><span>April 2025</span><span class="pay-amount">$88.50</span><span class="pay-writer">$70.80</span><span><span class="pay-status pay-paid">✅ Paid</span></span><span style="color:var(--rose-deep);font-size:0.78rem;cursor:pointer;">View</span></div>
-        <div class="payout-row"><span>March 2025</span><span class="pay-amount">$76.20</span><span class="pay-writer">$60.96</span><span><span class="pay-status pay-paid">✅ Paid</span></span><span style="color:var(--rose-deep);font-size:0.78rem;cursor:pointer;">View</span></div>
-      </div>
-    </div>
-
-    <!-- PLACEHOLDER PANELS -->
-    <div class="panel" id="panel-coins"><div class="card" style="text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;margin-bottom:1rem;">🪙</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;">Coin Analytics</div><div style="color:var(--muted);font-size:0.9rem;">Coming soon — track exactly which chapters earn the most coins and when readers unlock them.</div></div></div>
-    <div class="panel" id="panel-profile"><div class="card" style="text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;margin-bottom:1rem;">👤</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;">Writer Profile</div><div style="color:var(--muted);font-size:0.9rem;">Edit your public author page — bio, photo, social links, and featured stories.</div></div></div>
-    <div class="panel" id="panel-settings"><div class="card" style="text-align:center;padding:4rem 2rem;"><div style="font-size:3rem;margin-bottom:1rem;">⚙️</div><div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;">Settings</div><div style="color:var(--muted);font-size:0.9rem;">Manage payout details, notification preferences, password, and account info.</div></div></div>
   </div>
-</div>
 
-<!-- UPLOAD MODAL -->
-<div class="modal-overlay" id="uploadModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Upload a New Story</div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="m-field"><label class="m-label">Story Title *</label><input id="uploadTitle" class="m-input" type="text" placeholder="e.g. The Grace That Found Me"/></div>
-    <div class="m-field"><label class="m-label">Short Description *</label><textarea id="uploadDesc" class="m-input" placeholder="A brief summary readers will see on the browse page…"></textarea></div>
-    <div class="m-row">
-      <div class="m-field"><label class="m-label">Category *</label><select id="uploadCategory" class="m-input"><option value="">Select category…</option><option>Devotionals</option><option>Christian Romance</option><option>Spiritual Warfare</option><option>African Christian Lit</option><option>Bible Study</option><option>Poetry & Psalms</option><option>Christian Youth</option><option>Faith & Healing</option><option>Theology & Doctrine</option></select></div>
-      <div class="m-field"><label class="m-label">Language</label><select class="m-input"><option>English</option><option>Pidgin</option><option>Yoruba</option><option>Igbo</option><option>Hausa</option><option>French</option></select></div>
-    </div>
-    <div class="m-field">
-      <label class="m-label">Chapter Pricing</label>
-      <div class="pricing-toggle">
-        <button class="price-tab active" data-type="free" onclick="setPricingTab(this,'free')">✅ All Free</button>
-        <button class="price-tab" data-type="coins" onclick="setPricingTab(this,'coins')">🪙 Coin Unlock</button>
-        <button class="price-tab" data-type="purchase" onclick="setPricingTab(this,'mixed')">🔀 Mixed</button>
+  <!-- UPLOAD MODAL -->
+  <div class="modal-overlay" id="uploadModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Upload a New Story</div>
+        <button class="modal-close" onclick="closeModal()">âœ•</button>
       </div>
-      <div id="coinPriceField" style="display:none;"><label class="m-label">Coins per chapter</label><input class="m-input" type="number" placeholder="e.g. 8" min="1" max="50"/><div style="font-size:0.72rem;color:var(--muted);margin-top:0.35rem;">First 3 chapters are always free to attract readers.</div></div>
-    </div>
-    <div class="m-field">
-      <label class="m-label">Cover Image</label>
-      <div class="upload-area" onclick="showToast('📁 File picker connects when backend is live')"><div class="upload-icon">🖼️</div><div class="upload-label">Click to upload a cover image</div><div class="upload-hint">JPG or PNG · Recommended: 400 × 600px</div></div>
-    </div>
-    <div class="m-field"><label class="m-label">Tags <span style="color:var(--muted);font-weight:400;">(optional)</span></label><input class="m-input" type="text" placeholder="e.g. faith, redemption, Lagos, second chances"/></div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-save" onclick="handleUpload()">Save & Continue to Chapters →</button>
+      <div class="m-field"><label class="m-label">Story Title *</label><input id="uploadTitle" class="m-input"
+          type="text" placeholder="e.g. The Grace That Found Me" /></div>
+      <div class="m-field"><label class="m-label">Short Description *</label><textarea id="uploadDesc" class="m-input"
+          placeholder="A brief summary readers will see on the browse pageâ€¦"></textarea></div>
+      <div class="m-row">
+        <div class="m-field"><label class="m-label">Category *</label><select id="uploadCategory" class="m-input">
+            <option value="">Select categoryâ€¦</option>
+            <option>Devotionals</option>
+            <option>Christian Romance</option>
+            <option>Spiritual Warfare</option>
+            <option>African Christian Lit</option>
+            <option>Bible Study</option>
+            <option>Poetry & Psalms</option>
+            <option>Christian Youth</option>
+            <option>Faith & Healing</option>
+            <option>Theology & Doctrine</option>
+          </select></div>
+        <div class="m-field"><label class="m-label">Language</label><select class="m-input">
+            <option>English</option>
+            <option>Pidgin</option>
+            <option>Yoruba</option>
+            <option>Igbo</option>
+            <option>Hausa</option>
+            <option>French</option>
+          </select></div>
+      </div>
+      <div class="m-field">
+        <label class="m-label">Chapter Pricing</label>
+        <div class="pricing-toggle">
+          <button class="price-tab active" data-type="free" onclick="setPricingTab(this,'free')"><ion-icon
+              name="checkmark-circle-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> All
+            Free</button>
+          <button class="price-tab" data-type="coins" onclick="setPricingTab(this,'coins')"><ion-icon
+              name="wallet-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Coin Unlock</button>
+          <button class="price-tab" data-type="purchase" onclick="setPricingTab(this,'mixed')"><ion-icon
+              name="shuffle-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Mixed</button>
+        </div>
+        <div id="coinPriceField" style="display:none;"><label class="m-label">Coins per chapter</label><input
+            class="m-input" type="number" placeholder="e.g. 8" min="1" max="50" />
+          <div style="font-size:0.72rem;color:var(--muted);margin-top:0.35rem;">First 3 chapters are always free to
+            attract readers.</div>
+        </div>
+      </div>
+      <div class="m-field">
+        <label class="m-label">Cover Image</label>
+        <div class="upload-area"
+          onclick="showToast('<ion-icon name=&quot;folder-outline&quot; style=&quot;vertical-align:-2px;margin-right:4px;&quot;></ion-icon> File picker connects when backend is live')">
+          <div class="upload-icon"><ion-icon name="image-outline"></ion-icon></div>
+          <div class="upload-label">Click to upload a cover image</div>
+          <div class="upload-hint">JPG or PNG Â· Recommended: 400 Ã— 600px</div>
+        </div>
+      </div>
+      <div class="m-field"><label class="m-label">Tags <span
+            style="color:var(--muted);font-weight:400;">(optional)</span></label><input class="m-input" type="text"
+          placeholder="e.g. faith, redemption, Lagos, second chances" /></div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+        <button class="btn-save" onclick="handleUpload()">Save & Continue to Chapters â†’</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- EDIT MODAL -->
-<div class="modal-overlay" id="editModal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Edit Story</div>
-      <button class="modal-close" onclick="closeEditModal()">✕</button>
-    </div>
-    <div class="m-field"><label class="m-label">Story Title *</label><input id="editTitle" class="m-input" type="text"/></div>
-    <div class="m-field"><label class="m-label">Short Description *</label><textarea id="editDesc" class="m-input"></textarea></div>
-    <div class="m-row">
-      <div class="m-field"><label class="m-label">Category *</label><select id="editCategory" class="m-input"><option value="">Select category…</option><option>Devotionals</option><option>Christian Romance</option><option>Spiritual Warfare</option><option>African Christian Lit</option><option>Bible Study</option><option>Poetry & Psalms</option><option>Christian Youth</option><option>Faith & Healing</option><option>Theology & Doctrine</option></select></div>
-      <div class="m-field"><label class="m-label">Pricing</label><select id="editPricing" class="m-input"><option value="free">✅ All Free</option><option value="coins">🪙 Coin Unlock</option><option value="purchase">🔀 Mixed</option></select></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
-      <button class="btn-save" onclick="handleEditSave()">Save Changes</button>
+  <!-- EDIT MODAL -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Edit Story</div>
+        <button class="modal-close" onclick="closeEditModal()">âœ•</button>
+      </div>
+      <div class="m-field"><label class="m-label">Story Title *</label><input id="editTitle" class="m-input"
+          type="text" /></div>
+      <div class="m-field"><label class="m-label">Short Description *</label><textarea id="editDesc"
+          class="m-input"></textarea></div>
+      <div class="m-row">
+        <div class="m-field"><label class="m-label">Category *</label><select id="editCategory" class="m-input">
+            <option value="">Select categoryâ€¦</option>
+            <option>Devotionals</option>
+            <option>Christian Romance</option>
+            <option>Spiritual Warfare</option>
+            <option>African Christian Lit</option>
+            <option>Bible Study</option>
+            <option>Poetry & Psalms</option>
+            <option>Christian Youth</option>
+            <option>Faith & Healing</option>
+            <option>Theology & Doctrine</option>
+          </select></div>
+        <div class="m-field"><label class="m-label">Pricing</label><select id="editPricing" class="m-input">
+            <option value="free">All Free</option>
+            <option value="coins">Coin Unlock</option>
+            <option value="purchase">Mixed</option>
+          </select></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+        <button class="btn-save" onclick="handleEditSave()">Save Changes</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="toast" id="toast"></div>
 
-<script>
-  const panelTitles={overview:['Overview','Good morning, Grace 🌸'],stories:['Content','My Stories'],earnings:['Money','Earnings & Payouts'],coins:['Money','Coin Analytics'],profile:['Account','Writer Profile'],settings:['Account','Settings']};
+  <!-- CHAPTER MODAL -->
+  <div class="modal-overlay" id="chapterModal">
+    <div class="modal" style="max-width: 800px; width: 90%;">
+      <div class="modal-header">
+        <div class="modal-title" id="chapterModalTitle">Add New Chapter</div>
+        <button class="modal-close" onclick="closeChapterModal()">✕</button>
+      </div>
+      <div class="m-row">
+        <div class="m-field" style="flex:1;"><label class="m-label">Chapter Title *</label><input id="chapterTitle" class="m-input" type="text" placeholder="e.g. The Wedding That Wasn't" /></div>
+        <div class="m-field" style="width: 150px;"><label class="m-label">Chapter No. *</label><input id="chapterNum" class="m-input" type="number" min="1" value="1" /></div>
+      </div>
+      <div class="m-field">
+        <label class="m-label">Chapter Content *</label>
+        <div id="quillEditor" style="height: 350px; background: white; border-radius: 0 0 12px 12px; font-family: 'Inter', sans-serif;"></div>
+      </div>
+      <div class="m-field">
+        <label class="m-label">Pricing</label>
+        <select id="chapterPricing" class="m-input" style="max-width: 200px;">
+            <option value="free">Free</option>
+            <option value="locked">Locked (Coins)</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeChapterModal()">Cancel</button>
+        <button class="btn-save" onclick="window.saveChapter()">Save & Publish</button>
+      </div>
+    </div>
+  </div>
 
-  function showPanel(name,navEl){
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    const panel=document.getElementById('panel-'+name);
-    if(panel)panel.classList.add('active');
-    if(navEl)navEl.classList.add('active');
-    const t=panelTitles[name]||['',''];
-    document.getElementById('topbarLabel').textContent=t[0];
-    document.getElementById('topbarHeading').textContent=t[1];
-  }
+  <div class="toast" id="toast"></div>
 
-  function openModal(){document.getElementById('uploadModal').classList.add('open');}
-  function closeModal(){document.getElementById('uploadModal').classList.remove('open');}
-  document.getElementById('uploadModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-  
-  function openEditModal(id){
-    window.currentEditingStoryId = id;
-    if(window.populateEditModal) window.populateEditModal(id);
-    document.getElementById('editModal').classList.add('open');
-  }
-  function closeEditModal(){document.getElementById('editModal').classList.remove('open');}
-  document.getElementById('editModal').addEventListener('click',function(e){if(e.target===this)closeEditModal();});
-  document.getElementById('uploadModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+  <script>
+    window.panelTitles = { overview: ['Overview', 'Good morning ðŸŒ¸'], stories: ['Content', 'My Stories'], earnings: ['Money', 'Earnings & Payouts'], coins: ['Money', 'Coin Analytics'], profile: ['Account', 'Writer Profile'], settings: ['Account', 'Settings'] };
 
-  function setPricingTab(btn,type){
-    document.querySelectorAll('.price-tab').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    btn.dataset.type = type;
-    document.getElementById('coinPriceField').style.display=(type==='coins'||type==='mixed')?'block':'none';
-  }
-
-  function switchChartTab(btn){document.querySelectorAll('.chart-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-
-  function showToast(msg){
-    const t=document.getElementById('toast');
-    t.textContent=msg;t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),3500);
-  }
-</script>
-
-<!-- Firebase SDK & Upload Logic -->
-<script type="module">
-  import { auth, db, collection, addDoc, doc, getDoc, getDocs, query, where, updateDoc } from './firebase-config.js';
-  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-  let currentWriterId = null;
-  let writerPenName = "Writer";
-  let myStories = [];
-
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      window.location.href = 'index.html'; // Redirect to home if not logged in
-      return;
+    function showPanel(name, navEl) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      const panel = document.getElementById('panel-' + name);
+      if (panel) panel.classList.add('active');
+      if (navEl) navEl.classList.add('active');
+      const t = window.panelTitles[name] || ['', ''];
+      document.getElementById('topbarLabel').textContent = t[0];
+      document.getElementById('topbarHeading').textContent = t[1];
     }
 
-    try {
-      // Check if user is a writer
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        if (userData.account_type !== 'writer') {
-          alert('Only writers have access to the dashboard. Redirecting to home...');
-          window.location.href = 'index.html';
-          return;
-        }
-        currentWriterId = user.uid;
-        writerPenName = userData.pen_name || userData.full_name || user.email.split('@')[0];
-        
-        // Update UI with writer info
-        const nameEl = document.querySelector('.writer-name');
-        const avatarEl = document.querySelector('.writer-avatar');
-        if (nameEl) nameEl.textContent = writerPenName;
-        if (avatarEl) avatarEl.textContent = writerPenName.charAt(0).toUpperCase();
+    function openModal() { document.getElementById('uploadModal').classList.add('open'); }
+    function closeModal() { document.getElementById('uploadModal').classList.remove('open'); }
+    document.getElementById('uploadModal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
 
-        // Fetch their stories
-        loadMyStories();
-      } else {
-        window.location.href = 'index.html';
+    function openEditModal(id) {
+      window.currentEditingStoryId = id;
+      if (window.populateEditModal) window.populateEditModal(id);
+      document.getElementById('editModal').classList.add('open');
+    }
+    function closeEditModal() { document.getElementById('editModal').classList.remove('open'); }
+    document.getElementById('editModal').addEventListener('click', function (e) { if (e.target === this) closeEditModal(); });
+    document.getElementById('uploadModal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+
+    function setPricingTab(btn, type) {
+      document.querySelectorAll('.price-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      btn.dataset.type = type;
+      document.getElementById('coinPriceField').style.display = (type === 'coins' || type === 'mixed') ? 'block' : 'none';
+    }
+
+    function switchChartTab(btn) { document.querySelectorAll('.chart-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+  </script>
+
+  <!-- Firebase SDK & Upload Logic -->
+  <script type="module">
+    import { auth, db, collection, addDoc, doc, getDoc, getDocs, query, where, updateDoc } from './firebase-config.js';
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    let currentWriterId = null;
+    let writerPenName = "Writer";
+    let myStories = [];
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = 'index.html'; // Redirect to home if not logged in
+        return;
       }
-    } catch (error) {
-      console.error("Auth check error:", error);
-    }
-  });
 
-  async function loadMyStories() {
-    if (!currentWriterId) return;
-    
-    const tbody = document.getElementById('storyTableBody');
-    if (!tbody) return;
-    
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading stories...</td></tr>';
-    
-    try {
-      const q = query(collection(db, "stories"), where("author_uid", "==", currentWriterId));
-      const snapshot = await getDocs(q);
-      
-      myStories = [];
-      let html = '';
-      
-      snapshot.forEach(docSnap => {
-        const data = docSnap.data();
-        myStories.push({ id: docSnap.id, ...data });
-        
-        let pricingBadge = '✅ All free';
-        if (data.pricing_type === 'coins') pricingBadge = '🔒 Coin unlock';
-        else if (data.pricing_type === 'purchase') pricingBadge = '🔀 Mixed';
-        
-        const statusClass = data.status === 'live' ? 'status-live' : 'status-draft';
-        const statusText = data.status === 'live' ? '● Live' : '● Draft';
-        
-        html += `
+      try {
+        // Check if user is a writer
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          if (userData.account_type !== 'writer') {
+            alert('Only writers have access to the dashboard. Redirecting to home...');
+            window.location.href = 'index.html';
+            return;
+          }
+          currentWriterId = user.uid;
+          writerPenName = userData.pen_name || userData.full_name || user.email.split('@')[0];
+
+          // Update UI with writer info
+          const nameEl = document.querySelector('.writer-name');
+          const avatarEl = document.querySelector('.writer-avatar');
+          if (nameEl) nameEl.textContent = writerPenName;
+          if (avatarEl) avatarEl.textContent = writerPenName.charAt(0).toUpperCase();
+
+          const topbarHeading = document.getElementById('topbarHeading');
+          window.panelTitles.overview[1] = `Good morning, ${writerPenName} 🌸`;
+          if (document.getElementById('panel-overview') && document.getElementById('panel-overview').classList.contains('active')) {
+            if (topbarHeading) topbarHeading.textContent = window.panelTitles.overview[1];
+          }
+
+          // Populate Profile Panel
+          document.getElementById('profilePenName').value = userData.pen_name || '';
+          document.getElementById('profileBio').value = userData.bio || '';
+          document.getElementById('profileTwitter').value = userData.twitter || '';
+          document.getElementById('profileInstagram').value = userData.instagram || '';
+
+          // Populate Settings Panel
+          document.getElementById('settingsEmail').value = user.email || '';
+          if (userData.payout_details) {
+            document.getElementById('settingsBankName').value = userData.payout_details.bank_name || '';
+            document.getElementById('settingsAccountNo').value = userData.payout_details.account_no || '';
+            document.getElementById('settingsAccountName').value = userData.payout_details.account_name || '';
+          }
+
+          // Init dropdown
+          initializeMonthDropdown();
+
+          // Fetch their stories
+          loadMyStories();
+        } else {
+          window.location.href = 'index.html';
+        }
+      } catch (error) {
+        console.error("Auth check error:", error);
+      }
+    });
+
+    async function loadMyStories() {
+      if (!currentWriterId) return;
+
+      const tbody = document.getElementById('storyTableBody');
+      if (!tbody) return;
+
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">Loading stories...</td></tr>';
+
+      try {
+        const q = query(collection(db, "stories"), where("author_uid", "==", currentWriterId));
+        const snapshot = await getDocs(q);
+
+        myStories = [];
+        let html = '';
+
+        snapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          myStories.push({ id: docSnap.id, ...data });
+
+          let pricingBadge = '<ion-icon name="checkmark-circle-outline" style="vertical-align:-2px;margin-right:2px;"></ion-icon> All free';
+          if (data.pricing_type === 'coins') pricingBadge = '<ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:2px;"></ion-icon> Coin unlock';
+          else if (data.pricing_type === 'purchase') pricingBadge = '<ion-icon name="shuffle-outline" style="vertical-align:-2px;margin-right:2px;"></ion-icon> Mixed';
+
+          const statusClass = data.status === 'live' ? 'status-live' : 'status-draft';
+          const statusText = data.status === 'live' ? 'â— Live' : 'â— Draft';
+
+          html += `
           <tr>
-            <td><div class="st-cover-cell"><div class="st-cover ${data.coverClass||'c1'}">${data.title}</div><div><div class="st-title">${data.title}</div><div class="st-chapters">${data.category}</div></div></div></td>
+            <td><div class="st-cover-cell"><div class="st-cover ${data.coverClass || 'c1'}">${data.title}</div><div><div class="st-title">${data.title}</div><div class="st-chapters">${data.category}</div></div></div></td>
             <td><span class="status-pill ${statusClass}">${statusText}</span></td>
             <td>--</td>
             <td>${data.total_reads || 0}</td>
@@ -529,127 +1851,424 @@
             <td><div class="story-actions"><button class="action-btn" onclick="openEditModal('${docSnap.id}')">Edit</button></div></td>
           </tr>
         `;
-      });
-      
-      if (myStories.length === 0) {
-        html = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">No stories yet. Click Upload New Story to get started!</td></tr>';
+        });
+
+        if (myStories.length === 0) {
+          html = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:2rem;">No stories yet. Click Upload New Story to get started!</td></tr>';
+        }
+
+        tbody.innerHTML = html;
+
+        // Update badge
+        const badge = document.querySelector('.nav-badge');
+        if (badge) badge.textContent = myStories.length;
+
+        updateDashboardStats();
+
+      } catch (error) {
+        console.error("Error loading stories:", error);
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#C0392B;padding:2rem;">Failed to load stories.</td></tr>';
       }
-      
-      tbody.innerHTML = html;
-      
-      // Update badge
-      const badge = document.querySelector('.nav-badge');
-      if (badge) badge.textContent = myStories.length;
-      
-    } catch (error) {
-      console.error("Error loading stories:", error);
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#C0392B;padding:2rem;">Failed to load stories.</td></tr>';
     }
-  }
 
-  // Bind to window for HTML access
-  window.populateEditModal = function(id) {
-    const story = myStories.find(s => s.id === id);
-    if (!story) return;
-    
-    document.getElementById('editTitle').value = story.title || '';
-    document.getElementById('editDesc').value = story.description || '';
-    document.getElementById('editCategory').value = story.category || '';
-    document.getElementById('editPricing').value = story.pricing_type || 'free';
-  };
+    // Bind to window for HTML access
+    window.populateEditModal = function (id) {
+      const story = myStories.find(s => s.id === id);
+      if (!story) return;
 
-  window.handleEditSave = async function() {
-    const id = window.currentEditingStoryId;
-    if (!id) return;
-    
-    const title = document.getElementById('editTitle').value;
-    const desc = document.getElementById('editDesc').value;
-    const category = document.getElementById('editCategory').value;
-    const pricing = document.getElementById('editPricing').value;
-    
-    if (!title || !category) {
-      showToast('⚠️ Title and Category are required.');
-      return;
-    }
-    
-    const btn = document.querySelector('.btn-save');
-    const oldText = btn.textContent;
-    btn.textContent = 'Saving...';
-    btn.disabled = true;
-    
-    try {
-      await updateDoc(doc(db, "stories", id), {
-        title: title,
-        description: desc,
-        category: category,
-        pricing_type: pricing
+      document.getElementById('editTitle').value = story.title || '';
+      document.getElementById('editDesc').value = story.description || '';
+      document.getElementById('editCategory').value = story.category || '';
+      document.getElementById('editPricing').value = story.pricing_type || 'free';
+    };
+
+    window.handleEditSave = async function () {
+      const id = window.currentEditingStoryId;
+      if (!id) return;
+
+      const title = document.getElementById('editTitle').value;
+      const desc = document.getElementById('editDesc').value;
+      const category = document.getElementById('editCategory').value;
+      const pricing = document.getElementById('editPricing').value;
+
+      if (!title || !category) {
+        showToast('<ion-icon name="alert-circle-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Title and Category are required.');
+        return;
+      }
+
+      const btn = document.querySelector('.btn-save');
+      const oldText = btn.textContent;
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+
+      try {
+        await updateDoc(doc(db, "stories", id), {
+          title: title,
+          description: desc,
+          category: category,
+          pricing_type: pricing
+        });
+
+        showToast('<ion-icon name="checkmark-circle-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Story updated successfully!');
+        closeEditModal();
+        loadMyStories(); // refresh table
+      } catch (error) {
+        console.error("Edit error:", error);
+        showToast('<ion-icon name="close-circle-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Failed to update story.');
+      } finally {
+        btn.textContent = oldText;
+        btn.disabled = false;
+      }
+    };
+
+    window.handleUpload = async function () {
+      if (!currentWriterId) {
+        showToast('âš ï¸ You must be logged in as a writer to upload.');
+        return;
+      }
+
+      const title = document.getElementById('uploadTitle').value;
+      const desc = document.getElementById('uploadDesc').value;
+      const category = document.getElementById('uploadCategory').value;
+
+      if (!title || !category) {
+        showToast('<ion-icon name="alert-circle-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Please enter a title and select a category.');
+        return;
+      }
+
+      let pricing_type = 'free';
+      const activeTab = document.querySelector('.price-tab.active');
+      if (activeTab && activeTab.dataset.type) {
+        pricing_type = activeTab.dataset.type;
+      }
+
+      const randomCover = 'c' + (Math.floor(Math.random() * 7) + 1);
+
+      try {
+        showToast('Uploading story...');
+        const newDocRef = await addDoc(collection(db, "stories"), {
+          title: title,
+          description: desc,
+          author: writerPenName,
+          author_uid: currentWriterId,
+          category: category,
+          pricing_type: pricing_type,
+          coverClass: randomCover,
+          total_reads: 0,
+          avg_rating: 0,
+          status: "live",
+          createdAt: new Date().toISOString()
+        });
+
+        closeModal();
+        showToast('<ion-icon name="sparkles-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Story published successfully!');
+
+        // Clear inputs
+        document.getElementById('uploadTitle').value = '';
+        document.getElementById('uploadDesc').value = '';
+        document.getElementById('uploadCategory').value = '';
+
+        loadMyStories(); // refresh table
+      } catch (error) {
+        console.error(error);
+        showToast('<ion-icon name="close-circle-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Error publishing story. Check your connection.');
+      }
+    };
+
+    function initializeMonthDropdown() {
+      const select = document.getElementById('monthFilter');
+      if (!select) return;
+
+      const now = new Date();
+      const months = [];
+      for (let i = 0; i < 12; i++) {
+        const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const val = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+        const label = d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        months.push({ val, label });
+      }
+
+      select.innerHTML = months.map(m => `<option value="${m.val}">${m.label}</option>`).join('');
+
+      select.addEventListener('change', () => {
+        showToast('Dashboard updated for ' + select.options[select.selectedIndex].text);
+        // Data refetching for the specific month would happen here
       });
-      
-      showToast('✅ Story updated successfully!');
-      closeEditModal();
-      loadMyStories(); // refresh table
-    } catch (error) {
-      console.error("Edit error:", error);
-      showToast('❌ Failed to update story.');
-    } finally {
-      btn.textContent = oldText;
-      btn.disabled = false;
-    }
-  };
-
-  window.handleUpload = async function() {
-    if (!currentWriterId) {
-      showToast('⚠️ You must be logged in as a writer to upload.');
-      return;
     }
 
-    const title = document.getElementById('uploadTitle').value;
-    const desc = document.getElementById('uploadDesc').value;
-    const category = document.getElementById('uploadCategory').value;
-    
-    if (!title || !category) {
-      showToast('⚠️ Please enter a title and select a category.');
-      return;
-    }
-    
-    let pricing_type = 'free';
-    const activeTab = document.querySelector('.price-tab.active');
-    if (activeTab && activeTab.dataset.type) {
-      pricing_type = activeTab.dataset.type;
-    }
-    
-    const randomCover = 'c' + (Math.floor(Math.random() * 7) + 1);
-    
-    try {
-      showToast('Uploading story...');
-      await addDoc(collection(db, "stories"), {
-        title: title,
-        description: desc,
-        author: writerPenName,
-        author_uid: currentWriterId,
-        category: category,
-        pricing_type: pricing_type,
-        coverClass: randomCover,
-        total_reads: 0,
-        avg_rating: 0,
-        status: "live",
-        createdAt: new Date().toISOString()
+    window.updateDashboardStats = function () {
+      const emptyOverview = document.getElementById('empty-overview');
+      const statsOverview = document.getElementById('stats-overview');
+
+      if (!emptyOverview || !statsOverview) return;
+
+      if (myStories.length === 0) {
+        emptyOverview.style.display = 'block';
+        statsOverview.style.display = 'none';
+        return;
+      }
+
+      emptyOverview.style.display = 'none';
+      statsOverview.style.display = 'block';
+
+      let totalReads = 0;
+      let activeStories = 0;
+      let avgRatingSum = 0;
+      let totalChapters = 0;
+      let totalBookmarks = 0;
+      let totalRatings = 0;
+      let chaptersUnlocked = 0;
+      let totalEarnings = 0;
+
+      myStories.forEach(s => {
+        totalReads += s.total_reads || 0;
+        if (s.status === 'live') activeStories++;
+        avgRatingSum += s.avg_rating || 0;
+        totalChapters += s.chapters_count || 0;
+        totalBookmarks += s.bookmarks || 0;
+        totalRatings += s.ratings_count || 0;
+        chaptersUnlocked += s.unlocked_count || 0;
+        totalEarnings += s.earnings || 0;
       });
-      
-      closeModal();
-      showToast('<ion-icon name="sparkles-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> Story published successfully!');
-      
-      // Clear inputs
-      document.getElementById('uploadTitle').value = '';
-      document.getElementById('uploadDesc').value = '';
-      document.getElementById('uploadCategory').value = '';
-      
-      loadMyStories(); // refresh table
-    } catch (error) {
-      console.error(error);
-      showToast('❌ Error publishing story. Check your connection.');
+
+      let avgRating = myStories.length > 0 ? (avgRatingSum / myStories.length).toFixed(1) : "0.0";
+
+      document.getElementById('totalReaders').textContent = totalReads;
+      document.getElementById('statActiveStories').textContent = activeStories;
+      document.getElementById('avgRating').textContent = avgRating + '★';
+      document.getElementById('statTotalChapters').textContent = totalChapters;
+      document.getElementById('statBookmarks').textContent = totalBookmarks;
+      document.getElementById('statTotalRatings').textContent = totalRatings;
+      document.getElementById('totalChaptersUnlocked').textContent = chaptersUnlocked;
+
+      // Update Earnings Panel
+      const pendingEarnings = totalEarnings * 0.8;
+      document.getElementById('totalEarnings').textContent = '$' + totalEarnings.toFixed(2);
+      document.getElementById('earningsSub').innerHTML = `Payout on <strong>next 15th</strong> · $${pendingEarnings.toFixed(2)} to you (80%) · $${(totalEarnings*0.2).toFixed(2)} to platform (20%)`;
+      document.getElementById('earningsThisMonth').textContent = '$' + totalEarnings.toFixed(2);
+      document.getElementById('earningsTotalPaid').textContent = '$0.00';
+      document.getElementById('earningsPending').textContent = '$' + pendingEarnings.toFixed(2);
+
+      // Top Performing Stories
+      const topPerforming = document.getElementById('topPerformingStories');
+      let topHtml = '';
+      const sortedStories = [...myStories].sort((a, b) => (b.total_reads || 0) - (a.total_reads || 0)).slice(0, 3);
+
+      if (sortedStories.length === 0) {
+        topHtml = '<div style="color:var(--muted);font-size:0.85rem;padding: 1rem 0;">No stories yet.</div>';
+      } else {
+        sortedStories.forEach(s => {
+          const coverLetter = s.title ? s.title.substring(0, 2).toUpperCase() : '??';
+          topHtml += `
+          <div class="story-mini">
+            <div class="sm-cover ${s.coverClass || 'c1'}">${coverLetter}</div>
+            <div class="sm-info">
+              <div class="sm-title">${s.title}</div>
+              <div class="sm-meta">${s.total_reads || 0} reads Â· ${s.category || 'Story'}</div>
+            </div>
+            <div class="sm-earn">--</div>
+          </div>
+        `;
+        });
+      }
+      topPerforming.innerHTML = topHtml;
+    };
+
+    window.saveProfile = async function() {
+      if (!currentWriterId) return;
+      const penName = document.getElementById('profilePenName').value;
+      const bio = document.getElementById('profileBio').value;
+      const twitter = document.getElementById('profileTwitter').value;
+      const instagram = document.getElementById('profileInstagram').value;
+
+      try {
+        await updateDoc(doc(db, "users", currentWriterId), {
+          pen_name: penName,
+          bio: bio,
+          twitter: twitter,
+          instagram: instagram
+        });
+        showToast('Profile saved successfully!');
+        const nameEl = document.querySelector('.writer-name');
+        if (nameEl && penName) nameEl.textContent = penName;
+      } catch (e) {
+        console.error(e);
+        showToast('Error saving profile');
+      }
+    };
+
+    
+    let currentManageStoryId = null;
+    let quill = null;
+
+    // Initialize Quill when modal opens, or right away if we prefer
+    function initQuill() {
+        if (!quill) {
+            quill = new Quill('#quillEditor', {
+                theme: 'snow',
+                placeholder: 'Write your chapter here...',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, false] }],
+                        ['bold', 'italic', 'underline'],
+                        ['blockquote'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['clean']
+                    ]
+                }
+            });
+        }
     }
-  };
-</script>
+
+    window.openChapterManager = async function(storyId, storyTitle) {
+        currentManageStoryId = storyId;
+        document.getElementById('cmStoryTitle').textContent = "Chapters for: " + storyTitle;
+        showPanel('chapter-manager', document.querySelectorAll('.nav-item')[1]);
+        
+        await loadChapters(storyId);
+    };
+
+    async function loadChapters(storyId) {
+        const tbody = document.getElementById('chapterTableBody');
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;">Loading chapters...</td></tr>';
+        
+        try {
+            const q = query(collection(db, "chapters"), where("storyId", "==", storyId));
+            const querySnapshot = await getDocs(q);
+            
+            let chapters = [];
+            querySnapshot.forEach((doc) => {
+                chapters.push({ id: doc.id, ...doc.data() });
+            });
+            
+            // Sort by chapter number
+            chapters.sort((a, b) => a.chapterNum - b.chapterNum);
+            
+            if (chapters.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:2rem;">No chapters yet. Click New Chapter to start writing.</td></tr>';
+                return;
+            }
+            
+            let html = '';
+            chapters.forEach(ch => {
+                const isFree = ch.pricing === 'free';
+                const badgeHtml = isFree 
+                    ? '<span class="ch-badge ch-free" style="background:#D4F5E9; color:#1A7A55; padding:0.2rem 0.65rem; border-radius:50px; font-size:0.75rem;">Free</span>' 
+                    : '<span class="ch-badge ch-lock" style="background:#FFF0D0; color:#A06010; padding:0.2rem 0.65rem; border-radius:50px; font-size:0.75rem;">🔒 8 coins</span>';
+                    
+                const date = ch.createdAt ? new Date(ch.createdAt).toLocaleDateString() : '--';
+                
+                html += `
+                <tr>
+                    <td><strong>Chapter ${ch.chapterNum}</strong></td>
+                    <td>${ch.title}</td>
+                    <td>${badgeHtml}</td>
+                    <td>${date}</td>
+                    <td>
+                        <button class="btn-ghost" style="padding:0.3rem 0.8rem; font-size:0.8rem;">Edit</button>
+                    </td>
+                </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+            
+        } catch (e) {
+            console.error("Error loading chapters:", e);
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:red;padding:2rem;">Error loading chapters.</td></tr>';
+        }
+    }
+
+    window.openChapterModal = function() {
+        if (!currentManageStoryId) {
+            showToast("No story selected!");
+            return;
+        }
+        initQuill();
+        document.getElementById('chapterModal').classList.add('active');
+        document.getElementById('chapterTitle').value = '';
+        // auto-increment chapter number based on existing
+        const tbody = document.getElementById('chapterTableBody');
+        const rows = tbody.querySelectorAll('tr');
+        if (rows.length > 0 && !rows[0].textContent.includes('No chapters yet') && !rows[0].textContent.includes('Loading')) {
+            document.getElementById('chapterNum').value = rows.length + 1;
+        } else {
+            document.getElementById('chapterNum').value = 1;
+        }
+        quill.root.innerHTML = '';
+        document.getElementById('chapterPricing').value = 'free';
+    };
+
+    window.closeChapterModal = function() {
+        document.getElementById('chapterModal').classList.remove('active');
+    };
+
+    window.saveChapter = async function() {
+        if (!currentManageStoryId) return;
+        
+        const title = document.getElementById('chapterTitle').value;
+        const chapterNum = parseInt(document.getElementById('chapterNum').value);
+        const pricing = document.getElementById('chapterPricing').value;
+        const contentHtml = quill.root.innerHTML;
+        
+        if (!title || contentHtml === '<p><br></p>') {
+            showToast('Please enter a title and content.');
+            return;
+        }
+        
+        try {
+            showToast('Publishing chapter...');
+            await addDoc(collection(db, "chapters"), {
+                storyId: currentManageStoryId,
+                title: title,
+                chapterNum: chapterNum,
+                pricing: pricing,
+                content: contentHtml,
+                author_uid: currentWriterId,
+                createdAt: new Date().toISOString()
+            });
+            
+            // Also increment chapters_count on the story
+            const storyRef = doc(db, "stories", currentManageStoryId);
+            const storyDoc = await getDoc(storyRef);
+            if (storyDoc.exists()) {
+                const currentCount = storyDoc.data().chapters_count || 0;
+                await updateDoc(storyRef, { chapters_count: currentCount + 1 });
+            }
+            
+            closeChapterModal();
+            showToast('Chapter published successfully!');
+            await loadChapters(currentManageStoryId);
+            loadMyStories(); // Refresh dashboard stats
+            
+        } catch (e) {
+            console.error("Error saving chapter:", e);
+            showToast('Error saving chapter.');
+        }
+    };
+
+
+    window.saveSettings = async function() {
+      if (!currentWriterId) return;
+      const bankName = document.getElementById('settingsBankName').value;
+      const accountNo = document.getElementById('settingsAccountNo').value;
+      const accountName = document.getElementById('settingsAccountName').value;
+
+      try {
+        await updateDoc(doc(db, "users", currentWriterId), {
+          payout_details: {
+            bank_name: bankName,
+            account_no: accountNo,
+            account_name: accountName
+          }
+        });
+        showToast('Settings saved successfully!');
+      } catch (e) {
+        console.error(e);
+        showToast('Error saving settings');
+      }
+    };
+  </script>
+  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 </body>
+
 </html>

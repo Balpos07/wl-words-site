@@ -582,8 +582,8 @@
 
 <!-- STATS -->
 <div class="stats">
-  <div class="stat"><div class="stat-num">2,400+</div><div class="stat-label">Stories & Books</div></div>
-  <div class="stat"><div class="stat-num">850+</div><div class="stat-label">Christian Writers</div></div>
+  <div class="stat"><div class="stat-num" id="statStoriesCount">0</div><div class="stat-label">Stories & Books</div></div>
+  <div class="stat"><div class="stat-num" id="statWritersCount">0</div><div class="stat-label">Christian Writers</div></div>
   <div class="stat"><div class="stat-num">Free</div><div class="stat-label">To Start Reading</div></div>
   <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Faith Categories</div></div>
 </div>
@@ -749,7 +749,7 @@
 
 <!-- Firebase SDK & Logic -->
 <script type="module">
-  import { db, collection, getDocs, query, orderBy, limit } from './firebase-config.js';
+  import { db, collection, getDocs, query, orderBy, limit, where } from './firebase-config.js';
 
   async function loadTrendingBooks() {
     try {
@@ -757,7 +757,7 @@
       const featuredGrid = document.getElementById('featuredGrid');
       
       // Fetch top books
-      const q = query(collection(db, "stories"), orderBy("total_reads", "desc"), limit(8));
+      const q = query(collection(db, "stories"), where("status", "==", "live"), orderBy("total_reads", "desc"), limit(8));
       const snapshot = await getDocs(q);
       
       let stripHtml = '';
@@ -796,6 +796,20 @@
       if (snapshot.size > 0) {
         if (strip) strip.innerHTML = stripHtml;
         if (featuredGrid) featuredGrid.innerHTML = featuredHtml;
+      }
+
+      // Load real stats
+      try {
+        const storiesSnap = await getDocs(query(collection(db, "stories"), where("status", "==", "live")));
+        const statStories = document.getElementById('statStoriesCount');
+        if (statStories) statStories.textContent = storiesSnap.size;
+
+        const writersQ = query(collection(db, "users"), where("account_type", "==", "writer"));
+        const writersSnap = await getDocs(writersQ);
+        const statWriters = document.getElementById('statWritersCount');
+        if (statWriters) statWriters.textContent = writersSnap.size;
+      } catch (statsErr) {
+        console.error("Error loading stats:", statsErr);
       }
 
     } catch (error) {

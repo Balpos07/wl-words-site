@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Library — W&L Words</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet"/>
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:    #FFFFFF;
+      --off:      #FDF7FB;
+      --blush:    #F9E4EF;
+      --rose:     #E8789C;
+      --rose-deep:#C9527A;
+      --sky:      #C5DEFA;
+      --blue:     #4A82C2;
+      --blue-deep:#2F5F98;
+      --ink:      #1A1A2E;
+      --muted:    #6E6E85;
+      --border:   #F0D8E8;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--off);
+      color: var(--ink);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .logo span { color: var(--rose); }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.875rem; font-weight: 500;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rose-deep); }
+    .nav-ctas { display: flex; gap: 0.75rem; align-items: center; }
+    
+    .btn-ghost {
+      padding: 0.5rem 1.2rem;
+      border: 1.5px solid var(--rose);
+      color: var(--rose-deep);
+      background: transparent;
+      border-radius: 50px;
+      font-size: 0.875rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { background: var(--blush); }
+    
+    .user-profile-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--sky);
+      color: var(--blue-deep);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 0.9rem;
+      border: 2px solid white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      cursor: pointer;
+    }
+
+    /* ── LAYOUT ── */
+    .library-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2.5rem;
+      max-width: 1200px;
+      margin: 100px auto 4rem;
+      padding: 0 5%;
+      width: 100%;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .library-layout { grid-template-columns: 1fr; }
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    /* ── GRID ── */
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .book-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .book-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(232,120,156,0.12);
+    }
+
+    .bc-cover {
+      width: 100%;
+      aspect-ratio: 2/3;
+      background: var(--sky);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700; color: rgba(255,255,255,0.8);
+      position: relative;
+    }
+    .bc-cover.c1 { background: linear-gradient(135deg, #FFB347, #FF7B54); }
+    .bc-cover.c2 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+    .bc-cover.c3 { background: linear-gradient(135deg, #fa709a, #fee140); }
+    .bc-cover.c4 { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+    .bc-cover.c5 { background: linear-gradient(135deg, #84fab0, #8fd3f4); }
+    .bc-cover.c6 { background: linear-gradient(135deg, #ff0844, #ffb199); }
+    .bc-cover.c7 { background: linear-gradient(135deg, #09203f, #537895); }
+
+    .bc-info {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .bc-title {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .bc-author {
+      font-size: 0.85rem; color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .bc-meta {
+      margin-top: auto;
+      font-size: 0.8rem;
+      color: var(--blue);
+      font-weight: 500;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .empty-state {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: white;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      color: var(--muted);
+    }
+    .empty-state-icon {
+      font-size: 3rem; margin-bottom: 1rem; color: var(--border);
+    }
+
+    /* ── SIDEBAR (WALLET) ── */
+    .sidebar-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+      margin-bottom: 1.5rem;
+    }
+    .sidebar-card h4 {
+      font-size: 0.95rem; font-weight: 600; color: var(--ink);
+      margin-bottom: 1.25rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    
+    .coin-balance { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .coin-icon {
+      width: 48px; height: 48px;
+      background: #FFF0D0; color: #A06010;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .coin-amount { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: #8A6820; line-height: 1; }
+    .coin-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.2rem; }
+    
+    .coin-btn {
+      width: 100%; padding: 0.8rem;
+      background: #FFF0D0; color: #A06010;
+      border: none; border-radius: 8px;
+      font-weight: 600; font-size: 0.9rem;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .coin-btn:hover { background: #FDE8BA; }
+    .coin-note { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 0.75rem; }
+
+  </style>
+  
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="logo">W&L <span>Words</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="browse.html">Browse</a></li>
+      <li><a href="#" style="color:var(--rose-deep); font-weight: 600;">My Library</a></li>
+    </ul>
+    <div class="nav-ctas" id="navAuth">
+      <!-- Injected by auth state -->
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="library-layout">
+    
+    <div class="main-column">
+      <h1 class="section-title">My Library</h1>
+      
+      <div class="books-grid" id="libraryGrid">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+    
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="sidebar-card">
+        <h4 style="color:#8A6820;"><ion-icon name="wallet-outline" style="vertical-align:-2px;margin-right:4px;"></ion-icon> My Wallet</h4>
+        <div class="coin-balance">
+          <span class="coin-icon"><ion-icon name="cash-outline"></ion-icon></span>
+          <div>
+            <div class="coin-amount" id="coinAmount">0</div>
+            <div class="coin-label">coins available</div>
+          </div>
+        </div>
+        <button class="coin-btn" onclick="buyCoins()">+ Buy More Coins</button>
+        <p class="coin-note">100 coins = ₦1,000 · Pay once, unlock forever</p>
+      </div>
+    </aside>
+    
+  </div>
+
+  <script type="module">
+    import { auth, db, onAuthStateChanged, doc, getDoc, collection, query, where, getDocs, updateDoc, addDoc } from './firebase-config.js';
+
+    window.currentUser = null;
+
+    onAuthStateChanged(auth, async (user) => {
+      const navAuth = document.getElementById('navAuth');
+      if (user) {
+        window.currentUser = user;
+        const letter = user.email.charAt(0).toUpperCase();
+        navAuth.innerHTML = \`
+          <a href="dashboard.html" class="btn-ghost" style="border-color:var(--border);color:var(--ink);">Write</a>
+          <a href="my-library.html" class="user-profile-btn" title="My Library">\${letter}</a>
+        \`;
+
+        // Fetch User Data for Coins and Bookmarks
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+        
+        let bookmarkedIds = [];
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          document.getElementById('coinAmount').textContent = data.coins || 0;
+          bookmarkedIds = data.bookmarks || [];
+        }
+
+        loadLibrary(bookmarkedIds);
+
+      } else {
+        // Redirect to login if not authenticated
+        window.location.href = "index.html";
+      }
+    });
+
+    async function loadLibrary(bookmarkedIds) {
+      const grid = document.getElementById('libraryGrid');
+      
+      if (bookmarkedIds.length === 0) {
+        grid.innerHTML = \`
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-state-icon"><ion-icon name="bookmark-outline"></ion-icon></div>
+            <h3 style="margin-bottom:0.5rem; color:var(--ink);">Your library is empty</h3>
+            <p>Stories you bookmark will appear here so you can easily pick up where you left off.</p>
+            <br>
+            <a href="browse.html" class="btn-ghost">Browse Stories</a>
+          </div>
+        \`;
+        return;
+      }
+
+      grid.innerHTML = '<div style="grid-column: 1 / -1; color:var(--muted); text-align:center; padding: 2rem;">Loading your books...</div>';
+
+      try {
+        // Fetch all stories where ID is in the bookmarks array
+        // Note: Firestore 'in' queries are limited to 10 items. For a real app with many bookmarks, 
+        // you'd batch this or store references differently. We'll do a simple loop for the MVP.
+        let booksHtml = '';
+        
+        for (const storyId of bookmarkedIds) {
+           const storyRef = doc(db, "stories", storyId);
+           const snap = await getDoc(storyRef);
+           if (snap.exists()) {
+               const s = { id: snap.id, ...snap.data() };
+               const coverLetter = s.title ? s.title.substring(0, 2).toUpperCase() : '??';
+               const chCount = s.chapters_count || 0;
+               
+               booksHtml += \`
+                <a href="story.html?id=\${s.id}" class="book-card">
+                  <div class="bc-cover \${s.coverClass || 'c1'}">\${coverLetter}</div>
+                  <div class="bc-info">
+                    <div class="bc-title">\${s.title}</div>
+                    <div class="bc-author">by \${s.author}</div>
+                    <div class="bc-meta">
+                      <span>\${chCount} chapters</span>
+                    </div>
+                  </div>
+                </a>
+               \`;
+           }
+        }
+        
+        grid.innerHTML = booksHtml || '<div style="grid-column: 1 / -1; color:var(--muted);">No books found.</div>';
+        
+      } catch (e) {
+        console.error("Error loading library", e);
+        grid.innerHTML = '<div style="grid-column: 1 / -1; color:red;">Error loading library.</div>';
+      }
+    }
+
+    window.buyCoins = function() {
+      if (!window.currentUser) return;
+      
+      const amountInKobo = 1000 * 100; 
+      let handler = PaystackPop.setup({
+        key: 'pk_test_d3bd73de4a386927d78a8f152d0b5e94f31b816a',
+        email: window.currentUser.email || 'reader@example.com',
+        amount: amountInKobo,
+        currency: "NGN",
+        ref: 'WL_' + Math.floor((Math.random() * 1000000000) + 1),
+        callback: async function(response){
+            let reference = response.reference;
+            try {
+               const userRef = doc(db, "users", window.currentUser.uid);
+               const userSnap = await getDoc(userRef);
+               
+               let newBalance = 100;
+               if (userSnap.exists()) {
+                   const currentCoins = userSnap.data().coins || 0;
+                   newBalance = currentCoins + 100;
+                   await updateDoc(userRef, { coins: newBalance });
+               }
+               
+               await addDoc(collection(db, "transactions"), {
+                   userId: window.currentUser.uid,
+                   email: window.currentUser.email,
+                   amount: 1000,
+                   currency: "NGN",
+                   coins_awarded: 100,
+                   reference: reference,
+                   status: "success",
+                   date: new Date().toISOString()
+               });
+               
+               alert("Payment successful! 100 coins have been added to your wallet.");
+               document.getElementById('coinAmount').textContent = newBalance;
+               
+            } catch (e) {
+                console.error("Error updating DB after payment", e);
+                alert("Payment successful, but error updating coins.");
+            }
+        },
+        onClose: function(){
+            console.log('Payment popup closed');
+        }
+      });
+      handler.openIframe();
+    };
+  </script>
+</body>
+</html>

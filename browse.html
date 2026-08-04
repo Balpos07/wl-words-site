@@ -382,43 +382,43 @@
       <div class="cat-filter-list">
         <div class="cat-filter-item active" onclick="setCategory(this,'All')">
           <span class="cat-filter-left"><ion-icon name="list-outline"></ion-icon> All Categories</span>
-          <span class="cat-count">248</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Devotionals')">
           <span class="cat-filter-left"><ion-icon name="heart-half-outline"></ion-icon> Devotionals</span>
-          <span class="cat-count">54</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Christian Romance')">
           <span class="cat-filter-left"><ion-icon name="heart-outline"></ion-icon> Christian Romance</span>
-          <span class="cat-count">41</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Bible Study')">
           <span class="cat-filter-left"><ion-icon name="book-outline"></ion-icon> Bible Study</span>
-          <span class="cat-count">38</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Spiritual Warfare')">
           <span class="cat-filter-left"><ion-icon name="shield-outline"></ion-icon> Spiritual Warfare</span>
-          <span class="cat-count">27</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'African Christian Lit')">
           <span class="cat-filter-left"><ion-icon name="globe-outline"></ion-icon> African Christian Lit</span>
-          <span class="cat-count">23</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Poetry & Psalms')">
           <span class="cat-filter-left"><ion-icon name="brush-outline"></ion-icon> Poetry & Psalms</span>
-          <span class="cat-count">19</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Christian Youth')">
           <span class="cat-filter-left"><ion-icon name="school-outline"></ion-icon> Christian Youth</span>
-          <span class="cat-count">18</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Faith & Healing')">
           <span class="cat-filter-left"><ion-icon name="leaf-outline"></ion-icon> Faith & Healing</span>
-          <span class="cat-count">16</span>
+          <span class="cat-count">0</span>
         </div>
         <div class="cat-filter-item" onclick="setCategory(this,'Theology & Doctrine')">
           <span class="cat-filter-left"><ion-icon name="library-outline"></ion-icon> Theology</span>
-          <span class="cat-count">12</span>
+          <span class="cat-count">0</span>
         </div>
       </div>
     </div>
@@ -448,7 +448,7 @@
 
     <!-- Results meta -->
     <div class="results-meta">
-      <span class="results-count">Showing <strong>248</strong> books &amp; stories</span>
+      <span class="results-count">Showing <strong>0</strong> books &amp; stories</span>
       <div class="view-toggle">
         <button class="view-btn active" title="Grid view"><ion-icon name="grid-outline"></ion-icon></button>
         <button class="view-btn" title="List view"><ion-icon name="list-outline"></ion-icon></button>
@@ -456,13 +456,13 @@
     </div>
 
     <!-- Featured banner -->
-    <div class="featured-banner">
-      <div class="banner-cover">The Faithful Heart</div>
+    <div class="featured-banner" id="featuredBanner" style="display:none;">
+      <div class="banner-cover"></div>
       <div class="banner-text">
-        <div class="banner-eyebrow"><ion-icon name="sparkles-outline"></ion-icon> Editor's Pick this week</div>
-        <div class="banner-title">The Faithful Heart</div>
-        <div class="banner-author">by Grace Abiodun · Christian Romance · 42 chapters</div>
-        <a class="banner-btn" href="story.html">Read Chapter 1 Free →</a>
+        <div class="banner-eyebrow"><ion-icon name="sparkles-outline"></ion-icon> Editor's Pick</div>
+        <div class="banner-title"></div>
+        <div class="banner-author"></div>
+        <a class="banner-btn" href="#">Read Chapter 1 Free →</a>
       </div>
     </div>
 
@@ -481,7 +481,7 @@
 
 <!-- Firebase SDK & Logic -->
 <script type="module">
-  import { db, collection, getDocs, query, orderBy } from './firebase-config.js';
+  import { db, collection, getDocs, query, orderBy, where } from './firebase-config.js';
 
   // State
   let activeAvail = 'all';
@@ -491,13 +491,44 @@
   // ── FETCH DATA ──
   async function loadBooks() {
     try {
-      const q = query(collection(db, "stories"), orderBy("total_reads", "desc"));
+      const q = query(collection(db, "stories"), where("status", "==", "live"), orderBy("total_reads", "desc"));
       const snapshot = await getDocs(q);
       
       allBooks = [];
       snapshot.forEach(doc => {
         allBooks.push({ id: doc.id, ...doc.data() });
       });
+      
+      // Update Category Counts
+      document.querySelectorAll('.cat-filter-item').forEach(item => {
+        const match = item.getAttribute('onclick').match(/'([^']+)'/);
+        if (match) {
+          const catName = match[1];
+          const countSpan = item.querySelector('.cat-count');
+          if (catName === 'All') {
+            countSpan.textContent = allBooks.length;
+          } else {
+            countSpan.textContent = allBooks.filter(b => b.category === catName).length;
+          }
+        }
+      });
+
+      // Update Featured Banner
+      const banner = document.getElementById('featuredBanner');
+      if (banner) {
+        if (allBooks.length > 0) {
+          const featured = allBooks[0];
+          banner.style.display = 'flex';
+          const bannerCover = banner.querySelector('.banner-cover');
+          bannerCover.textContent = featured.title;
+          bannerCover.className = `banner-cover ${featured.coverClass || 'c1'}`;
+          banner.querySelector('.banner-title').textContent = featured.title;
+          banner.querySelector('.banner-author').textContent = `by ${featured.author || 'Unknown'} · ${featured.category || 'Story'} · ${featured.total_reads || 0} reads`;
+          banner.querySelector('.banner-btn').href = `story.html?id=${featured.id}`;
+        } else {
+          banner.style.display = 'none';
+        }
+      }
 
       renderBooks();
     } catch (error) {

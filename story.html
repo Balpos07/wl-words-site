@@ -419,6 +419,7 @@
   </style>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 </head>
 <body>
 
@@ -440,21 +441,6 @@
 <!-- ══════════════════════════════════ -->
 <!--  BOOK DETAIL VIEW                 -->
 <!-- ══════════════════════════════════ -->
-<div id="bookDetailView">
-
-  <!-- Book Hero -->
-  <div class="book-hero">
-    <div class="book-hero-inner">
-      <div class="book-cover-lg">The Faithful Heart</div>
-      <div class="book-hero-info">
-        <div class="hero-badge"><ion-icon name="heart-outline" style="vertical-align:-2px; margin-right:4px;"></ion-icon> Christian Romance</div>
-        <h1 class="hero-title">The Faithful Heart</h1>
-        <p class="hero-author">by <a href="#">Grace Abiodun</a> · Lagos, Nigeria</p>
-        <div class="hero-stats">
-          <div class="hero-stat"><div class="hero-stat-num">42</div><div class="hero-stat-label">Chapters</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">15.3k</div><div class="hero-stat-label">Readers</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">4.7 ★</div><div class="hero-stat-label">Rating</div></div>
-          <div class="hero-stat"><div class="hero-stat-num">2025</div><div class="hero-stat-label">Published</div></div>
         </div>
         <div class="hero-tags">
           <span class="tag">Faith</span>
@@ -465,7 +451,7 @@
         </div>
         <div class="hero-ctas">
           <button class="btn-read" onclick="openReading(1)"><ion-icon name="book-outline"></ion-icon> Read Chapter 1 — Free</button>
-          <button class="btn-bookmark"><ion-icon name="bookmark-outline"></ion-icon> Save for Later</button>
+          <button class="btn-bookmark" onclick="toggleBookmark()" id="btnBookmark1"><ion-icon name="bookmark-outline"></ion-icon> Save for Later</button>
         </div>
       </div>
     </div>
@@ -477,79 +463,25 @@
 
       <!-- Description -->
       <div class="section-label">About this story</div>
-      <div class="description">
-        <p>Adaugo has spent five years rebuilding her life after a broken engagement nearly destroyed her faith and her sense of self. Now a celebrated wedding planner in Lagos, she keeps love at a careful distance — until a client assigns her to plan the wedding of the one man who got away.</p>
-        <p>Emeka Nwosu has never stopped believing that God brings second chances. But convincing Adaugo that their story isn't finished will take more than words — it will take a miracle, the kind that only comes when two stubborn hearts finally let go and trust.</p>
-        <p>Set across Lagos and Abuja, <em>The Faithful Heart</em> is a tender story about what happens when faith is tested not by tragedy, but by hope.</p>
+      <div class="description" id="storyDescription">
+        <p>Loading description...</p>
       </div>
 
       <!-- Chapters -->
       <div class="section-label" style="margin-top:2rem;">Chapters</div>
-      <div class="chapters-section">
+      
+      <div class="chapters-section" id="chaptersSection">
         <div class="chapters-header">
           <h3>Table of Contents</h3>
-          <span class="chapters-count">42 chapters · 3 free</span>
+          <span class="chapters-count" id="chaptersCountLabel">Loading chapters...</span>
         </div>
-
-        <div class="chapter-row" onclick="openReading(1)">
-          <span class="ch-num">1</span>
-          <div class="ch-info">
-            <div class="ch-title">The Wedding That Wasn't</div>
-            <div class="ch-meta">2,800 words · 12 min read</div>
-          </div>
-          <span class="ch-badge ch-free">Free</span>
-        </div>
-        <div class="chapter-row" onclick="openReading(2)">
-          <span class="ch-num">2</span>
-          <div class="ch-info">
-            <div class="ch-title">Five Years Later</div>
-            <div class="ch-meta">3,100 words · 14 min read</div>
-          </div>
-          <span class="ch-badge ch-free">Free</span>
-        </div>
-        <div class="chapter-row" onclick="openReading(3)">
-          <span class="ch-num">3</span>
-          <div class="ch-info">
-            <div class="ch-title">The Impossible Client</div>
-            <div class="ch-meta">2,600 words · 11 min read</div>
-          </div>
-          <span class="ch-badge ch-free">Free</span>
-        </div>
-        <div class="chapter-row locked">
-          <span class="ch-num">4</span>
-          <div class="ch-info">
-            <div class="ch-title">A Face from the Past</div>
-            <div class="ch-meta">3,400 words · 15 min read</div>
-          </div>
-          <span class="ch-badge ch-lock">🔒 8 coins</span>
-        </div>
-        <div class="chapter-row locked">
-          <span class="ch-num">5</span>
-          <div class="ch-info">
-            <div class="ch-title">What Prayer Looks Like Now</div>
-            <div class="ch-meta">2,900 words · 13 min read</div>
-          </div>
-          <span class="ch-badge ch-lock">🔒 8 coins</span>
-        </div>
-        <div class="chapter-row locked">
-          <span class="ch-num">6</span>
-          <div class="ch-info">
-            <div class="ch-title">The First Conversation</div>
-            <div class="ch-meta">3,200 words · 14 min read</div>
-          </div>
-          <span class="ch-badge ch-lock">🔒 8 coins</span>
-        </div>
-        <div class="chapter-row locked" style="border-bottom:none;">
-          <span class="ch-num" style="color:var(--border);">···</span>
-          <div class="ch-info">
-            <div class="ch-title" style="color:var(--muted);">36 more chapters</div>
-            <div class="ch-meta">8 coins each to unlock</div>
-          </div>
-          <span class="ch-badge ch-lock">🔒</span>
+        <div id="chaptersList">
+            <div class="chapter-row" style="cursor:default;">
+                <div class="ch-info" style="text-align:center; padding: 2rem; color:var(--muted);">Loading chapters...</div>
+            </div>
         </div>
       </div>
     </div>
-
     <!-- Sidebar -->
     <aside class="detail-sidebar">
 
@@ -563,7 +495,7 @@
             <div class="coin-label">coins available</div>
           </div>
         </div>
-        <button class="coin-btn">+ Buy More Coins</button>
+        <button class="coin-btn" onclick="buyCoins()">+ Buy More Coins</button>
         <p class="coin-note">100 coins = $1.00 · Pay once, unlock forever</p>
       </div>
 
@@ -610,7 +542,7 @@
       <div class="toolbar-ch-title" id="toolbarTitle">Chapter 1 · The Wedding That Wasn't</div>
     </div>
     <div class="toolbar-controls">
-      <button class="tool-btn" title="Bookmark" onclick="this.classList.toggle('active')"><ion-icon name="bookmark-outline"></ion-icon></button>
+      <button class="tool-btn" title="Bookmark" onclick="toggleBookmark()" id="btnBookmark2"><ion-icon name="bookmark-outline"></ion-icon></button>
       <button class="tool-btn" title="Font settings" id="settingsBtn" onclick="toggleSettings()">Aa</button>
     </div>
 
@@ -672,193 +604,398 @@
   </div>
 </div><!-- /readingView -->
 
+
 <script>
-  // ── CHAPTER DATA ──
-  const chapters = [
-    {
-      num: 1, title: "The Wedding That Wasn't", free: true,
-      label: "Chapter 1", time: "~12 min read · Free chapter",
-      content: `
-        <p>The bouquet hit the marble floor before anyone could catch it, and Adaugo Obi knew, with the particular certainty that only God and a woman's gut can produce, that today was going to be the worst day of her professional life.</p>
-
-        <p>Three hundred guests sat in white linen chairs inside the Eko Hotel ballroom, their perfume a collective cloud of expectation. The orchids had arrived at six that morning, exactly as ordered. The string quartet was positioned, the champagne flutes were filled, the photographer — the very expensive, very temperamental photographer from Abuja — was circling the room like a well-dressed hawk. Everything was perfect. Everything was always perfect when Adaugo planned a wedding.</p>
-
-        <p>Except for the groom. Who was not here.</p>
-
-        <blockquote>"He called from the airport," the best man whispered, his bow tie askew, his forehead shining with what Adaugo had learned to identify as the particular sweat of a man delivering terrible news. "He said he couldn't do it. He said to tell her — he said to tell everyone he's sorry."</blockquote>
-
-        <p>Adaugo looked at the man for a long moment. Then she looked at the door through which the bride, Chiamaka Osei-Mensah, daughter of Dr. and Mrs. Franklin Osei-Mensah of Victoria Island, would soon walk. She thought about her commission. She thought about the two-page review that would appear on Instagram by morning. She thought about the five years she had spent building Beloved Events from a notebook and a borrowed folding table into the most sought-after wedding planning company in Lagos.</p>
-
-        <p>And then she put those thoughts aside, the way her grandmother had always taught her to put aside anything that got in the way of doing what was right, and she walked to the door.</p>
-
-        <p>What happened in the next forty-five minutes would be retold, embellished, and eventually mythologized in the Lagos social circuit for years. Adaugo sent the quartet home. She arranged for the champagne to be quietly redirected to a back room. She spoke to the mothers — both of them, a feat requiring the diplomatic skill of a UN envoy — and she sat with Chiamaka herself for seventeen minutes in a small anteroom that smelled of lilies and heartbreak.</p>
-
-        <p>She did not cry. Adaugo Obi had a rule about crying at weddings. None of the tears could be hers.</p>
-
-        <p>By the time the guests were redirected to a hastily reframed "celebration brunch," she had already called the hotel manager, adjusted the catering order, and sent a personal note — handwritten, because some things still required a human hand — to each member of the string quartet with a full payment and a small apology.</p>
-
-        <p>It was only in the taxi home, somewhere on Carter Bridge with the Lagos traffic as still and indifferent as ever, that she allowed herself one question. Not for Chiamaka. Not for the groom whose name she was already beginning to forget. For herself.</p>
-
-        <p>She thought of Emeka. She always thought of Emeka when weddings broke open. She thought of the church in Lekki, the morning that never became an afternoon, the guests who had been kinder than she deserved, and her own mother's face, which had held an expression Adaugo still could not name after all these years.</p>
-
-        <p>She pressed her forehead against the cool of the taxi window.</p>
-
-        <p>"God," she said, under her breath, to no one and to the only One who had always been listening. "I'm tired."</p>
-
-        <p>The traffic moved. Lagos went on being Lagos. And Adaugo went home, put the kettle on, and opened her calendar for the following week, which contained fourteen client meetings, two venue visits, and a florist dispute she had been avoiding since Tuesday.</p>
-
-        <p>She did not think about what it meant that the only time she felt truly competent was when she was managing other people's love stories. She did not think about it because she had learned, in five years of very disciplined not-thinking, that some questions were not meant to be answered alone.</p>
-
-        <p>That was a Wednesday.</p>
-
-        <p>On Friday, a new client enquiry landed in her inbox with the subject line: <em>Wedding Planning — Urgent — Referred by Pastor Chukwu.</em></p>
-
-        <p>She would read it Saturday morning, over her second cup of tea, and she would feel the particular stillness that comes just before something changes everything.</p>
-
-        <p>But that was Saturday. And first, there was Thursday to survive.</p>
-      `
-    },
-    {
-      num: 2, title: "Five Years Later", free: true,
-      label: "Chapter 2", time: "~14 min read · Free chapter",
-      content: `
-        <p>Five years is long enough to become a different person. Adaugo knew this because the woman she had been at twenty-six — nervous, hopeful, terrifyingly in love — would not recognise the woman who now stood at the head of a conference table in a glass-walled office in Victoria Island, explaining to a room full of corporate clients why the floral arrangement they had chosen would not photograph well.</p>
-
-        <p>The old Adaugo would have agreed with the client. The new one simply knew better.</p>
-
-        <p>"The hydrangeas will wilt under the lighting you've chosen for the reception hall," she said, tapping the mood board. "I'd suggest garden roses — the blush variety — or we work with what the hydrangeas actually need and change the lighting. Either is achievable. The choice is yours."</p>
-
-        <p>The client chose the roses. They always did. Adaugo had learned that people mostly wanted to feel that the decision was theirs, and she had gotten very good at arranging the options so that the right answer was also the obvious one.</p>
-
-        <p>She thought sometimes that this was not entirely a healthy skill to have developed.</p>
-      `
-    },
-    {
-      num: 3, title: "The Impossible Client", free: true,
-      label: "Chapter 3", time: "~11 min read · Free chapter",
-      content: `
-        <p>The email had come from a PA, which was either a sign of great importance or great difficulty. In Adaugo's experience, it was usually both.</p>
-
-        <p>The client — referred only as "Mr. E. Nwosu, Lagos/Abuja" — required a full wedding plan for a ceremony in April. Six weeks away. The budget was generous to the point of being almost absurd. The requirements were listed in a way that suggested someone who knew exactly what they wanted and had not yet learned that wanting and getting were different arts.</p>
-
-        <p>Pastor Chukwu had referred them personally, which meant she could not simply decline. The pastor had baptised her, counselled her, and sat with her mother on the worst Sunday of 2019. There were debts that could not be paid in money.</p>
-
-        <p>She replied to the PA that she would be available for an initial consultation on Tuesday at eleven.</p>
-
-        <p>She did not yet know that she was agreeing to the most important meeting of her life. She thought she was agreeing to a difficult client and a very short timeline.</p>
-
-        <p>She made a note to order extra pens. She always thought more clearly when she had extra pens.</p>
-      `
-    },
-    { num: 4, title: "A Face from the Past", free: false, label: "Chapter 4", time: "~15 min read · 8 coins", content: "" },
-    { num: 5, title: "What Prayer Looks Like Now", free: false, label: "Chapter 5", time: "~13 min read · 8 coins", content: "" },
-    { num: 6, title: "The First Conversation", free: false, label: "Chapter 6", time: "~14 min read · 8 coins", content: "" },
-  ];
-
   let currentChapter = 1;
   let fontSizes = [14, 16, 18, 20, 22, 24];
   let fontIdx = 2;
-  let unlockedChapters = new Set([1, 2, 3]);
-
-  function openReading(num) {
+  
+  // We will store fetched chapters here
+  let chapters = [];
+  let unlockedChapters = new Set([1, 2, 3]); // By default, 1,2,3 are "unlocked" since they are typically free.
+  
+  // Expose these globally for the HTML onclick handlers
+  window.openReading = function(num) {
     currentChapter = num;
     document.getElementById('bookDetailView').style.display = 'none';
     document.getElementById('readingView').style.display = 'block';
     document.getElementById('mainNav').style.display = 'none';
     window.scrollTo(0, 0);
     renderChapter();
-  }
+  };
 
-  function closeReading() {
+  window.closeReading = function() {
     document.getElementById('bookDetailView').style.display = 'block';
     document.getElementById('readingView').style.display = 'none';
     document.getElementById('mainNav').style.display = 'flex';
     window.scrollTo(0, 0);
-  }
+  };
 
-  function renderChapter() {
+  window.renderChapter = function() {
     const ch = chapters[currentChapter - 1];
     if (!ch) return;
 
     document.title = `${ch.title} — W&L Words`;
-    document.getElementById('toolbarTitle').textContent = `${ch.label} · ${ch.title}`;
-    document.getElementById('chLabel').textContent = ch.label;
+    document.getElementById('toolbarTitle').textContent = `Chapter ${ch.chapterNum} · ${ch.title}`;
+    document.getElementById('chLabel').textContent = "Chapter " + ch.chapterNum;
     document.getElementById('chMainTitle').textContent = ch.title;
-    document.querySelector('#readingWrap .ch-sub').textContent = ch.time;
-    document.getElementById('chProgress').textContent = `Chapter ${ch.num} of ${chapters.length}`;
-    document.getElementById('prevBtn').disabled = ch.num === 1;
-    document.getElementById('nextBtn').disabled = ch.num === chapters.length;
+    
+    const timeToRead = Math.max(1, Math.ceil((ch.content.length || 0) / 1000));
+    const priceText = ch.pricing === 'free' ? 'Free chapter' : '8 coins';
+    document.querySelector('#readingWrap .ch-sub').textContent = `~${timeToRead} min read · ${priceText}`;
+    
+    document.getElementById('chProgress').textContent = `Chapter ${ch.chapterNum} of ${chapters.length}`;
+    document.getElementById('prevBtn').disabled = ch.chapterNum === 1;
+    document.getElementById('nextBtn').disabled = ch.chapterNum === chapters.length;
 
-    const isLocked = !ch.free && !unlockedChapters.has(ch.num);
+    const isLocked = ch.pricing !== 'free' && !unlockedChapters.has(ch.chapterNum);
     document.getElementById('proseContent').innerHTML = isLocked ? '' : ch.content;
     document.getElementById('lockGate').style.display = isLocked ? 'block' : 'none';
     document.getElementById('chNav').style.display = isLocked ? 'none' : 'flex';
 
-    // partial preview for locked
     if (isLocked) {
-      document.getElementById('proseContent').innerHTML = `<p style="color:var(--read-muted);font-style:italic;">Continue the story from where Chapter ${ch.num - 1} left off…</p>`;
+      document.getElementById('proseContent').innerHTML = `<p style="color:var(--read-muted);font-style:italic;">Continue the story from where Chapter ${ch.chapterNum - 1} left off…</p>`;
     }
 
     updateProgress();
-  }
+  };
 
-  function goChapter(dir) {
+  window.goChapter = function(dir) {
     const next = currentChapter + dir;
     if (next < 1 || next > chapters.length) return;
     currentChapter = next;
     window.scrollTo(0, 0);
     renderChapter();
-  }
+  };
 
-  function unlockChapter() {
-    unlockedChapters.add(currentChapter);
-    renderChapter();
-    // Update coin display
-    const coinEl = document.querySelector('.coin-amount');
-    if (coinEl) coinEl.textContent = parseInt(coinEl.textContent) - 8;
-  }
-
-  // Progress bar on scroll
-  window.addEventListener('scroll', updateProgress);
-  function updateProgress() {
+  window.updateProgress = function() {
     const wrap = document.getElementById('readingWrap');
     if (!wrap) return;
     const total = document.body.scrollHeight - window.innerHeight;
     const pct = total > 0 ? Math.min(100, (window.scrollY / total) * 100) : 0;
     document.getElementById('progressFill').style.width = pct + '%';
-  }
+  };
+  window.addEventListener('scroll', window.updateProgress);
 
-  // Font size
-  function changeFontSize(dir) {
+  window.changeFontSize = function(dir) {
     fontIdx = Math.max(0, Math.min(fontSizes.length - 1, fontIdx + dir));
     const sz = fontSizes[fontIdx];
     document.documentElement.style.setProperty('--read-size', sz + 'px');
     document.getElementById('fsDisplay').textContent = sz + 'px';
-  }
+  };
 
-  // Theme
-  function setTheme(theme, btn) {
+  window.setTheme = function(theme, btn) {
     document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.body.classList.remove('dark-mode', 'sepia-mode');
     if (theme === 'dark')  document.body.classList.add('dark-mode');
     if (theme === 'sepia') document.body.classList.add('sepia-mode');
-  }
+  };
 
-  // Settings panel toggle
-  function toggleSettings() {
+  window.toggleSettings = function() {
     document.getElementById('settingsPanel').classList.toggle('open');
     document.getElementById('settingsBtn').classList.toggle('active');
-  }
+  };
+  
   document.addEventListener('click', (e) => {
     if (!e.target.closest('#settingsPanel') && !e.target.closest('#settingsBtn')) {
-      document.getElementById('settingsPanel').classList.remove('open');
-      document.getElementById('settingsBtn').classList.remove('active');
+      const panel = document.getElementById('settingsPanel');
+      if (panel) panel.classList.remove('open');
+      const btn = document.getElementById('settingsBtn');
+      if (btn) btn.classList.remove('active');
     }
   });
 </script>
 
+
 <!-- Firebase SDK -->
-<script type="module" src="firebase-config.js"></script>
+<script type="module">
+
+  // Dynamic Firebase Loading
+  const urlParams = new URLSearchParams(window.location.search);
+  const storyId = urlParams.get('id');
+
+  import { db, doc, getDoc } from './firebase-config.js';
+
+  async function loadStoryData() {
+    if (!storyId) {
+      document.getElementById('storyTitle').textContent = "No story ID provided";
+      return;
+    }
+    try {
+      const docRef = doc(db, "stories", storyId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        
+        // Basic Info
+        document.getElementById('storyTitle').textContent = data.title;
+        document.getElementById('storyAuthor').textContent = data.author;
+        document.getElementById('storyCategory').textContent = data.category;
+        document.getElementById('storyDescription').innerHTML = `<p>${data.description}</p>`;
+        
+        // Cover
+        const coverEl = document.getElementById('storyCover');
+        coverEl.textContent = data.title.substring(0, 2).toUpperCase();
+        coverEl.className = 'book-cover-lg ' + (data.coverClass || 'c1');
+        
+        // Stats
+        document.getElementById('statChapters').textContent = data.chapters_count || 0;
+        document.getElementById('statReaders').textContent = data.total_reads || 0;
+        document.getElementById('statRating').textContent = (data.avg_rating || 0).toFixed(1) + ' ★';
+        document.getElementById('statPublished').textContent = new Date(data.createdAt).getFullYear() || '--';
+        
+      } else {
+        document.getElementById('storyTitle').textContent = "Story not found";
+      }
+    } catch (e) {
+      console.error("Error fetching story:", e);
+    }
+  }
+
+  
+  // --- Chapter Fetching Logic ---
+  import { collection, query, where, getDocs, updateDoc, increment, doc, getDoc } from './firebase-config.js';
+  
+  async function loadChaptersForStory() {
+    if (!storyId) return;
+    
+    try {
+      const q = query(collection(db, "chapters"), where("storyId", "==", storyId));
+      const querySnapshot = await getDocs(q);
+      
+      let fetchedChapters = [];
+      querySnapshot.forEach((doc) => {
+          fetchedChapters.push({ id: doc.id, ...doc.data() });
+      });
+      
+      fetchedChapters.sort((a, b) => a.chapterNum - b.chapterNum);
+      window.chapters = fetchedChapters; // expose to global scope for the reading view
+      
+      const listContainer = document.getElementById('chaptersList');
+      const countLabel = document.getElementById('chaptersCountLabel');
+      
+      if (fetchedChapters.length === 0) {
+        countLabel.textContent = "0 chapters";
+        listContainer.innerHTML = '<div class="chapter-row" style="cursor:default;"><div class="ch-info" style="text-align:center; padding: 2rem; color:var(--muted);">No chapters published yet.</div></div>';
+        return;
+      }
+      
+      let freeCount = fetchedChapters.filter(c => c.pricing === 'free').length;
+      countLabel.textContent = `${fetchedChapters.length} chapters · ${freeCount} free`;
+      
+      let html = '';
+      fetchedChapters.forEach(ch => {
+        const isFree = ch.pricing === 'free';
+        const words = ch.content ? ch.content.split(' ').length : 0;
+        const timeToRead = Math.max(1, Math.ceil(words / 200));
+        
+        let badgeHtml = '';
+        let lockedClass = '';
+        if (isFree) {
+            badgeHtml = '<span class="ch-badge ch-free">Free</span>';
+        } else {
+            badgeHtml = '<span class="ch-badge ch-lock">🔒 8 coins</span>';
+            lockedClass = 'locked';
+        }
+        
+        html += `
+        <div class="chapter-row ${lockedClass}" onclick="openReading(${ch.chapterNum})">
+          <span class="ch-num">${ch.chapterNum}</span>
+          <div class="ch-info">
+            <div class="ch-title">${ch.title}</div>
+            <div class="ch-meta">~${words} words · ${timeToRead} min read</div>
+          </div>
+          ${badgeHtml}
+        </div>
+        `;
+      });
+      listContainer.innerHTML = html;
+      
+    } catch (e) {
+      console.error("Error loading chapters:", e);
+    }
+  }
+  
+  // Attach unlock logic to global window so button works
+  
+  window.unlockChapter = async function() {
+    if (!window.currentUser) {
+        alert("Please log in to unlock this chapter.");
+        return;
+    }
+    
+    const COST = 8;
+    let currentCoins = window.userData ? (window.userData.coins || 0) : 0;
+    
+    if (currentCoins < COST) {
+        alert(`You need 8 coins to unlock this chapter. You currently have ${currentCoins} coins. Please buy more!`);
+        return;
+    }
+    
+    // Deduct coins
+    try {
+        const userRef = doc(db, "users", window.currentUser.uid);
+        const newBalance = currentCoins - COST;
+        
+        // Let's add the chapter ID to an unlocked array in the user doc
+        // Wait, for MVP let's just deduct coins and let the local state handle it, 
+        // but to be persistent, we should save unlocked_chapters.
+        let unlocked = window.userData.unlocked_chapters || [];
+        unlocked.push(window.chapters[window.currentChapter - 1].id);
+        
+        await updateDoc(userRef, {
+            coins: newBalance,
+            unlocked_chapters: unlocked
+        });
+        
+        window.userData.coins = newBalance;
+        window.userData.unlocked_chapters = unlocked;
+        
+        const coinEl = document.querySelector('.coin-amount');
+        if (coinEl) coinEl.textContent = newBalance;
+        
+        // Add to local state and re-render
+        window.unlockedChapters.add(window.currentChapter);
+        window.renderChapter();
+        
+        alert("Chapter unlocked!");
+        
+    } catch (e) {
+        console.error("Error unlocking", e);
+        alert("Failed to unlock chapter.");
+    }
+  };
+
+
+  // Run the loader
+  document.addEventListener("DOMContentLoaded", loadChaptersForStory);
+
+  
+  // --- Paystack Integration ---
+  import { addDoc } from './firebase-config.js';
+
+  window.buyCoins = function() {
+    if (!window.currentUser) {
+        alert("You must be logged in to buy coins.");
+        return;
+    }
+    
+    // Hardcoded for MVP: 1000 NGN for 100 coins
+    const amountInKobo = 1000 * 100; 
+
+    let handler = PaystackPop.setup({
+      // We will use a public test key for Paystack
+      key: 'pk_test_d3bd73de4a386927d78a8f152d0b5e94f31b816a', // dummy test key, works for demo popup
+      email: window.currentUser.email || 'reader@example.com',
+      amount: amountInKobo,
+      currency: "NGN",
+      ref: 'WL_' + Math.floor((Math.random() * 1000000000) + 1),
+      callback: async function(response){
+          // Payment complete!
+          let reference = response.reference;
+          
+          try {
+             // 1. Give the user 100 coins
+             const userRef = doc(db, "users", window.currentUser.uid);
+             const userSnap = await getDoc(userRef);
+             
+             let newBalance = 100;
+             if (userSnap.exists()) {
+                 const currentCoins = userSnap.data().coins || 0;
+                 newBalance = currentCoins + 100;
+                 await updateDoc(userRef, {
+                     coins: newBalance
+                 });
+             } else {
+                 // edge case, shouldn't happen if they are logged in and have a document
+             }
+             
+             // 2. Record the transaction
+             await addDoc(collection(db, "transactions"), {
+                 userId: window.currentUser.uid,
+                 email: window.currentUser.email,
+                 amount: 1000,
+                 currency: "NGN",
+                 coins_awarded: 100,
+                 reference: reference,
+                 status: "success",
+                 date: new Date().toISOString()
+             });
+             
+             alert("Payment successful! 100 coins have been added to your wallet.");
+             
+             // Refresh coin display (we need to make sure we fetch it)
+             const coinEl = document.querySelector('.coin-amount');
+             if (coinEl) coinEl.textContent = newBalance;
+             
+             // Update global var if we store it
+             window.userData = window.userData || {};
+             window.userData.coins = newBalance;
+             
+          } catch (e) {
+              console.error("Error updating DB after payment", e);
+              alert("Payment successful, but error updating coins. Please contact support.");
+          }
+      },
+      onClose: function(){
+          // User closed the popup
+          console.log('Payment popup closed');
+      }
+    });
+    handler.openIframe();
+  };
+
+  
+  // --- Bookmark Logic ---
+  
+  window.toggleBookmark = async function() {
+      if (!window.currentUser) {
+          alert("Please log in to bookmark stories.");
+          return;
+      }
+      
+      if (!storyId) return;
+      
+      try {
+          const userRef = doc(db, "users", window.currentUser.uid);
+          
+          let bookmarkedIds = window.userData ? (window.userData.bookmarks || []) : [];
+          const isBookmarked = bookmarkedIds.includes(storyId);
+          
+          if (isBookmarked) {
+              bookmarkedIds = bookmarkedIds.filter(id => id !== storyId);
+              document.getElementById('btnBookmark1').innerHTML = '<ion-icon name="bookmark-outline"></ion-icon> Save for Later';
+              document.getElementById('btnBookmark2').classList.remove('active');
+          } else {
+              bookmarkedIds.push(storyId);
+              document.getElementById('btnBookmark1').innerHTML = '<ion-icon name="bookmark"></ion-icon> Saved to Library';
+              document.getElementById('btnBookmark2').classList.add('active');
+          }
+          
+          await updateDoc(userRef, { bookmarks: bookmarkedIds });
+          if (window.userData) window.userData.bookmarks = bookmarkedIds;
+          
+      } catch (e) {
+          console.error("Error toggling bookmark:", e);
+      }
+  };
+  
+  // We need to also check if it's bookmarked on load to set the initial button states
+  window.checkInitialBookmarkState = function() {
+      if (!window.currentUser || !storyId) return;
+      const bookmarkedIds = window.userData ? (window.userData.bookmarks || []) : [];
+      if (bookmarkedIds.includes(storyId)) {
+          const btn1 = document.getElementById('btnBookmark1');
+          if (btn1) btn1.innerHTML = '<ion-icon name="bookmark"></ion-icon> Saved to Library';
+          const btn2 = document.getElementById('btnBookmark2');
+          if (btn2) btn2.classList.add('active');
+      }
+  };
+
+  // Run directly
+  loadStoryData();
+
+</script>
 </body>
 </html>

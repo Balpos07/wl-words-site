@@ -1,0 +1,60 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(uid) {
+      return isAuthenticated() && request.auth.uid == uid;
+    }
+
+    // 1. Users Collection
+    // Users can only read and write their own profile data.
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // 2. Stories Collection
+    match /stories/{storyId} {
+      // Anyone can read a story if it is live
+      allow read: if resource.data.status == 'live';
+      
+      // Writers can read their own drafts
+      allow read: if isOwner(resource.data.author_uid);
+      
+      // Only authenticated users can create stories, and they must set themselves as author
+      allow create: if isAuthenticated() && request.resource.data.author_uid == request.auth.uid;
+      
+      // Only the author can update or delete their story
+      allow update, delete: if isOwner(resource.data.author_uid);
+    }
+    
+    // 3. Chapters Collection (Future proofing)
+    match /chapters/{chapterId} {
+      // Anyone can read a chapter if it is free, OR if they have unlocked it (logic usually handled server-side)
+      // For now, allow reading all chapters, but restrict writes to the story owner.
+      allow read: if true;
+      allow create: if isAuthenticated() && request.resource.data.author_uid == request.auth.uid;
+      allow update, delete: if isOwner(resource.data.author_uid);
+    }
+    
+    // 4. Payouts / Earnings (Secure these so readers can't modify them)
+    match /payouts/{payoutId} {
+      // Writers can read their own payouts
+      allow read: if isOwner(resource.data.writer_uid);
+      // Payouts should only be created/updated by a secure backend server (Admin SDK)
+      allow write: if false;
+    }
+    // 5. Transactions (Coin Purchases)
+    match /transactions/{transactionId} {
+      allow read: if isOwner(resource.data.userId);
+      // For MVP, allow authenticated users to create a transaction. In production, this should be done via webhook.
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false; // Transactions should never be updated or deleted by users
+    }
+  }
+}
